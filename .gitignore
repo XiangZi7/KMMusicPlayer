@@ -8,17 +8,20 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
-*.local
-unpackage
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
 .DS_Store
+dist
+*.local
+
+# Editor directories and files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+/src/auto-imports.d.ts
+
+.idea
+.hbuilderx
+.vscode
+package-lock.json
+.eslintrc-auto-import.json
