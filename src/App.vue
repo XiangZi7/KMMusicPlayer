@@ -1,27 +1,11 @@
+<script setup>
+import { useTheme } from "@/hooks/useTheme";
+import defaultComm from "@/layouts/default.vue";
+// 使用主题
+useTheme()
+</script>
 <template>
-  <div id="app">
-   <Backround></Backround>
-    <Top></Top>
-    <aplayer></aplayer>
-  </div>
+	<defaultComm />
+	<!-- <router-view /> -->
 </template>
 
-<script>
-import Backround from './components/backround.vue';
-import Top from './components/top.vue';
-import aplayer from './components/aplayer.vue'
-export default {
-  name: 'App',
-  components:{
-    Top,
-    Backround,
-    aplayer
-  },
-
-}
-</script>
-
-<style>
-
-
-</style>

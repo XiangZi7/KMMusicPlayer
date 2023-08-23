@@ -1,80 +1,101 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Content from '../Views/Content.vue'
-import search from '../Views/SongSearch.vue'
-import defaultlist from '../Views/defaultList.vue'
-import playmv from '../Views/playmv.vue'
-import newmv from '../Views/newMV.vue'
-import radio from '../Views/radio.vue'
-import wallpaper from '../Views/wallpaper.vue'
-import Playlist from '../Views/PlaylistDetails.vue'
-import Leaderboard from '../Views/Leaderboard.vue'
-import singerlist from '../Views/singerlist.vue'
-import album from '../Views/album.vue'
-Vue.use(Router)
+import { createRouter, createWebHashHistory } from "vue-router";
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Content',
-      component: Content
-    },
-    {
-      path: '/content',
-      name: 'Content',
-      component: Content,
-    },
-    {
-      path:'/search',
-      name:'search',
-      component:search,
-      props:true,
-    },
-    {
-      path:'/defaultlist',
-      name:'defaultlist',
-      component:defaultlist
-    },
-    {
-      path:'/playmv',
-      name:'playmv',
-      component:playmv
-    },
-    {
-      path:'/newmv',
-      name:'newmv',
-      component:newmv
-    },
-    {
-      path:'/radio',
-      name:'radio',
-      component:radio
-    },
-    {
-      path:'/wallpaper',
-      name:'wallpaper',
-      component:wallpaper
-    },
-    {
-      path:'/Playlist',
-      name:'Playlist',
-      component:Playlist
-    },
-    {
-      path:'/Leaderboard',
-      name:'Leaderboard',
-      component:Leaderboard
-    },
-    {
-      path:'/singerlist',
-      name:'singerlist',
-      component:singerlist
-    },
-    {
-      path:'/album',
-      name:'album',
-      component:album
-    },
-  ]
+
+const routes = [
+	{
+		path: '/',
+		component: () => import('@/pages/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/musiclibrary',
+		component: () => import('@/pages/musiclibrary/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/mv',
+		component: () => import('@/pages/mv/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/mv/:id',
+		name: "mv",
+		component: () => import('@/pages/mv/[id].vue'),
+	},
+	{
+		path: '/radio',
+		component: () => import('@/pages/radio/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/songList',
+		component: () => import('@/pages/songList/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/testPlayer',
+		component: () => import('@/pages/testPlayer/index.vue'),
+	},
+	{
+		path: '/theme',
+		component: () => import('@/pages/theme/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/search',
+		component: () => import('@/pages/search/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/playList',
+		component: () => import('@/pages/playListDetail/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/currentPlaylist',
+		component: () => import('@/pages/currentPlaylist/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/animation',
+		component: () => import('@/pages/animation/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
+		path: '/animation/:id',
+		name: "animation",
+		component: () => import('@/pages/animation/[id].vue'),
+	},
+	{
+		path: '/animation/player/:id',
+		name: "playerAnimation",
+		component: () => import('@/pages/animation/player.vue'),
+	},
+]
+
+const router = createRouter({
+	history: createWebHashHistory(),
+	routes: routes
 })
+
+export default router

@@ -1,29 +1,12 @@
-
-import Vue from 'vue'
-import App from './App'
+import { createApp } from 'vue'
+import App from './App.vue'
 import router from './router'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import pinia from "./stores/index";
 
-// 饿了么
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// 你自定义的 css
+import './styles/main.scss'
+import './styles/music.scss'
 
-import vueConfig from './vue.config';
-
-//导入Vuex
-import store from './store/index'
-// 饿了么
-Vue.use(ElementUI);
-
-
-
-
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  store,
-  router,
-  components: { App },
-  template: '<App/>'
-})
+createApp(App).use(pinia).use(ElementPlus).use(router).mount('#app')
