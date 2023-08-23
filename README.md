@@ -1,19 +1,23 @@
-# Kuriyama Mirai Player
+# KM-Music-Player Player
 
 ### 介绍 📖
 
-Kuriyama Mirai Player 一款基于 Vue3.3、Vite4、Pinia、Element-Plus 开源的Web音乐播放器，使用目前最新技术栈开发。
+KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)
+
+
+KM-Music-Player 一款基于 Vue3.3、Vite4、Pinia、Element-Plus 开源的Web音乐播放器，使用目前最新技术栈开发。
 
 ### 在线预览 👀
 
-vercel：https://kuriyamamiraiplayer.vercel.app/#/ (可能需要魔法)
+github pages：https://xiangzi7.github.io/KM-Music-Player/
 
-github pages：https://xiangzi7.github.io/Kuriyama-Mirai-Player/
+
+vercel：https://kmmusic.vercel.app (可能需要魔法)
 
 
 ### 代码仓库 ⭐
 
-GitHub：https://github.com/XiangZi7/Kuriyama-Mirai-Player
+GitHub：https://github.com/XiangZi7/KM-Music-Player
 
 项目功能 🔨
 使用 Vue3.3 开发，单文件组件＜ script setup ＞
@@ -29,7 +33,7 @@ GitHub：https://github.com/XiangZi7/Kuriyama-Mirai-Player
 
 #Github
 
-`git clone https://github.com/XiangZi7/Kuriyama-Mirai-Player.git`
+`git clone https://github.com/XiangZi7/KM-Music-Player.git`
 
 * Install：
   `yarn`
