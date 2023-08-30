@@ -80,20 +80,6 @@ watch(
 );
 // 播放
 const play = async () => {
-  // 加载歌词
-  if (!currentSong.value.Lyric) {
-    lyric(currentSong.value.id).then((resLyric) => {
-      let isLyric = "";
-      try {
-        isLyric = resLyric.data.lrc.lyric;
-      } catch (error) {
-        isLyric = "";
-        console.error(error);
-      }
-      musicstore.updateSongs({ Lyric: isLyric });
-    });
-  }
-  state.parsedLyrics = parseLyrics(currentSong.value.Lyric);
   state.animationPlayState = "running";
   state.playing = true;
   state.currenPlayerState = state.isPlayerModel[1].icon;
@@ -166,6 +152,21 @@ const handleEnded = () => {
 const handleTimeUpdate = async () => {
   state.currentTime = Math.floor(audio.value.currentTime);
   state.progress = (state.currentTime / state.duration) * 100;
+
+  // 加载歌词
+  if (!currentSong.value.Lyric) {
+    lyric(currentSong.value.id).then(({ data }) => {
+      let isLyric = "";
+      try {
+        isLyric = data.lrc.lyric;
+      } catch (error) {
+        isLyric = "";
+        console.error(error);
+      }
+      musicstore.updateSongs({ Lyric: isLyric });
+    });
+  }
+  state.parsedLyrics = parseLyrics(currentSong.value.Lyric);
   // 歌词时间
   if (!state.parsedLyrics) return;
   for (let i = 0; i < state.parsedLyrics.length; i++) {
