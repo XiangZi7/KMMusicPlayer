@@ -51,6 +51,7 @@ html {
 .el-table .el-table__cell {
 	padding: 14px 0;
 }
+
 .el-table {
 	font-size: 15px;
 	--el-table-border-color: none;
@@ -78,14 +79,21 @@ html {
 	opacity: 0;
 }
 
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+	border-bottom: none !important;
+}
+
 .about {
 	margin-left: 40px;
+
 	a {
 		text-decoration: none;
 		padding: 0 10px;
 		color: var(--prism-color);
 	}
 }
-.playerButton{
+
+.playerButton {
 	margin: 5px 0 10px 0;
 }

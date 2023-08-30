@@ -14,12 +14,6 @@ const {
 const toMV = (id) => {
 	router.push({ name: `mv`, params: { id } })
 }
-
-// onMounted(async () => {
-// 	const { data } = await newMV()
-// 	state.list = data.data
-// })
-
 const props = defineProps({
 	data: {
 		type: Object,

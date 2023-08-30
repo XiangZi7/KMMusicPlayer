@@ -1,6 +1,4 @@
 <script setup>
-import { GlobalStore } from "@/stores/index";
-import { useTheme } from "@/hooks/useTheme";
 const { switchDark } = useTheme();
 const globalstore = GlobalStore()
 const state = reactive({

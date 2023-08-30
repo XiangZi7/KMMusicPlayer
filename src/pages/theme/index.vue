@@ -1,8 +1,5 @@
 <script setup>
-import { GlobalStore } from "@/stores/index";
-import { useTheme } from "@/hooks/useTheme";
 import { DEFAULT_PRIMARY } from "@/config/config";
-import darkSwitch from "@/components/darkSwitch.vue";
 import axios from "axios";
 const { changePrimary } = useTheme();
 const globalstore = GlobalStore()
@@ -13,38 +10,6 @@ const state = reactive({
 const {
 	list,
 } = toRefs(state)
-
-// const getAssetImgs = (imgname) => {
-// 	return new URL(`../../static/img/thme/${imgname}`, import.meta.url).href
-// }
-const preset = reactive([
-	{
-		colorName: '默认',
-		colorUrl: '默认.png',
-		gbrUrl: DEFAULT_PRIMARY
-	},
-	{
-		colorName: '牡丹粉红',
-		gbrUrl: '#eea2a4'
-	},
-	{
-		colorName: '栗紫',
-		gbrUrl: '#5a191b'
-	},
-	{
-		colorName: '香叶红',
-		gbrUrl: '#f07c82'
-	},
-	{
-		colorName: '艳红',
-		gbrUrl: '#ed5a65'
-	},
-	{
-		colorName: '茶花红',
-		gbrUrl: '#ee3f4d'
-	},
-
-])
 
 const predefineColors = [
 	DEFAULT_PRIMARY,

@@ -58,3 +58,10 @@ export function getLightColor(color, level) {
 	for (let i = 0; i < 3; i++) rgb[i] = Math.floor((255 - rgb[i]) * level + rgb[i]);
 	return rgbToHex(rgb[0], rgb[1], rgb[2]);
 }
+
+/**
+ * 测试自动带入
+ */
+export function testTitle(params) {
+	return "哈哈哈testTitle"
+}

@@ -1,6 +1,5 @@
 <script setup>
 import { cloudsearch, songUrl } from '@/api/api'
-import musicTable from "@/components/musicTable.vue";
 import songList from "./components/songList.vue";
 import mv from "./components/mv.vue";
 import artists from "./components/artists.vue";

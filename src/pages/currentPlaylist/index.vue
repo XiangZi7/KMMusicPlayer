@@ -1,5 +1,4 @@
 <script setup>
-import { musicStore } from '@/stores/musicStore'
 import { formatTime } from '@/composables/formatTime'
 const musicstore = musicStore()
 const router = useRouter()

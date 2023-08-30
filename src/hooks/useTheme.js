@@ -1,5 +1,3 @@
-import { GlobalStore } from '@/stores/index'
-import { getLightColor, getDarkColor } from "@/utils/theme/tool";
 import { DEFAULT_PRIMARY } from "@/config/config";
 import { ElMessage } from "element-plus";
 

@@ -1,6 +1,5 @@
 <script setup>
-import { GlobalStore } from "@/stores/index";
-import { loginStatus, createKey, createQR, checkKey, logout } from "@/api/api.js";
+import { loginStatus, createKey, createQR, checkKey, logout } from "@/api/api";
 import { ElMessage } from 'element-plus'
 
 const globalstore = GlobalStore()
@@ -129,7 +128,7 @@ const submit = () => {
 			<input type="text" placeholder="Search" @keyup.enter='toResult' v-model='kw'>
 		</div>
 		<div class="about">
-			<a href="https://github.com/XiangZi7/Vue3MusicPlayer/" target="_blank">github</a>
+			<a href="https://github.com/XiangZi7/KM-Music-Player" target="_blank">github</a>
 			<a href="https://github.com/XiangZi7/" target="_blank">about</a>
 		</div>
 		<!-- <Navigation /> -->

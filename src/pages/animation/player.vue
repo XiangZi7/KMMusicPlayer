@@ -1,7 +1,6 @@
 <script setup>
 import { videoPlay } from 'vue3-video-play' // 引入组件
 import 'vue3-video-play/dist/style.css' // 引入css
-import { GlobalStore } from "@/stores/index";
 const globalstore = GlobalStore()
 const route = useRoute()
 const state = reactive({
