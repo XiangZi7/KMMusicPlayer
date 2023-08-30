@@ -128,7 +128,7 @@ const submit = () => {
 			<input type="text" placeholder="Search" @keyup.enter='toResult' v-model='kw'>
 		</div>
 		<div class="about">
-			<a href="https://github.com/XiangZi7/KM-Music-Player" target="_blank">github</a>
+			<a href="https://github.com/XiangZi7/KM-Music-Player/" target="_blank">github</a>
 			<a href="https://github.com/XiangZi7/" target="_blank">about</a>
 		</div>
 		<!-- <Navigation /> -->
