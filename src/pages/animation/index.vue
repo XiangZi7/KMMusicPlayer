@@ -40,7 +40,7 @@ const toResult = async () => {
             <div
               class="apps-item mv-text"
               @click="
-                router.push({ name: `animation` })
+                router.push({ name: `animation`, params: { id: 1 } })
               "
               v-for="(item, idx) in list"
               :key="idx"

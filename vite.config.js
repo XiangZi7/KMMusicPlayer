@@ -73,7 +73,19 @@ export default defineConfig({
       },
     },
   },
+  esbuild: {
+    pure: ["console.log", "debugger"]
+  },
   build: {
+    // esbuild 打包更快，但是不能去除 console.log，去除 console 使用 terser 模式
+    // minify: "esbuild",
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     base: './',
     rollupOptions: {
       // 静态资源分类打包
@@ -90,19 +102,6 @@ export default defineConfig({
               return id.toString().split('node_modules/')[1].split('/')[0].toString()
             }
           }
-        }
-      },
-      // 打包清除console
-      minify: 'terser',
-      terserOptions: {
-        /*
-         * command 用来判断环境
-         */
-        compress: {
-          //warnings: false,
-          drop_console: command !== 'serve',
-          drop_debugger: command !== 'serve',
-          //pure_funcs:['console.log'] // 移除console
         }
       },
     },
