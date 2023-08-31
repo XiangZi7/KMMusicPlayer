@@ -79,13 +79,13 @@ export default defineConfig({
   build: {
     // esbuild 打包更快，但是不能去除 console.log，去除 console 使用 terser 模式
     // minify: "esbuild",
-    minify: "terser",
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
+    minify: "esbuild",
+    // terserOptions: {
+    //   compress: {
+    //     drop_console: true,
+    //     drop_debugger: true
+    //   }
+    // },
     base: './',
     rollupOptions: {
       // 静态资源分类打包

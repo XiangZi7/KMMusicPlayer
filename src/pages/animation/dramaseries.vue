@@ -11,13 +11,11 @@ const { list, loading } = toRefs(state);
 
 onMounted(async () => {
   state.loading = true;
-  videoUrl({ id: JSON.parse(decodeURIComponent(route.params.id)) }).then(
-    ({ data }) => {
-      state.loading = false;
-      state.list = data.data;
-      globalstore.setAnthologyObj(data.data);
-    }
-  );
+  videoUrl({ id: route.params.id }).then(({ data }) => {
+    state.loading = false;
+    state.list = data.data;
+    globalstore.setAnthologyObj(data.data);
+  });
 });
 </script>
 <template>
