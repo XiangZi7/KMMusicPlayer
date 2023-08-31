@@ -91,7 +91,22 @@ export default defineConfig({
             }
           }
         }
-      }
+      },
+      // 打包清除console
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          /*
+           * command 用来判断环境
+           */
+          compress: {
+            //warnings: false,
+            drop_console: command !== 'serve',
+            drop_debugger: command !== 'serve',
+            //pure_funcs:['console.log'] // 移除console
+          }
+        },
+      },
     },
     sourcemap: false,
     target: 'es2015',
