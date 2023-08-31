@@ -83,8 +83,8 @@ const routes = [
 	},
 	{
 		path: '/animation/:id',
-		name: "dramaseries",
-		component: () => import('@/pages/animation/dramaseries.vue'),
+		name: "animation",
+		component: () => import('@/pages/animation/[id].vue'),
 	},
 	{
 		path: '/animation/player/:id',

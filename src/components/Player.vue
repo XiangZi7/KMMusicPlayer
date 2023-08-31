@@ -167,7 +167,6 @@ const handleTimeUpdate = async () => {
     });
   }
   state.parsedLyrics = parseLyrics(currentSong.value.Lyric);
-  console.log("🚀 => parsedLyrics:", state.parsedLyrics)
   // 歌词时间
   if (!state.parsedLyrics) return;
   for (let i = 0; i < state.parsedLyrics.length; i++) {

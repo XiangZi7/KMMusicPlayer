@@ -6,6 +6,5 @@ useTheme()
 </script>
 <template>
 	<defaultComm />
-	<!-- <router-view /> -->
 </template>
 
