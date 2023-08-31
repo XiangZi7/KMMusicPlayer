@@ -167,6 +167,7 @@ const handleTimeUpdate = async () => {
     });
   }
   state.parsedLyrics = parseLyrics(currentSong.value.Lyric);
+  console.log("🚀 => parsedLyrics:", state.parsedLyrics)
   // 歌词时间
   if (!state.parsedLyrics) return;
   for (let i = 0; i < state.parsedLyrics.length; i++) {
@@ -224,7 +225,6 @@ const changeVolumes = (val) => {
 };
 
 const parseLyrics = (lyric) => {
-  // console.log("🚀 => file: Player.vue:180 => lyric:", lyric)
   if (!lyric) return;
   const lines = lyric.split("\n");
   return lines

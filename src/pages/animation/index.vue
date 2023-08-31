@@ -3,13 +3,16 @@ import { videoSearch } from "@/api/api";
 const router = useRouter();
 const state = reactive({
   list: [],
-  input: "",
+  input: "境界的彼方",
   loading: false,
   total: 0,
   currentPage: 1,
 });
 const { list, input, loading, total, currentPage } = toRefs(state);
 
+onMounted(() => {
+  toResult()
+})
 const toResult = async () => {
   state.loading = true;
   videoSearch({ name: state.input }).then(({ data }) => {
@@ -22,7 +25,6 @@ const toResult = async () => {
 <template>
   <div>
     <div class="content-section">
-      <!-- <span class="mb-20 text-center">因vecel被ban了，可能需要魔法上网才能搜索得到动漫</span> -->
       <div class="video">
         <input
           type="text"
@@ -38,7 +40,7 @@ const toResult = async () => {
             <div
               class="apps-item mv-text"
               @click="
-                router.push({ name: `animation`, params: { id: item.videoId } })
+                router.push({ name: `animation`, params: { id: encodeURIComponent(JSON.stringify(item.videoId)) } })
               "
               v-for="(item, idx) in list"
               :key="idx"
