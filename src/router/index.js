@@ -25,7 +25,7 @@ const routes = [
 	},
 	{
 		path: '/mv/:id',
-		component: () => import('@/pages/mv/[id].vue'),
+		component: () => import('@/pages/mv/Play.vue'),
 	},
 	{
 		path: '/radio',
