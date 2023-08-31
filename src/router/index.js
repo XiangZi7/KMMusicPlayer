@@ -82,7 +82,7 @@ const routes = [
 	},
 	{
 		path: '/animation/:id',
-		component: () => import('@/pages/animation/[id].vue'),
+		component: () => import('@/pages/animation/dramaseries.vue'),
 	},
 	{
 		path: '/animation/player/:id',
