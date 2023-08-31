@@ -25,7 +25,6 @@ const routes = [
 	},
 	{
 		path: '/mv/:id',
-		name: "mv",
 		component: () => import('@/pages/mv/[id].vue'),
 	},
 	{
@@ -83,7 +82,6 @@ const routes = [
 	},
 	{
 		path: '/animation/:id',
-		name: "animation",
 		component: () => import('@/pages/animation/[id].vue'),
 	},
 	{

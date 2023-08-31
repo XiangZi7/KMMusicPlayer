@@ -11,8 +11,8 @@ const state = reactive({
 const { list, input, loading, total, currentPage } = toRefs(state);
 
 onMounted(() => {
-  toResult()
-})
+  toResult();
+});
 const toResult = async () => {
   state.loading = true;
   videoSearch({ name: state.input }).then(({ data }) => {
@@ -39,9 +39,7 @@ const toResult = async () => {
           <div class="apps-card" style="margin-top: 20px">
             <div
               class="apps-item mv-text"
-              @click="
-                router.push({ name: `animation`, params: { id: item.videoId } })
-              "
+              @click="router.push({ path: `/animation/${item.videoId}` })"
               v-for="(item, idx) in list"
               :key="idx"
             >

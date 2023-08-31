@@ -9,7 +9,7 @@ const state = reactive({
 const { list, loading } = toRefs(state);
 
 const toMV = (id) => {
-  router.push({ name: `mv`, params: { id } });
+  router.push({ path: `/mv/${id}`});
 };
 
 onMounted(async () => {
