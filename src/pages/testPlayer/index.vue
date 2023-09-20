@@ -12,12 +12,38 @@ const state = reactive({
 		{ name: '歌曲1', src: 'https://cn-scya-ct-01-03.bilivideo.com/mefmxcodeboss/aod/202112/13/76e0f45f3b756cb5fd82f4024a7e4b7e.m4a?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1685005922&gen=playurlv2&os=bcache&oi=2104912314&trid=0000e70271b5204f4af5bc9ee48f1da1d033B&mid=0&platform=html5&upsig=13e2f675be1a5aeb3dfdd01c79f6dae1&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=62703&bvc=vod&nettype=0&orderid=0,1&logo=00000000' },
 		{ name: '歌曲2', src: 'https://cn-jxjj-ct-01-01.bilivideo.com/mefmxcodeboss/aod/202106/14/f14b848a15d6357bf2b5dc9c14fcb633.m4a?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1685005996&gen=playurlv2&os=bcache&oi=2104912314&trid=0000067ed8353dcc4d5096a47f4dbf757368B&mid=0&platform=html5&upsig=ab517e53df7a09c7cb1fc36ab45886ae&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=4261&bvc=vod&nettype=0&orderid=0,1&logo=00000000' },
 	],
+	value1: [],
+	options: [
+		{
+			value: 'Option1',
+			label: 'Option1',
+		},
+		{
+			value: 'Option2',
+			label: 'Option2',
+		},
+		{
+			value: 'Option3',
+			label: 'Option3',
+		},
+		{
+			value: 'Option4',
+			label: 'Option4',
+		},
+		{
+			value: 'Option5',
+			label: 'Option5',
+		},
+	]
 })
 const {
 	list,
 	currentTime,
 	duration,
 	progress,
+	value1,
+	options,
+	playing
 } = toRefs(state)
 
 const currentSong = computed(() => state.songs[state.currentIndex])
@@ -64,7 +90,7 @@ const nextSong = () => {
 		state.currentIndex = 0
 	} else {
 		state.currentIndex++
-	}
+	}   
 	playSong()
 }
 // 播放歌曲
@@ -119,7 +145,10 @@ const seek = (event) => {
 	const percentage = clickX / progressWidth
 	audio.value.currentTime = state.duration * percentage
 }
-
+function changeSelect(params) {
+	console.log("🚀 => file: index.vue:148 => params:", params.join())
+	
+}
 </script>
 <template>
 	<div class="music-player">
@@ -138,6 +167,10 @@ const seek = (event) => {
 		</div>
 		<audio ref="audio" :src="currentSong.src" @timeupdate="handleTimeUpdate" @durationchange="handleDurationChange"
 			@ended="handleEnded"></audio>
+
+		<el-select v-model="value1" @change="changeSelect" multiple placeholder="Select" style="width: 240px">
+			<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+		</el-select>
 	</div>
 </template>
 <style lang='scss' scoped>
