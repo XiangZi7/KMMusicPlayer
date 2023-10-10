@@ -42,6 +42,13 @@ const routes = [
 		}
 	},
 	{
+		path: '/chat',
+		component: () => import('@/pages/chat/index.vue'),
+		meta: {
+			keepAlive: true
+		}
+	},
+	{
 		path: '/testPlayer',
 		component: () => import('@/pages/testPlayer/index.vue'),
 	},
