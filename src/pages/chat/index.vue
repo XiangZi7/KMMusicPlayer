@@ -1,5 +1,6 @@
 <script setup>
 import request from "@/api/request.js";
+import axios from 'axios'
 import MarkdownIt from 'markdown-it';
 
 const scrollbarRef = ref()
@@ -26,7 +27,7 @@ const {
 } = toRefs(state)
 
 onMounted(() => {
-  request.get("/models").then(({data}) => {
+  axios.get(import.meta.env.VITE_API_AIURL + "/models").then(({data}) => {
     state.selectList = data.data
   })
 })
@@ -36,7 +37,7 @@ function sendMessage() {
     state.loading = true
     state.messages.push({id: state.messages.length + 1, text: state.newMessage, isOther: false});
     handlescrollbar()
-    request.get(`/chat`,
+    axios.get(import.meta.env.VITE_API_AIURL +`/chat`,
         {
           params: {
             kw: state.newMessage,
@@ -157,7 +158,8 @@ function retHtml(text) {
     margin-left: 10px;
   }
 }
-.msg{
+
+.msg {
   margin: 10px 0;
 }
 
