@@ -1,7 +1,6 @@
 <script setup>
-import request from "@/api/request.js";
+import MarkdownIt from "markdown-it";
 import axios from 'axios'
-import MarkdownIt from 'markdown-it';
 
 const scrollbarRef = ref()
 const innerRef = ref()
@@ -26,34 +25,87 @@ const {
   selectList
 } = toRefs(state)
 
-onMounted(() => {
+
+onMounted(async () => {
   axios.get(import.meta.env.VITE_API_AIURL + "/models").then(({data}) => {
     state.selectList = data.data
   })
-})
+});
 
-function sendMessage() {
+async function sendMessage() {
   if (state.newMessage.trim() !== "") {
     state.loading = true
     state.messages.push({id: state.messages.length + 1, text: state.newMessage, isOther: false});
     handlescrollbar()
-    axios.get(import.meta.env.VITE_API_AIURL +`/chat`,
+
+    const data = JSON.stringify({
+      model: state.select,
+      messages: [
         {
-          params: {
-            kw: state.newMessage,
-            model: state.select
+          role: "user",
+          content: state.newMessage,
+        },
+      ],
+      temperature: 0.7,
+      stream: true,
+    });
+
+    try {
+      const response = await fetch(
+          "https://api.chatanywhere.com.cn/v1/chat/completions",
+          {
+            method: "POST",
+            body: data,
+            headers: {
+              Authorization:
+                  "Bearer sk-ADjDpi2dQxYS186eDyx0aiIRcpty65qWDvjaKqnmgd67hbsX",
+              "Content-Type": "application/json",
+            },
           }
-        }).then(({data}) => {
+      );
+      //清空输入框文本
+      state.newMessage = "";
+      const reader = response.body.getReader();
+      //
       state.messages.push({
-        id: state.messages.length + 1,
-        name: data.model,
-        text: data.choices[0].message.content,
+        id: 1,
+        text:"",
+        name: state.select,
         isOther: true
-      });
-      handlescrollbar()
+      })
+      // 缓存最后一条消息对象，用于追加文本内容
+      let lastMessage = state.messages[state.messages.length - 1];
+      while (true) {
+        const {done, value} = await reader.read();
+
+        if (done) {
+          console.log("Stream ended");
+          state.loading = false
+          break;
+        }
+
+         // 将每一块数据追加到 lastMessage.text
+        let chars = new TextDecoder().decode(value);
+        let lines = chars.split("data:");
+
+        for (let i = 0; i < lines.length; i++) {
+          chars = lines[i].replace(/\s*/, "").replace(/\s*$/, "");
+          if (!chars) {
+            continue;
+          }
+
+          let obj = JSON.parse(chars);
+          // 检查是否存在有效的文本内容，然后追加到最后一条消息
+          if (obj && obj.choices[0].delta && obj.choices[0].delta.content != undefined && obj.choices[0].delta.content != 'undefined') {
+            lastMessage.text += obj.choices[0].delta.content;
+            handlescrollbar()
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
       state.loading = false
-    })
-    state.newMessage = "";
+    }
   }
 }
 
@@ -69,8 +121,8 @@ function handlescrollbar() {
 function retHtml(text) {
   return md.render(text)
 }
-
 </script>
+
 <template>
   <div class="box">
     <div id="chatbox">
@@ -103,9 +155,8 @@ function retHtml(text) {
       <el-button class="ipt-btn" type="primary" @click="sendMessage" :loading="loading">发送</el-button>
     </div>
   </div>
-
-
 </template>
+
 <style lang='scss' scoped>
 .box {
   max-height: 100vh;
