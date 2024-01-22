@@ -97,7 +97,6 @@ function playAll() {
 .playlist {
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
