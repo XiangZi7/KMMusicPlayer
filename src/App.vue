@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { useTheme } from "@/hooks/useTheme";
-import defaultComm from "@/layouts/default.vue";
-// 使用主题
-useTheme()
-</script>
-<template>
-	<defaultComm />
-</template>
 
+import DefaultLayout from "@/layouts/index.vue";
+useTheme();
+</script>
+
+<template>
+  <default-layout />
+</template>

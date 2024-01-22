@@ -1,64 +1,18 @@
-# KM-Music-Player Player
+# Vue 3 + TypeScript + Vite
 
-### 介绍 📖
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)
+## Recommended IDE Setup
 
+- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-基于 Vue3.3、Vite4、Pinia、Element-Plus 开源的Web音乐播放器，使用目前最新技术栈开发。
+## Type Support For `.vue` Imports in TS
 
-### 在线预览 👀
-netlify：https://kmmusic.netlify.app
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-github pages：https://xiangzi7.github.io/KM-Music-Player/
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
-
-vercel：https://kmmusic.vercel.app (可能需要魔法)
-
-
-### 代码仓库 ⭐
-
-GitHub：https://github.com/XiangZi7/KM-Music-Player
-
-项目功能 🔨
-使用 Vue3.3 开发，单文件组件＜ script setup ＞
-采用 Vite4 作为项目开发、打包工具
-使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
-基于 Element Plus
-使用 VueRouter 路由懒加载
-
-### 安装使用步骤 📔
-
-* Clone
-
-
-#Github
-
-`git clone https://github.com/XiangZi7/KM-Music-Player.git`
-
-* Install：
-  `yarn`
-* Run：
-  `yarn dev`
-* 文档说明
-  https://neteasecloudmusicapi.vercel.app/#/  （可能需魔法上网）
-
-### 项目截图 📷
-
-![1686722338917](image/README/1686722338917.png)
-
-![1686722358440](image/README/1686722358440.png)
-
-![1686722368781](image/README/1686722368781.png)
-
-![1686722421686](image/README/1686722421686.png)
-
-![1686722435660](image/README/1686722435660.png)
-
-### 项目后台接口 🧩
-
-* https://neteasecloudmusicapi.vercel.app/#/  （可能需魔法上网）
-
-### QQ交流群 👨‍👨‍👦‍👦
-
-![1686722147442](image/README/1686722147442.png)
+1. Disable the built-in TypeScript Extension
+   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.

@@ -1,0 +1,63 @@
+.banner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  background-image: url("@/assets/bannaer.jpg");
+  border-radius: 14px;
+  margin-top: 50px;
+  height: 170px;
+  position: relative;
+}
+
+.des {
+  padding: 20px;
+}
+
+.des-text {
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 16px;
+  line-height: 1.7em;
+  color: #ebecec;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 50%;
+}
+
+.des-title {
+  color: white;
+}
+
+.danceMk {
+  position: absolute;
+  right: 10px;
+  top: -41.5px;
+
+  img {
+    width: 400px;
+  }
+}
+
+// SongList
+.Music-Library {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px 5px;
+
+  div {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.Library-item  {
+  transition: transform 0.3s ease; /* 鼠标悬停上浮效果 */
+  &:hover{
+    transform: translateY(-8px); /* 鼠标悬停上浮效果 */
+  }
+}
