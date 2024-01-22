@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SongList from "./components/SongList.vue";
-import MV from "./components/MV.vue";
+import SongList from "@/pages/search/components/SongList.vue";
+import MV from "@/pages/search/components/MV.vue";
 import { cloudsearch } from "@/api";
 import { ResSearch } from "./interface";
 
