@@ -73,7 +73,7 @@ watch(
           <label>歌单</label>
         </el-badge>
       </template>
-      <SongList v-if="activeName == '1000'" v-model="list" />
+      <song-list v-if="activeName == '1000'" v-model="list" />
     </el-tab-pane>
     <el-tab-pane name="1004">
       <template #label>
