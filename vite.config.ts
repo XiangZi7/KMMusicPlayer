@@ -38,7 +38,7 @@ export default defineConfig({
       dts: "src/auto-import/imports.d.ts",
       eslintrc: {
         enabled: true,
-        filepath: 'src/auto-import/eslintrc-auto-import.json',
+        filepath: "src/auto-import/eslintrc-auto-import.json",
       },
       resolvers: [
         ElementPlusResolver(),
