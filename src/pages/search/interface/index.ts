@@ -13,3 +13,19 @@ export interface ResSearch {
   activeName: number | string;
   songTotal: total;
 }
+
+export interface IMSongList {
+  id: number;
+  coverImgUrl: string;
+  name: string;
+  creator: {
+    nickname: string;
+  };
+}
+
+export interface IMV {
+  id: number;
+  cover: string;
+  name: string;
+  artistName: string;
+}

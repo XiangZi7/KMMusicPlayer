@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const ModelValue = defineModel();
+import { IMSongList } from "@/pages/search/interface";
+
+const ModelValue = defineModel<IMSongList[]>();
 </script>
 <template>
   <div class="playlist mt-2">

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const ModelValue = defineModel();
+import { IMV } from "@/pages/search/interface";
+
+const ModelValue = defineModel<IMV[]>();
 </script>
 <template>
   <div class="mvlist mt-2">

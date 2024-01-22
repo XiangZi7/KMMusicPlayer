@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SongList from "@/pages/search/components/SongList.vue";
-import MV from "@/pages/search/components/MV.vue";
+import ASongList from "./components/SongList.vue";
+import AMV from "./components/MV.vue";
 import { cloudsearch } from "@/api";
 import { ResSearch } from "./interface";
 
@@ -73,7 +73,7 @@ watch(
           <label>歌单</label>
         </el-badge>
       </template>
-      <song-list v-if="activeName == '1000'" v-model="list" />
+      <ASongList v-if="activeName == '1000'" v-model="list" />
     </el-tab-pane>
     <el-tab-pane name="1004">
       <template #label>
@@ -86,7 +86,7 @@ watch(
           <label>MV</label>
         </el-badge>
       </template>
-      <MV v-if="activeName == '1004'" v-model="list" />
+      <AMV v-if="activeName == '1004'" v-model="list" />
     </el-tab-pane>
   </el-tabs>
 </template>
