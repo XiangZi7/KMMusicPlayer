@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { MusicPlayer } from "@/hooks/type";
+import { formatTimes } from "@/utils/timeUtils";
 
 // 使用 inject 并设置一个合适的默认值，或者校验是否 undefined
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
-
+const settingStore = useSettingStore();
 // 确保 musicPlayer 不是 undefined
 if (!musicPlayer) {
   // 提供了错误处理
@@ -26,13 +27,24 @@ const {
   nextTrack,
 } = musicPlayer;
 
+const MusicStore = useMusicStore();
+
 function FormattingTime(time: number) {
   return formatTime(time);
 }
+function ListFormattingTime(time: number) {
+  return formatTimes(time);
+}
 
 const Emit = defineEmits(["showDrawer"]);
+
 function HandleShowDrawer() {
   Emit("showDrawer");
+}
+
+// 根据下标，删除歌曲
+function deleteSong(idx: number) {
+  MusicStore.trackList.splice(idx, 1);
 }
 </script>
 <template>
@@ -40,16 +52,16 @@ function HandleShowDrawer() {
     <div class="cover-info yx-col-8">
       <div class="cover cursor-pointer">
         <img
-          :src="currentTrackSong.cover"
-          :alt="currentTrackSong.title"
+          :src="currentTrackSong?.cover"
+          :alt="currentTrackSong?.title"
           @click="HandleShowDrawer"
         />
       </div>
       <div class="song-info">
-        <div class="song-title">{{ currentTrackSong.title }}</div>
+        <div class="song-title">{{ currentTrackSong?.title }}</div>
         <div class="artist flex items-center h-[50px]">
-          {{ currentTrackSong.singer }}
-          <div class="ml-3 Lyric">
+          {{ currentTrackSong?.singer }}
+          <div v-if="settingStore?.loadLyric" class="ml-3 Lyric">
             <div>{{ LyricList[currentLyricIndex]?.lrc }}</div>
             <div>{{ LyricList[currentLyricIndex]?.tlyric }}</div>
           </div>
@@ -89,9 +101,50 @@ function HandleShowDrawer() {
     </div>
 
     <div class="volume flex items-center yx-col-offset-4 yx-col-4">
-      <div class="w-[120px] flex">
+      <div class="w-[120px] flex items-center">
         <i-material-symbols:volume-up class="text-2xl mr-1" />
         <el-slider v-model="volume" @change="setVolume" />
+        <el-popover placement="top-start" :width="500" trigger="click">
+          <template #reference>
+            <i-streamline:interface-setting-menu-1-button-parallel-horizontal-lines-menu-navigation-three-hamburger
+              class="ml-3 text-2xl"
+            />
+          </template>
+          <div class="flex items-center justify-between pt-2 pb-2">
+            <div>当前播放：</div>
+            <div class="cursor-pointer" @click="MusicStore.clearAllSong">
+              清空
+            </div>
+          </div>
+          <el-scrollbar height="400">
+            <el-row
+              v-for="(item, idx) in MusicStore.trackList"
+              :key="item.id"
+              :gutter="24"
+              class="pt-3 pb-3 pl-1 pr-1 items-center current-item"
+            >
+              <el-col :span="9">
+                <div class="flex items-center gap-2 text-ellipsis">
+                  {{ idx + 1 }} .
+                  <el-avatar :src="item.cover" size="small" />
+                  {{ item.title }}
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="text-ellipsis">{{ item.singer }}</div>
+              </el-col>
+              <el-col :span="6">
+                <div>{{ ListFormattingTime(item.time) }}</div>
+              </el-col>
+              <el-col :span="3">
+                <i-material-symbols:delete-outline
+                  class="delete-icon"
+                  @click="deleteSong(idx)"
+                />
+              </el-col>
+            </el-row>
+          </el-scrollbar>
+        </el-popover>
       </div>
     </div>
   </div>

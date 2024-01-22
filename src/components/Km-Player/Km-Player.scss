@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background:var(--prism-player-bg);
+  background: var(--prism-player-bg);
   backdrop-filter: blur(10px);
   //border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -76,4 +76,23 @@
 .Lyric {
   font-size: 12px;
   color: #666;
+}
+
+
+.current-item:hover {
+  background-color: var(--hover-menu-bg);
+  color: #ffffff; /* 鼠标悬停时文字变为白色 */
+}
+/* 这是初始状态下 'X' 的样式，它应该是不可见的 */
+.current-item .delete-icon {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+/* 在鼠标悬停时改变 'X' 的样式使其可见 */
+.current-item:hover .delete-icon {
+  opacity: 1;
+  visibility: visible;
 }

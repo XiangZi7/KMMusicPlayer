@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Avatar } from "@element-plus/icons";
+import { logout } from "@/api";
 
 const router = useRouter();
 const state = reactive({
@@ -15,6 +16,12 @@ function isEmpty(obj: object) {
 
 function toSearch() {
   router.push({ path: "/search", query: { kw: state.kw } });
+}
+
+function userLogout() {
+  logout().then(() => {
+    userStore.setUserInfo({});
+  });
 }
 </script>
 <template>
@@ -74,7 +81,7 @@ function toSearch() {
           <img class="profile-img" :src="userStore.userInfo.avatarUrl" alt="" />
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>
+              <el-dropdown-item @click="userLogout">
                 <i-material-symbols-light:logout />
                 退出
               </el-dropdown-item>
@@ -88,7 +95,7 @@ function toSearch() {
         <i-solar:settings-minimalistic-outline />
       </div>
       <div v-else @click="showLogin = true">
-        <el-button type="primary" :icon="Avatar" round>登录</el-button>
+        <el-button class="yx-tag" :icon="Avatar" round>登录</el-button>
       </div>
     </div>
     <user-login v-if="showLogin" v-model="showLogin" />

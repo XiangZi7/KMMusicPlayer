@@ -1,5 +1,6 @@
 import { lyric } from "@/api/index.js";
 import { BilingualLyricLine } from "@/utils/interface";
+
 /**
  * @description 音乐播放器hook
  * @author Yxcr
@@ -8,8 +9,7 @@ import { BilingualLyricLine } from "@/utils/interface";
 export function useMusicPlayer() {
   // MusicStore
   const MusicStore = useMusicStore();
-  // settingStore
-  const SettingStore = useSettingStore();
+
   const trackList = MusicStore.trackList;
   // 创建一个新的audio元素
   const audio = new Audio();
@@ -34,10 +34,8 @@ export function useMusicPlayer() {
   const currentLyricIndex = ref<number>(0);
   // 计算当前歌词需要的 translateY 值以保持在中间
   const lyricTranslateY = ref<number>(0);
-
   // 当前歌曲信息
   const currentTrackSong = computed(() => trackList[currentTrackIndex.value]);
-
   // 更新当前播放时间的方法
   const updateCurrentTime = () => {
     currentTime.value = audio.currentTime;
@@ -53,7 +51,7 @@ export function useMusicPlayer() {
 
   // 加载音轨的方法，用于更新audio元素的src，并重置currentTime和duration
   const loadTrack = (index: number) => {
-    audio.src = trackList[index].source;
+    audio.src = trackList[index]?.source;
     audio.load();
     currentTime.value = 0;
     duration.value = 0;
@@ -65,18 +63,15 @@ export function useMusicPlayer() {
     // 先清空一遍歌词
     LyricList.value = [];
     // 加载歌词
-    getLyric(trackList[index].id as number | string);
+    getLyric(trackList[index]?.id as number | string);
   };
   // 获取歌词
   const getLyric = (id: number | string) => {
-    // 如果设置中未开启加载歌词，则直接返回
-    if (!SettingStore.loadLyric) return;
-
     // 根据当前的歌曲索引从播放列表中获取当前歌曲
     const CurrentSong = MusicStore.trackList[currentTrackIndex.value];
 
     // 如果当前歌曲没有歌词信息
-    if (!CurrentSong.Lyric) {
+    if (!CurrentSong?.Lyric) {
       // 异步获取歌词
       lyric(id).then(({ lrc, tlyric }) => {
         // 一旦获取歌词，就将其设置为当前歌曲的歌词

@@ -48,6 +48,9 @@ export const useMusicStore = defineStore({
     setCurrentIndex(index: number) {
       this.currentIndex = index;
     },
+    clearAllSong() {
+      this.trackList = [];
+    },
   },
   persist: piniaPersistConfig("musicStore"),
 });

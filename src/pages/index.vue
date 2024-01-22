@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cloudsearch } from "@/api";
 import { IState } from "@/pages/index";
-
+const router = useRouter();
 const state = reactive<IState>({
   SongsList: [],
   SongList: [],
@@ -15,6 +15,10 @@ onMounted(() => {
     state.SongList = result.playlists;
   });
 });
+
+function toDetail(id: number) {
+  router.push({ path: `/songList/songListDetails/${id}` });
+}
 </script>
 <template>
   <div>
@@ -37,7 +41,12 @@ onMounted(() => {
     <!-- SongsList -->
     <el-scrollbar>
       <div class="Music-Library mt-3">
-        <div v-for="item in SongList" :key="item.id" class="Library-item">
+        <div
+          v-for="item in SongList"
+          :key="item.id"
+          class="Library-item"
+          @click="toDetail(item.id)"
+        >
           <el-image
             lazy
             loading="lazy"

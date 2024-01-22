@@ -3,6 +3,7 @@ import ASongList from "./components/ASongList.vue";
 import AMV from "./components/AMV.vue";
 import { cloudsearch } from "@/api";
 import { ResSearch } from "./interface";
+import { messagePro } from "@/utils/messagePro";
 
 const route = useRoute();
 const state = reactive<ResSearch>({
@@ -17,19 +18,35 @@ const state = reactive<ResSearch>({
 
 const { songTotal, list, activeName } = toRefs(state);
 
-function getMusic(type: string | number) {
-  cloudsearch({ kw: route.query.kw as string, type }).then(({ result }) => {
-    state.list = result.songs || result.playlists || result.mvs;
-    if (result.songCount !== undefined) {
-      state.songTotal.songCount = result.songCount;
-    }
-    if (result.playlistCount !== undefined) {
-      state.songTotal.playlistCount = result.playlistCount;
-    }
-    if (result.mvCount !== undefined) {
-      state.songTotal.mvCount = result.mvCount;
-    }
-  });
+function getMusic(type: string | number, page?: number) {
+  cloudsearch({ kw: route.query.kw as string, type, offset: page })
+    .then(({ result, code, message }) => {
+      // 通知错误结果
+      if (code != 200) {
+        messagePro(code, message);
+      }
+      // 结果处理
+      if (result) {
+        const newItems = result.songs || result.playlists || result.mvs || [];
+        state.list = state.list.concat(newItems);
+        if (result.songCount !== undefined) {
+          state.songTotal.songCount = result.songCount;
+        }
+        if (result.playlistCount !== undefined) {
+          state.songTotal.playlistCount = result.playlistCount;
+        }
+        if (result.mvCount !== undefined) {
+          state.songTotal.mvCount = result.mvCount;
+        }
+      } else {
+        // 处理 result 为 undefined 的情况
+        console.error("result is undefined. Cannot proceed.");
+      }
+    })
+    .catch((error) => {
+      // 提示或处理错误
+      console.error("An error occurred:", error);
+    });
 }
 // Tabs Change
 function handleClick(e: any) {
@@ -60,7 +77,11 @@ watch(
           <label>歌曲</label>
         </el-badge>
       </template>
-      <song-sheet v-if="activeName == '1'" v-model="list" />
+      <song-sheet
+        v-if="activeName == '1'"
+        v-model="list"
+        @query="(pageNum) => getMusic($event, pageNum)"
+      />
     </el-tab-pane>
     <el-tab-pane name="1000">
       <template #label>

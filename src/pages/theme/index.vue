@@ -25,9 +25,7 @@ onMounted(() => {
   });
 });
 
-function load(e) {
-  console.log(e);
-}
+function load() {}
 
 function changeColor(color) {
   themeStore.setPrimary(color);

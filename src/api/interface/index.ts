@@ -25,6 +25,8 @@ export interface ResSearch {
     playlistCount: number;
     mvCount: number;
   };
+  code: number;
+  message: string;
 }
 // 歌词
 export interface Reslyric<T = any> extends code {

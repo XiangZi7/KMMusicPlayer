@@ -34,3 +34,10 @@
 .yx-col-offset-8 {
   margin-inline-start: 33.33333333333333%;
 }
+
+.text-ellipsis {
+  text-overflow: ellipsis;   /* 使得超出容器的文本显示省略号 */
+  overflow: hidden;          /* 隐藏溢出容器的内容 */
+  white-space: nowrap;       /* 确保文本在一行内显示，不换行 */
+}
+

@@ -4,6 +4,10 @@
   height: 600px;
   width: 100%;
   position: relative;
+
+  @media screen and (max-width: 945px) {
+    display: none;
+  }
 }
 
 .lyrics-container::before,
