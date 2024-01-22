@@ -23,7 +23,7 @@ const {
   currentTrackSong,
   isPlaying,
 } = musicPlayer;
-const ModelValue = defineModel();
+const ModelValue = defineModel<boolean>();
 </script>
 <template>
   <el-drawer

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-const dialogVisible = defineModel();
+const dialogVisible = defineModel<boolean>();
+
 // 获取完用户数据就关闭登录窗口
 function closeLoginModal() {
   dialogVisible.value = false;
 }
+
 const { qrImgUrl, qrStatus } = useLoginQr(closeLoginModal);
 </script>
 <template>

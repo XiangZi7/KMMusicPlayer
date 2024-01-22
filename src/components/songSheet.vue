@@ -2,8 +2,9 @@
 import { urlV1 } from "@/api";
 import { Track } from "@/stores/interface";
 import { MusicPlayer } from "@/hooks/type";
+import { MVItem } from "@/components/interface";
 
-const ModelValue = defineModel();
+const ModelValue = defineModel<MVItem[]>();
 const musicStore = useMusicStore();
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
 if (!musicPlayer) {
