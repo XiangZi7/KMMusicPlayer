@@ -1,6 +1,6 @@
-<script setup>
-import HeaderBar from "@/layouts/components/Header.vue";
-import SideBar from "@/layouts/components/SideBar.vue";
+<script setup lang="ts">
+import HeaderBar from "./components/Header.vue";
+import SideBar from "./components/SideBar.vue";
 import PlayerDrawer from "@/components/Km-Player/components/PlayerDrawer.vue";
 // 共享播放器数据
 provide("musicPlayer", useMusicPlayer());

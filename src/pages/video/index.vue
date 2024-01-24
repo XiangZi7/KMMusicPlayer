@@ -9,7 +9,6 @@ const { list } = toRefs(state);
 
 onMounted(() => {
   mvFirst().then(({ data }) => {
-    console.log(data);
     state.list = data;
   });
 });

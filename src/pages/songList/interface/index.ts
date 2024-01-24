@@ -1,15 +1,17 @@
-export interface Playlist {
-  playlists: {
-    coverImgUrl: string;
-    name: string;
-    creator: {
-      avatarUrl: string;
-      nickname: string;
-    };
-    description: string;
-    tags: string[];
-    tracks: Track[];
+export interface MaybePlaylist {
+  coverImgUrl?: string;
+  name?: string;
+  creator?: {
+    avatarUrl?: string;
+    nickname?: string;
   };
+  description?: string;
+  tags?: string[];
+  tracks?: Track[];
+}
+
+export interface Playlist {
+  playlists?: MaybePlaylist;
 }
 export interface Track {
   id: string;

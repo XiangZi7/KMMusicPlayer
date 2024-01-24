@@ -9,9 +9,9 @@ const router = createRouter({
  *
  *  eg:
  *
- *  src/pages/index.vue => /
+ *  src/pages/[id].vue => /
  *  src/pages/about.vue => /about
- *  src/pages/users/index.vue => /users
+ *  src/pages/users/[id].vue => /users
  *  src/pages/users/profile.vue => /users/profile
  *  src/pages/users/[id].vue => /users/:id
  *  src/pages/[user]/settings.vue => /:user/settings

@@ -39,7 +39,6 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log("=>(http.ts:42) response", response.data);
     // 进度条结束
     NProgress.done();
     // 返回完整的response对象，不仅是data部分

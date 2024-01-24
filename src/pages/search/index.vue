@@ -3,7 +3,6 @@ import ASongList from "./components/ASongList.vue";
 import AMV from "./components/AMV.vue";
 import { cloudsearch } from "@/api";
 import { ResSearch } from "./interface";
-import { messagePro } from "@/utils/messagePro";
 
 const route = useRoute();
 const state = reactive<ResSearch>({

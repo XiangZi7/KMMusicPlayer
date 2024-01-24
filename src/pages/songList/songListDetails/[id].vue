@@ -1,34 +1,40 @@
 <script setup lang="ts">
 import { playlistDetail, urlV1 } from "@/api";
-import { Playlist } from "@/pages/songList/interface";
+import { Playlist, Track } from "@/pages/songList/interface";
 
 const MusicStore = useMusicStore();
 const route = useRoute();
 const state = reactive<Playlist>({
-  playlists: {},
+  playlists: undefined,
 });
 const { playlists } = toRefs(state);
 
 watch(
   () => route.params.id,
-  () => {
-    state.playlists = [];
-    playlistDetail(route.params.id).then(({ playlist }) => {
+  (id) => {
+    state.playlists = undefined;
+    playlistDetail(id).then(({ playlist }) => {
       state.playlists = playlist;
     });
   },
   { immediate: true },
 );
-const isEmpty = (obj) => {
-  if (obj) {
+// 校验对象是否是“空”的函数类型
+// 将 obj 任意类型改为 object 可能的类型
+function isEmpty(obj: object | null | undefined): boolean {
+  if (obj instanceof Object) {
     return Object.keys(obj).length > 0;
   }
-};
+  return false;
+}
 
 // 播放当前歌单全部歌曲
 function playAll() {
+  if (!state.playlists || !state.playlists.tracks) {
+    return;
+  }
   let ids = state.playlists.tracks.map((item) => item.id).join();
-  let storeSong = [];
+  let storeSong: Track[] = [];
   urlV1(ids).then(({ data }) => {
     state.playlists.tracks.forEach((item1) => {
       let hasTarget = data.find((item2) => item1.id === item2.id);
@@ -49,7 +55,7 @@ function playAll() {
 </script>
 <template>
   <div v-if="isEmpty(playlists)" class="playlist">
-    <div class="flex">
+    <div class="flex mb-3">
       <div
         class="playlist-cover yx-col-6"
         :style="{
@@ -61,7 +67,8 @@ function playAll() {
         <!-- Playlist info on the right -->
         <h2>{{ playlists?.name }}</h2>
         <div class="author">
-          <img
+          <el-avatar
+            class="mr-2"
             :src="playlists?.creator?.avatarUrl + '?param=60y60'"
             :alt="playlists?.creator?.nickname"
           />

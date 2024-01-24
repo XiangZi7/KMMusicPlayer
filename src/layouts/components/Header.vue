@@ -23,6 +23,15 @@ function userLogout() {
     userStore.setUserInfo({});
   });
 }
+
+// onMounted(() => {
+//   plCount().then((res) => {
+//     console.log(res);
+//   });
+// });
+function toRouter(path) {
+  router.push({ path });
+}
 </script>
 <template>
   <header class="header w-full flex items-center">
@@ -81,9 +90,19 @@ function userLogout() {
           <img class="profile-img" :src="userStore.userInfo.avatarUrl" alt="" />
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="userLogout">
-                <i-material-symbols-light:logout />
-                退出
+              <el-dropdown-item
+                @click="toRouter(`/user/${userStore.userInfo.userId}`)"
+              >
+                <div class="flex gap-1 items-center">
+                  <i-mdi:account-circle-outline />
+                  个人信息
+                </div>
+              </el-dropdown-item>
+              <el-dropdown-item class="flex gap-3" @click="userLogout">
+                <div class="flex gap-1 items-center">
+                  <i-material-symbols-light:logout />
+                  退出
+                </div>
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -91,7 +110,19 @@ function userLogout() {
         <div class="text-[14px] text-[var(--prism-color)]">
           {{ userStore.userInfo.nickname }}
         </div>
-        <i-material-symbols:notifications-outline-rounded />
+        <el-dropdown>
+          <i-material-symbols:notifications-active-outline
+            class="text-[16px]"
+          />
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="userLogout">
+                <i-material-symbols-light:logout />
+                退出
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         <i-solar:settings-minimalistic-outline />
       </div>
       <div v-else @click="showLogin = true">

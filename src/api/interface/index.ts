@@ -14,6 +14,16 @@ export interface ResultData<T = any> extends code {
 export interface ResultRes<T = any> extends code {
   result?: T;
 }
+// 搜索参数的接口
+export interface SearchParams {
+  kw?: string;
+  offset?: number;
+  type?: number | string;
+}
+
+export interface VideoSearchParams {
+  name: string;
+}
 
 // 搜索
 export interface ResSearch {
@@ -63,4 +73,15 @@ export interface ResUserPlaylist extends code {
 export interface ResPlaylistDetail extends code {
   playlist: [];
   privileges: [];
+}
+
+//用户歌单params
+export interface userPlayListParams {
+  id?: number | string;
+  offset?: number;
+  limit?: number;
+}
+//用户歌单实体类
+export interface userPlayListPOJO extends code {
+  playlist: [];
 }

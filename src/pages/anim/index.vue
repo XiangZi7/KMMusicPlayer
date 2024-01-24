@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { videoSearch } from "@/api";
-
+import { Anime } from "./interface/index";
 const router = useRouter();
 const state = reactive({
-  animes: [],
+  animes: [] as Anime[],
   searchQuery: "",
   currentPage: 1,
   loading: false,
@@ -34,7 +34,7 @@ function filterAnimes() {
     });
 }
 
-function goToDetails(id) {
+function goToDetails(id: number) {
   router.push(`/anim/animeDetails?id=${id}`);
 }
 </script>

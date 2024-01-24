@@ -17,10 +17,10 @@ const { addTrackAndPlay } = musicPlayer;
 const observer_item = ref([]);
 const emit = defineEmits(["query"]);
 
-const { currentPage } = useObserver(observer_item, dataCallback);
+// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+const Obser = useObserver(observer_item, dataCallback);
 
 function dataCallback(PageNum: number) {
-  console.log(currentPage);
   emit("query", PageNum);
 }
 

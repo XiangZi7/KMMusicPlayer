@@ -34,20 +34,12 @@
 
 .main-container {
   position: relative;
-  overflow: auto; /* 若需要在 '.main-container' 中滚动，从 'hidden' 改为 'auto' */
+  overflow: hidden; /* 若需要在 '.main-container' 中滚动，从 'hidden' 改为 'auto' */
 }
 
 .content-wrapper {
   padding: 20px;
 }
-
-.wrapper {
-  display: flex;
-  flex-grow: 1;
-  overflow: auto; /* 之前是 'hidden', 修改为 'auto' 提供滚动条 */
-  box-sizing: border-box;
-}
-
 
 /* fade-transform */
 .fade-transform-leave-active,

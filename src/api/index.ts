@@ -7,17 +7,11 @@ import {
   ResRecommendResource,
   ResPlaylistDetail,
   ResSearch,
+  SearchParams,
+  VideoSearchParams,
+  userPlayListParams,
+  userPlayListPOJO,
 } from "./interface";
-// 搜索参数的接口
-interface SearchParams {
-  kw?: string;
-  offset?: number;
-  type?: number | string;
-}
-
-interface VideoSearchParams {
-  name: string;
-}
 
 // 搜索歌曲
 export const cloudsearch = (params: SearchParams) =>
@@ -29,7 +23,7 @@ export const cloudsearch = (params: SearchParams) =>
     }`,
   );
 //获取音乐连接
-export const urlV1 = (id: number) =>
+export const urlV1 = (id: number | string) =>
   httpGet<ResultData>(`song/url/v1?id=${id}&level=exhigh`);
 // 搜索动漫
 export const videoSearch = (params: VideoSearchParams) =>
@@ -61,7 +55,12 @@ export const recommendResource = () =>
 // 喜欢音乐
 export const likeMusic = (id: number) => httpGet(`/like?id=${id}`);
 // 获取用户歌单
-export const userPlaylist = (id: number) => httpGet(`/user/playlist?uid=${id}`);
+export const userPlaylist = (params: userPlayListParams) =>
+  httpGet<userPlayListPOJO>(
+    `/user/playlist?uid=${params.id}&limit=${params.limit || 30}&offset=${
+      ((params.offset || 1) - 1) * 30
+    }`,
+  );
 // 获取歌单所有歌曲
 export const playlistTrackAll = (params: { id: number; offset?: number }) =>
   httpGet(
@@ -78,4 +77,10 @@ export const lyric = (id: number | string) =>
 
 // 最热MV
 export const mvFirst = () => httpGet<ResultData>("/mv/first");
-export const mvUrl = (id: number) => httpGet<ResultData>(`mv/url?id=${id}`);
+export const mvUrl = (id: number) => httpGet<ResultData>(`/mv/url?id=${id}`);
+// 获取用户等级信息
+export const userLevel = () => httpGet<ResultData>(`/user/level`);
+// 获取账号信息
+export const userAccount = () => httpGet<ResultData>(`/user/account`);
+//私信和通知接口
+export const plCount = () => httpGet<ResultData>(`/pl/count`);

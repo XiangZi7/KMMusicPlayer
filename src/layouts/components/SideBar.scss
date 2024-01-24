@@ -1,11 +1,12 @@
 .left-side {
   flex-basis: 240px;
   border-right: 1px solid var(--border-color);
-  padding: 26px 10px 26px 26px;
-  overflow-y: auto;
   flex-shrink: 0;
   @media screen and (max-width: 945px) {
     display: none;
+  }
+  &-p{
+    padding: 26px 10px 26px 26px;
   }
 
   svg {
