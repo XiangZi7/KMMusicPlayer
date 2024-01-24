@@ -1,10 +1,10 @@
 <script setup>
+import { userAccount, userLevel } from "@/api";
 const state = reactive({
   list: [],
   levelInfo: {},
 });
 const { list, levelInfo } = toRefs(state);
-import { userAccount, userLevel } from "@/api";
 
 onMounted(() => {
   userAccount().then(({ profile }) => {
@@ -12,7 +12,6 @@ onMounted(() => {
   });
   userLevel().then(({ data }) => {
     state.levelInfo = data;
-    console.log("=>([id].vue:15) state.level", state.levelInfo);
   });
 });
 </script>

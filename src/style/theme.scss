@@ -67,7 +67,7 @@ a {
   overflow: hidden;
   backdrop-filter: blur(30px);
   background-repeat: no-repeat;
-  --track-cover: var(--track-cover-url, none); /* Fallback to 'none' if variable not set */
+  --track-cover: var(--track-cover-url, none);
 }
 
 .drawer-bg::before {

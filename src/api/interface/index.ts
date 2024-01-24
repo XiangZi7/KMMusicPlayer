@@ -14,6 +14,12 @@ export interface ResultData<T = any> extends code {
 export interface ResultRes<T = any> extends code {
   result?: T;
 }
+// 分页
+export interface pages {
+  offset?: number;
+  limit?: number;
+  cat?: string | string[];
+}
 // 搜索参数的接口
 export interface SearchParams {
   kw?: string;

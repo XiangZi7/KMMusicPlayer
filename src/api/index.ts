@@ -11,6 +11,7 @@ import {
   VideoSearchParams,
   userPlayListParams,
   userPlayListPOJO,
+  pages,
 } from "./interface";
 
 // 搜索歌曲
@@ -84,3 +85,12 @@ export const userLevel = () => httpGet<ResultData>(`/user/level`);
 export const userAccount = () => httpGet<ResultData>(`/user/account`);
 //私信和通知接口
 export const plCount = () => httpGet<ResultData>(`/pl/count`);
+//歌单 ( 网友精选碟 )
+export const topPlaylist = (params: pages) =>
+  httpGet<{ playlists: [] }>(
+    `/top/playlist?limit=30&offset=${((params.offset || 1) - 1) * 30}&cat=${
+      params.cat
+    }`,
+  );
+//歌单分类
+export const playlistCatList = () => httpGet<{ sub: [] }>(`/playlist/catlist`);

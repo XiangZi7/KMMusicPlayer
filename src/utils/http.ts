@@ -44,7 +44,12 @@ instance.interceptors.response.use(
     // 返回完整的response对象，不仅是data部分
     return response.data;
   },
-  (error): Promise<any> => Promise.reject(error),
+  (error) => {
+    // 响应错误时也结束进度条
+    NProgress.done();
+    // 继续 reject 错误，这样调用 http 请求的代码就能捕获到异常
+    return Promise.reject(error);
+  },
 );
 
 // 封装get方法

@@ -8,6 +8,7 @@ export interface MaybePlaylist {
   description?: string;
   tags?: string[];
   tracks?: Track[];
+  id?: number;
 }
 
 export interface Playlist {
@@ -26,4 +27,15 @@ export interface Track {
     lrc?: string;
     tlyric?: string;
   };
+}
+
+interface CatItem {
+  name: string;
+  label: string;
+}
+
+export interface State {
+  Playlist: MaybePlaylist[];
+  CatList: CatItem[];
+  currentCat: string | string[];
 }

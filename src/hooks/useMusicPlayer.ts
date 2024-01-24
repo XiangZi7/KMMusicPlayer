@@ -1,6 +1,6 @@
-import { lyric } from "@/api/index.js";
+import { lyric, urlV1 } from "@/api/index.js";
 import { BilingualLyricLine } from "@/utils/interface";
-
+import { messagePro } from "@/utils/messagePro";
 /**
  * @description 音乐播放器hook
  * @author Yxcr
@@ -46,11 +46,51 @@ export function useMusicPlayer() {
 
   // 组件卸载时清除定时器，防止内存泄露
   onUnmounted(() => {
+    // 移除错误监听器
     clearInterval(intervalId);
+    audio.removeEventListener("error", handleAudioError);
   });
+  // 错误处理：定义用于处理audio错误事件的方法
+  const handleAudioError = async () => {
+    // 错误处理逻辑
+    console.error("音频播放错误:", audio.error);
 
+    // 显示给用户的错误消息，可以根据 audio.error.code 提供更具体的错误信息
+    let errorMessage = "播放错误，请尝试其他音乐。";
+    if (audio.error) {
+      switch (audio.error.code) {
+        case audio.error.MEDIA_ERR_ABORTED:
+          errorMessage = "播放被终止。";
+          break;
+        case audio.error.MEDIA_ERR_NETWORK:
+          errorMessage = "下载过程中发生网络错误。";
+          break;
+        case audio.error.MEDIA_ERR_DECODE:
+          errorMessage = "解码过程中发生错误。";
+          break;
+        case audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+          errorMessage = "音频格式不支持。";
+          try {
+            const { data } = await urlV1(trackList[currentTrackIndex.value].id);
+            trackList[currentTrackIndex.value].source = data[0].url;
+            play();
+          } catch (e) {
+            console.error("获取新源失败：", e);
+          }
+          break;
+        default:
+          errorMessage = "发生了未知错误。";
+          break;
+      }
+      messagePro(audio.error.code, errorMessage);
+    }
+  };
   // 加载音轨的方法，用于更新audio元素的src，并重置currentTime和duration
   const loadTrack = (index: number) => {
+    // 移除上一首可能存在的错误监听器
+    audio.removeEventListener("error", handleAudioError);
+    // 添加错误监听器
+    audio.addEventListener("error", handleAudioError);
     audio.src = trackList[index]?.source;
     audio.load();
     currentTime.value = 0;
@@ -60,13 +100,13 @@ export function useMusicPlayer() {
     audio.addEventListener("loadedmetadata", () => {
       duration.value = audio.duration;
     });
-    // 先清空一遍歌词
-    LyricList.value = [];
     // 加载歌词
     getLyric(trackList[index]?.id as number | string);
   };
   // 获取歌词
   const getLyric = (id: number | string) => {
+    // 先清空一遍歌词
+    LyricList.value = [];
     // 根据当前的歌曲索引从播放列表中获取当前歌曲
     const CurrentSong = MusicStore.trackList[currentTrackIndex.value];
 

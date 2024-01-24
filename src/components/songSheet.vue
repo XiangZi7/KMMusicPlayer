@@ -55,7 +55,7 @@ function addMusic(item: any) {
       @dblclick="addMusic(item)"
     >
       <div class="item-section cover-container yx-col-6">
-        <img class="cover" :src="item.al.picUrl" :alt="item.name" />
+        <el-image lazy class="cover" :src="item.al.picUrl" :alt="item.name" />
         <span class="ml-2">
           {{ item.name }}
         </span>
@@ -176,32 +176,5 @@ function addMusic(item: any) {
     flex-direction: column;
     align-items: flex-start;
   }
-}
-
-//过渡效果 observer_item的过渡效果
-.come-in {
-  opacity: 1;
-  transform: translateY(150px);
-  animation: come-in 1s ease forwards;
-}
-
-.come-in:nth-child(odd) {
-  animation-duration: 1s;
-}
-
-.already-visible {
-  opacity: 1;
-  transform: translateY(0);
-  animation: none;
-}
-
-@keyframes come-in {
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.opaque {
-  opacity: 0;
 }
 </style>

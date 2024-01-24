@@ -41,3 +41,30 @@
   white-space: nowrap;       /* 确保文本在一行内显示，不换行 */
 }
 
+
+//过渡效果 observer_item的过渡效果
+.come-in {
+  opacity: 1;
+  transform: translateY(150px);
+  animation: come-in 1s ease forwards;
+}
+
+.come-in:nth-child(odd) {
+  animation-duration: 1s;
+}
+
+.already-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+@keyframes come-in {
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.opaque {
+  opacity: 0;
+}

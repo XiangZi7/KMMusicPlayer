@@ -8,7 +8,7 @@ const ModelValue = defineModel<IMSongList[]>();
     <!-- Song Item -->
     <div v-for="item in ModelValue" :key="item.id" class="song">
       <div class="cover">
-        <img :src="item.coverImgUrl + '?param=500y500'" alt="Song 1 Title" />
+        <el-image :src="item.coverImgUrl + '?param=450y450'" :alt="item.name" />
       </div>
       <div class="title">{{ item.name }}</div>
       <div class="artist">{{ item.creator.nickname }}</div>
@@ -18,21 +18,21 @@ const ModelValue = defineModel<IMSongList[]>();
 </template>
 <style lang="scss" scoped>
 .playlist {
-  padding: 10px;
-  display: flex;
+  display: grid; /* 使用 Grid 布局 */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(220px, 1fr)
+  ); /* 歌单项的最小宽度是 120px，1fr 表示自适应填充 */
+  gap: 15px; /* 设置歌单项之间的间距 */
   text-align: center; /* Center the text */
   width: 100%;
-  gap: 20px;
-  flex-wrap: wrap;
 }
 
 .song {
-  width: 200px;
-  flex: 0 0 auto;
   display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
   flex-direction: column; /* Stack cover on top of the text */
-  align-items: center;
-  margin-bottom: 30px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer; /* Indicate that items are interactable */
 }
