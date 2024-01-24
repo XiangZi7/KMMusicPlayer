@@ -11,6 +11,8 @@ KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)
 
 ### 在线预览 👀
 
+Netlify：<https://kmmusic.netlify.app>
+
 github pages：<https://xiangzi7.github.io/KM-Music-Player/>
 
 vercel：<https://kmmusic.vercel.app> (可能需要魔法)
