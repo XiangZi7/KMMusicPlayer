@@ -1,0 +1,64 @@
+.mv-container {
+  width: 80%;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mv-player {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #ccc;
+}
+
+.mv-info {
+  padding: 10px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.mv-info h1, .mv-info h2 {
+  margin: 10px 0;
+}
+
+.mv-comments {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.mv-comments h3 {
+  font-size: 1.2em;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.comments-list {
+  list-style: none;
+}
+
+.comment p {
+  background-color: #f2f2f2;
+  border-left: 4px solid #007bff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.comment p:before {
+  content: "\201C"; /* unicode for left double quotation mark */
+  font-size: 1.5em;
+  vertical-align: top;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.comment p:after {
+  content: "\201D"; /* unicode for right double quotation mark */
+  font-size: 1.5em;
+  vertical-align: bottom;
+  color: #007bff;
+  font-weight: bold;
+}
