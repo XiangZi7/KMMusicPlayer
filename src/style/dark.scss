@@ -15,7 +15,10 @@ html:not(.dark) {
   --prism-property: #ce9178;
   --prism-regex: #ad502b;
   --prism-color: var(--theme-color);
-  --prism-player-bg: rgba(255, 255, 255, 0.5)
+  --prism-player-bg: rgba(255, 255, 255, 0.5);
+  --chat-text-bg:#f1f2f6;
+  --msg-date: #626466;
+  --chat-header-bg: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 78%, rgba(255, 255, 255, 0) 100%);
 }
 
 html.dark {
@@ -36,6 +39,11 @@ html.dark {
   --prism-property: #ce9178;
   --prism-regex: #ad502b;
   --prism-color: #fff;
-  --prism-player-bg: #1e1e1e
-
+  --prism-player-bg: #1e1e1e;
+  --chat-text-color: #b5b7ba;
+  --msg-date: #fff;
+  --chat-header-bg: linear-gradient(to bottom,
+          #27292d 0%,
+          #27292d 78%,
+          rgba(255, 255, 255, 0) 100%);
 }

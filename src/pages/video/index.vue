@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { mvFirst } from "@/api";
 import { useRouter } from "vue-router";
+import { MV } from "@/pages/video/interface";
+
 const router = useRouter();
 const state = reactive({
-  list: [],
+  list: [] as MV[],
 });
 const { list } = toRefs(state);
 
@@ -29,24 +31,28 @@ function playMV(id: number) {
         <img :src="item.cover + '?param=400y200'" :alt="item.name" />
       </div>
       <h2 class="mv-title">
-        <h3>{{ item.name }}</h3>
+        <div class="text-[14px]">{{ item.name }}</div>
       </h2>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .mv-container {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  display: grid; /* 使用 Grid 布局 */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(320px, 1fr)
+  ); /* 歌单项的最小宽度是 120px，1fr 表示自适应填充 */
+  gap: 15px; /* 设置歌单项之间的间距 */
 }
 
 .item-mv {
-  width: 300px;
-  height: 200px;
-  max-width: 300px;
-  max-height: 200px;
-  flex: 0 0 auto;
+  display: flex; /* 使用 Flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  padding: 10px; /* 内边距 */
+  transition: transform 0.2s; /* 添加 hover 效果的动画 */
+  flex-direction: column;
 }
 
 .mv-cover {

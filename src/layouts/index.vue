@@ -18,9 +18,9 @@ const ShowDrawer = ref(false);
       <!-- ////  SideBar  ///// -->
       <!-- //////////////////// -->
       <SideBar />
-      <div class="main-container w-full">
-        <el-scrollbar>
-          <div class="content-wrapper">
+      <div class="main-container flex-1">
+        <el-scrollbar style="height: calc(100% - 90px)">
+          <div class="content-wrapper w-full h-full">
             <!-- //////////////////// -->
             <!-- ////  AppMain  ///// -->
             <!-- //////////////////// -->
@@ -32,7 +32,6 @@ const ShowDrawer = ref(false);
               </transition>
             </router-view>
           </div>
-          <div class="h-[90px]"></div>
         </el-scrollbar>
         <PlayerDrawer v-model="ShowDrawer" />
         <km-player @show-drawer="ShowDrawer = !ShowDrawer" />

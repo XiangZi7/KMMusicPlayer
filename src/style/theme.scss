@@ -15,11 +15,14 @@
   --overlay-bg: rgba(36, 39, 59, 0.3);
   --scrollbar-bg: rgb(226, 226, 226);
   --theme-color: rgb(82 91 114);
+
 }
 
 * {
   outline: none;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
@@ -86,6 +89,10 @@ a {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0));
 }
 
+.el-scrollbar__view {
+  width: 100%;
+  height: 100%;
+}
 
 ::-webkit-scrollbar {
   width: 6px;

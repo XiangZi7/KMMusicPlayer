@@ -37,6 +37,7 @@ const changePrimarys = (e) => {
   const resultHex = rgbaToHex(e);
   changePrimary(resultHex);
 };
+
 /**
  * Rgba转换hex
  * @param rgba 颜色的字符串
@@ -76,7 +77,9 @@ function rgbaToHex(rgba) {
             <div class="color-item">
               <div :style="{ backgroundColor: item.hex }"></div>
             </div>
-            <span>{{ item.name }}({{ item.pinyin }})</span>
+            <span class="text-[14px] text-ellipsis text-[var(--prism-color)]"
+              >{{ item.name }}({{ item.pinyin }})</span
+            >
           </div>
         </div>
       </div>

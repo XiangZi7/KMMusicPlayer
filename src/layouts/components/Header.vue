@@ -112,7 +112,7 @@ function toRouter(path) {
         </div>
         <el-dropdown>
           <i-material-symbols:notifications-active-outline
-            class="text-[16px]"
+            class="text-[16px] text-[var(--prism-color)]"
           />
           <template #dropdown>
             <el-dropdown-menu>

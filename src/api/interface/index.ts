@@ -14,12 +14,14 @@ export interface ResultData<T = any> extends code {
 export interface ResultRes<T = any> extends code {
   result?: T;
 }
+
 // 分页
 export interface pages {
-  offset?: number;
-  limit?: number;
+  offset?: number | string;
+  limit?: number | string;
   cat?: string | string[];
 }
+
 // 搜索参数的接口
 export interface SearchParams {
   kw?: string;
@@ -44,6 +46,7 @@ export interface ResSearch {
   code: number;
   message: string;
 }
+
 // 歌词
 export interface Reslyric<T = any> extends code {
   klyric: T;
@@ -87,7 +90,33 @@ export interface userPlayListParams {
   offset?: number;
   limit?: number;
 }
+
 //用户歌单实体类
 export interface userPlayListPOJO extends code {
   playlist: [];
+}
+
+//MV视频评论
+export interface CommentMVParams extends pages {
+  id: string | number;
+}
+
+//MV视频评论POJO
+export interface CommentMVPOJO {
+  comments: CommentMV[];
+  hotComments: CommentMV[];
+}
+
+export interface CommentMV {
+  id: number | string;
+  content: string;
+  timeStr: string;
+  likedCount: string | number;
+  user: {
+    avatarUrl: string;
+    nickname: string;
+  };
+  ipLocation: {
+    location: string;
+  };
 }

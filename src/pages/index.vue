@@ -59,7 +59,13 @@ function toDetail(id: number) {
       </div>
     </el-scrollbar>
     <!--   songSheet  -->
-    <song-sheet v-if="SongsList.length > 0" v-model="SongsList" class="mt-3" />
+    <el-scrollbar>
+      <song-sheet
+        v-if="SongsList.length > 0"
+        v-model="SongsList"
+        class="mt-3 h-[180px]"
+      />
+    </el-scrollbar>
   </div>
 </template>
 <style lang="scss" scoped>

@@ -59,7 +59,12 @@ function goToDetails(id: number) {
           class="anime-card"
           @click="goToDetails(anime.videoId)"
         >
-          <img :src="anime.cover" :alt="anime.title" class="anime-cover" />
+          <el-image
+            lazy
+            :src="anime.cover"
+            :alt="anime.title"
+            class="anime-cover"
+          />
           <h3 class="anime-title">{{ anime.title }}</h3>
         </div>
       </div>

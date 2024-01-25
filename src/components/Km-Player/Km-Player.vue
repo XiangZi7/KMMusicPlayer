@@ -51,8 +51,9 @@ function deleteSong(idx: number) {
   <div class="music-player">
     <div class="cover-info yx-col-8">
       <div class="cover cursor-pointer">
-        <img
-          :src="currentTrackSong?.cover"
+        <el-image
+          lazy
+          :src="currentTrackSong?.cover + '?param=150y150'"
           :alt="currentTrackSong?.title"
           @click="HandleShowDrawer"
         />
@@ -126,7 +127,7 @@ function deleteSong(idx: number) {
               <el-col :span="9">
                 <div class="flex items-center gap-2 text-ellipsis">
                   {{ idx + 1 }} .
-                  <el-avatar :src="item.cover" size="small" />
+                  <el-avatar :src="item.cover + '?param=50y50'" size="small" />
                   {{ item.title }}
                 </div>
               </el-col>

@@ -1,9 +1,7 @@
 .anime-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  //justify-content: center;
-  padding: 16px;
+  display: grid; /* 使用 Grid 布局 */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* 歌单项的最小宽度是 120px，1fr 表示自适应填充 */
+  gap: 10px; /* 设置歌单项之间的间距 */
 }
 
 .anime-card {

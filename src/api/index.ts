@@ -12,6 +12,8 @@ import {
   userPlayListParams,
   userPlayListPOJO,
   pages,
+  CommentMVParams,
+  CommentMVPOJO,
 } from "./interface";
 
 // 搜索歌曲
@@ -94,3 +96,13 @@ export const topPlaylist = (params: pages) =>
   );
 //歌单分类
 export const playlistCatList = () => httpGet<{ sub: [] }>(`/playlist/catlist`);
+//获取 mv 数据
+export const mvDetail = (mvid: number | string) =>
+  httpGet<ResultData>(`/mv/detail?mvid=${mvid}`);
+// mv 评论
+export const commentMV = (params: CommentMVParams) =>
+  httpGet<CommentMVPOJO>(
+    `/comment/mv?id=${params.id}&limit=${params.limit || 30}&offset=${
+      ((params.offset || 1) - 1) * 30
+    }`,
+  );
