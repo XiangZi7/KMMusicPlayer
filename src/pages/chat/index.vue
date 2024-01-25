@@ -179,6 +179,7 @@ function deleteMes(idx) {
 
 function showErrorMessage(e) {
   console.log("=>(index.vue:176) e", e);
+  messagePro(1, e);
 }
 </script>
 
