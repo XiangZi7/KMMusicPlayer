@@ -2,6 +2,10 @@
 interface ISong {
   id: number;
   name: string;
+  ar: Array<{id: number; name: string;}>;
+  al: {id: number; name: string; picUrl: string;};
+  dt: number;
+  mv: number;
 }
 
 interface ISongList {
@@ -12,6 +16,6 @@ interface ISongList {
 
 // 定义状态的接口
 export interface IState {
-  SongsList: ISong[];
   SongList: ISongList[];
+  SongsList: ISong[];
 }

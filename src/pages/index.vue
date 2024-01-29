@@ -63,7 +63,7 @@ function toDetail(id: number) {
       <song-sheet
         v-if="SongsList.length > 0"
         v-model="SongsList"
-        class="mt-3 h-[180px]"
+        class="mt-5 h-full"
       />
     </el-scrollbar>
   </div>
