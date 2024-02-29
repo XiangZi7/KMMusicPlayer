@@ -22,6 +22,7 @@ vercel：<https://kmmusic.vercel.app> (可能需要魔法)
 GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 项目功能 🔨
+
 使用 Vue3.3 开发，单文件组件＜ script setup ＞
 采用 Vite5 作为项目开发、打包工具
 使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
