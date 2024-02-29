@@ -110,8 +110,9 @@ export function useMusicPlayer() {
     // 根据当前的歌曲索引从播放列表中获取当前歌曲
     const CurrentSong = MusicStore.trackList[currentTrackIndex.value];
 
+
     // 如果当前歌曲没有歌词信息
-    if (!CurrentSong?.Lyric) {
+    if (isEmptyObject(CurrentSong?.Lyric as string)) {
       // 异步获取歌词
       lyric(id).then(({ lrc, tlyric }) => {
         // 一旦获取歌词，就将其设置为当前歌曲的歌词
@@ -130,8 +131,8 @@ export function useMusicPlayer() {
     } else {
       // 如果当前歌曲已有歌词信息，则直接使用现有歌词生成双语歌词数据
       const bilingualData = createBilingualData(
-        CurrentSong.Lyric.lrc || "", // 确保即使歌词不存在也不会是 undefined
-        CurrentSong.Lyric.tlyric || "", // 确保即使翻译歌词不存在也不会是 undefined
+        CurrentSong.Lyric?.lrc || "", // 确保即使歌词不存在也不会是 undefined
+        CurrentSong.Lyric?.tlyric || "", // 确保即使翻译歌词不存在也不会是 undefined
       );
       LyricList.value = bilingualData; // 将生成的双语歌词数据设置为当前的歌词列表
     }

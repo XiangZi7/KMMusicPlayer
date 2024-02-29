@@ -1,10 +1,4 @@
 <script setup lang="ts">
-// const state = reactive({
-//   list: [],
-// })
-// const {
-// list,
-// }= toRefs(state)
 // 使用 inject 并设置一个合适的默认值，或者校验是否 undefined
 import { MusicPlayer } from "@/hooks/type";
 
@@ -35,7 +29,7 @@ const ModelValue = defineModel<boolean>();
     title=""
     class="drawer-bg"
     direction="ttb"
-    size="89.6%"
+    size="calc(100% - 90px)"
   >
     <div>
       <div class="flex min-w-0" style="flex-flow: row wrap">
@@ -76,7 +70,6 @@ const ModelValue = defineModel<boolean>();
           </div>
         </div>
       </div>
-      123456
     </div>
   </el-drawer>
 </template>

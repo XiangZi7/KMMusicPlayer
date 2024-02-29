@@ -32,6 +32,7 @@ const MusicStore = useMusicStore();
 function FormattingTime(time: number) {
   return formatTime(time);
 }
+
 function ListFormattingTime(time: number) {
   return formatTimes(time);
 }
