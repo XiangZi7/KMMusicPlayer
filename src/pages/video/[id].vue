@@ -9,10 +9,19 @@ const state = reactive<mvDetails>({
   comments: [],
 });
 const { comments, mvSrc, mvInfo } = toRefs(state);
-const observer_item = ref([]);
+const observedElement = ref([]);
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-const Obser = useObserver(observer_item, dataCallback);
-function dataCallback(PageNum: number | string) {
+// 使用hook并传入必要的参数
+useIntersectionObserver(
+  observedElement,
+  {
+    initialPageNum: 1, // 初始页码
+    pageSize: 10, // 页面大小
+    threshold: 0.1, // 可选阈值参数
+  },
+  handleIntersect,
+);
+function handleIntersect(PageNum: number | string) {
   commentMV({ offset: PageNum, id: route.params.id }).then(({ comments }) => {
     state.comments = state.comments.concat(comments);
   });
@@ -48,7 +57,7 @@ watch(
         <li
           v-for="item in comments"
           :key="item.id"
-          ref="observer_item"
+          ref="observedElement"
           class="comment"
         >
           <div class="user-avatar">
