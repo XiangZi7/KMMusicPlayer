@@ -23,10 +23,14 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 项目功能 🔨
 
-使用 Vue3.3 开发，单文件组件＜ script setup ＞
+使用 Vue3.4 开发，单文件组件＜ script setup ＞
+
 采用 Vite5 作为项目开发、打包工具
-使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
+
+使用 Pinia 轻量、简单、易用，集成 Pinia 持久化插件
+
 基于 Element Plus
+
 使用 VueRouter 路由懒加载
 
 ### 安装使用步骤 📔
