@@ -9,20 +9,29 @@ const musicStore = useMusicStore();
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
 if (!musicPlayer) {
   // 提供了错误处理
-  throw new Error("musicPlayer is not provided.");
+  throw new Error("musicPlayer is not provided");
 }
 const { addTrackAndPlay } = musicPlayer;
 
 // 获取所有具有 '.observer-item' 类名的元素
-const observer_item = ref([]);
+const observedElement = ref([]);
 const emit = defineEmits(["query"]);
 
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-const Obser = useObserver(observer_item, dataCallback);
+// 定义当元素进入视口时触发的回调函数
+const handleIntersect = (pageNum: number) => {
+  emit("query", pageNum);
+};
 
-function dataCallback(PageNum: number) {
-  emit("query", PageNum);
-}
+// 使用hook并传入必要的参数
+useIntersectionObserver(
+  observedElement,
+  {
+    initialPageNum: 1, // 初始页码
+    pageSize: 10, // 页面大小
+    threshold: 0.1, // 可选阈值参数
+  },
+  handleIntersect,
+);
 
 function FormattingSongTime(time: number) {
   return formatTimes(time);
@@ -50,7 +59,7 @@ function addMusic(item: any) {
     <div
       v-for="item in ModelValue"
       :key="item.id"
-      ref="observer_item"
+      ref="observedElement"
       class="list-item"
       @dblclick="addMusic(item)"
     >

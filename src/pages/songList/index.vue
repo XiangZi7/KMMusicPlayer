@@ -2,12 +2,20 @@
 import { playlistCatList, topPlaylist } from "@/api";
 import { State } from "@/pages/songList/interface";
 // 获取所有具有 '.observer-item' 类名的元素
-const observer_item = ref([]);
+const observedElement = ref([]);
 const router = useRouter();
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-const Obser = useObserver(observer_item, dataCallback);
+// 使用hook并传入必要的参数
+useIntersectionObserver(
+  observedElement,
+  {
+    initialPageNum: 1, // 初始页码
+    pageSize: 10, // 页面大小
+    threshold: 0.1, // 可选阈值参数
+  },
+  handleIntersect,
+);
 
-function dataCallback(PageNum: number) {
+function handleIntersect(PageNum: number) {
   topPlaylist({ offset: PageNum, cat: state.currentCat }).then(
     ({ playlists }) => {
       state.Playlist = state.Playlist.concat(playlists);
@@ -64,7 +72,7 @@ function catChange(e: []) {
       <div
         v-for="item in Playlist"
         :key="item.id"
-        ref="observer_item"
+        ref="observedElement"
         class="playlist-item"
         @click="router.push({ path: `/songList/songListDetails/${item.id}` })"
       >

@@ -9,6 +9,7 @@ module.exports = {
     "./src/auto-import/eslintrc-auto-import.json",
     "plugin:vue/vue3-recommended",
     "@vue/eslint-config-prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:vue/vue3-essential",
   ],
@@ -34,6 +35,16 @@ module.exports = {
     "no-var": "error",
     // 禁止出现未使用过的变量
     "no-unused-vars": ["error"],
+    "@typescript-eslint/no-explicit-any": 2,
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        allowDestructuring: true,
+        allowedNames: ["self"],
+      },
+    ],
+    // 调整 TypeScript 的规则以允许我们定义未使用的参数
+    "@typescript-eslint/no-unused-vars": "off",
     // 关闭名称校验
     "vue/multi-word-component-names": "off",
     // 非生产环境启用 debugger

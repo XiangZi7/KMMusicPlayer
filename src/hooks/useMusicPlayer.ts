@@ -110,7 +110,6 @@ export function useMusicPlayer() {
     // 根据当前的歌曲索引从播放列表中获取当前歌曲
     const CurrentSong = MusicStore.trackList[currentTrackIndex.value];
 
-
     // 如果当前歌曲没有歌词信息
     if (isEmptyObject(CurrentSong?.Lyric as string)) {
       // 异步获取歌词

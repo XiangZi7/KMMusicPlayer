@@ -2,7 +2,6 @@ import {
   HomeFilled,
   VideoCamera,
   SetUp,
-  ChatDotRound,
   Setting,
 } from "@element-plus/icons";
 import MdiMusicBoxMultipleOutline from "@/components/MdiMusicBoxMultipleOutline.vue";
@@ -19,7 +18,6 @@ export const SideBarData = [
       { title: "视频", icon: VideoCamera, router: "/video" },
       { title: "歌单", icon: StreamlineMusicFolderSong, router: "/songList" },
       { title: "动漫", icon: MingcuteMovieLine, router: "/anim" },
-      { title: "聊天AI", icon: ChatDotRound, router: "/chat" },
       { title: "设置", icon: Setting, router: "/setting" },
       { title: "测试", icon: MdiTestTube, router: "/test" },
     ],

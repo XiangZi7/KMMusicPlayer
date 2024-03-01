@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 export type QrCallback = (isAuthorized: boolean) => void;
 
 // 登陆状态模型
