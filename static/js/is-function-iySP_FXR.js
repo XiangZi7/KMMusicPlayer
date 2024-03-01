@@ -1,1 +1,0 @@
-var e=n,i=Object.prototype.toString;function n(t){if(!t)return!1;var o=i.call(t);return o==="[object Function]"||typeof t=="function"&&o!=="[object RegExp]"||typeof window!="undefined"&&(t===window.setTimeout||t===window.alert||t===window.confirm||t===window.prompt)}export{e as i};
