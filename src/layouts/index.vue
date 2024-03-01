@@ -24,12 +24,10 @@ const ShowDrawer = ref(false);
             <!-- //////////////////// -->
             <!-- ////  AppMain  ///// -->
             <!-- //////////////////// -->
-            <router-view v-slot="{ Component }">
-              <transition appear name="fade-transform" mode="out-in">
-                <keep-alive>
-                  <component :is="Component" />
-                </keep-alive>
-              </transition>
+            <router-view v-slot="{ Component, route }">
+              <!-- <transition appear name="fade-transform" mode="out-in"> -->
+              <component :is="Component" :key="route.fullPath" />
+              <!-- </transition> -->
             </router-view>
           </div>
         </el-scrollbar>

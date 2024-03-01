@@ -92,22 +92,9 @@ export default defineConfig({
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
         assetFileNames: "static/[ext]/[name]-[hash].[ext]",
-        // 静态资源分拆打包
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.toString().indexOf(".pnpm/") !== -1) {
-              return id.toString().split(".pnpm/")[1].split("/")[0].toString();
-            } else if (id.toString().indexOf("node_modules/") !== -1) {
-              return id
-                .toString()
-                .split("node_modules/")[1]
-                .split("/")[0]
-                .toString();
-            }
-          }
-        },
       },
     },
+    minify: "esbuild",
     sourcemap: false,
     target: "es2015",
     reportCompressedSize: false,
