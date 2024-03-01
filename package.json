@@ -3,6 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)",
+  "author": {
+    "name": "Yxcr",
+    "email": "793923048@qq.com",
+    "url": "https://github.com/XiangZi7"
+  },
+  "homepage": "https://github.com/XiangZi7/KM-Music-Player",
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -50,5 +58,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vue-tsc": "^1.8.25"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
