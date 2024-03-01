@@ -17,17 +17,20 @@ const state = reactive<ResSearch>({
 
 const { songTotal, list, activeName } = toRefs(state);
 
-function getMusic(type: string | number, page?: number) {
-  cloudsearch({ kw: route.query.kw as string, type, offset: page })
-    .then(({ result, code, message }) => {
-      // 通知错误结果
-      if (code != 200) {
-        messagePro(code, message);
-      }
+function getMusic(page?: number) {
+  cloudsearch({
+    kw: route.query.kw as string,
+    type: state.activeName,
+    offset: page,
+  })
+    .then(({ result }) => {
       // 结果处理
       if (result) {
         const newItems = result.songs || result.playlists || result.mvs || [];
-        state.list = state.list.concat(newItems);
+        state.list = page
+          ? state.list.concat(newItems)
+          : (state.list = newItems);
+
         if (result.songCount !== undefined) {
           state.songTotal.songCount = result.songCount;
         }
@@ -47,16 +50,17 @@ function getMusic(type: string | number, page?: number) {
       console.error("An error occurred:", error);
     });
 }
+
 // Tabs Change
-function handleClick(e: any) {
+function handleClick() {
   state.list = [];
-  const { props } = e;
-  getMusic(props.name);
+  getMusic();
 }
 watch(
   () => route.query.kw,
   () => {
-    getMusic(state.activeName);
+    state.list = [];
+    getMusic();
   },
   {
     immediate: true,
@@ -76,11 +80,7 @@ watch(
           <label>歌曲</label>
         </el-badge>
       </template>
-      <song-sheet
-        v-if="activeName == '1'"
-        v-model="list"
-        @query="(pageNum) => getMusic($event, pageNum)"
-      />
+      <song-sheet v-if="activeName == '1'" v-model="list" @query="getMusic" />
     </el-tab-pane>
     <el-tab-pane name="1000">
       <template #label>

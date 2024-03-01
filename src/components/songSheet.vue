@@ -64,7 +64,13 @@ function addMusic(item: any) {
       @dblclick="addMusic(item)"
     >
       <div class="item-section cover-container yx-col-6">
-        <el-image lazy class="cover" fit="cover" :src="item.al.picUrl+'?param=100y100'" :alt="item.name" />
+        <el-image
+          lazy
+          class="cover"
+          fit="cover"
+          :src="item.al.picUrl + '?param=100y100'"
+          :alt="item.name"
+        />
         <span class="ml-2">
           {{ item.name }}
         </span>
