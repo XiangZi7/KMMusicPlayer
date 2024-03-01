@@ -1,9 +1,4 @@
-import {
-  HomeFilled,
-  VideoCamera,
-  SetUp,
-  Setting,
-} from "@element-plus/icons";
+import { HomeFilled, VideoCamera, SetUp, Setting } from "@element-plus/icons";
 import MdiMusicBoxMultipleOutline from "@/components/MdiMusicBoxMultipleOutline.vue";
 import StreamlineMusicFolderSong from "@/components/StreamlineMusicFolderSong.vue";
 import MingcuteMovieLine from "@/components/MingcuteMovieLine.vue";
