@@ -105,10 +105,12 @@ export interface CommentMVParams extends pages {
 export interface CommentMVPOJO {
   comments: CommentMV[];
   hotComments: CommentMV[];
+  total: number;
 }
 
 export interface CommentMV {
   id: number | string;
+  commentId?: number | string;
   content: string;
   timeStr: string;
   likedCount: string | number;

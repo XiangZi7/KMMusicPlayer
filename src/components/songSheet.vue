@@ -6,6 +6,7 @@ import { MVItem } from "@/components/interface";
 
 const ModelValue = defineModel<MVItem[]>();
 const musicStore = useMusicStore();
+const router = useRouter();
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
 if (!musicPlayer) {
   // 提供了错误处理
@@ -93,7 +94,11 @@ function addMusic(item: any) {
             @click="addMusic(item)"
           />
         </div>
-        <div v-if="item.mv != 0" class="button">
+        <div
+          v-if="item.mv != 0"
+          class="button"
+          @click="router.push({ path: `/video/${item.mv}` })"
+        >
           <i-ph:film-strip class="icon" />
         </div>
       </div>
@@ -174,7 +179,7 @@ function addMusic(item: any) {
 }
 
 .list-item:hover .button {
-  display: inline-block;
+  display: flex;
 }
 
 .tx-ellipsis {
@@ -185,7 +190,6 @@ function addMusic(item: any) {
   word-break: break-all;
 }
 
-/* Add responsiveness as needed */
 @media (max-width: 600px) {
   .list-item {
     flex-direction: column;

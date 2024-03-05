@@ -20,6 +20,8 @@ export interface MusicPlayerState {
   LyricList: Lyric[];
   currentLyricIndex: number;
   lyricTranslateY: number;
+  playMode: number;
+  currentTrackIndex: number;
 }
 
 export interface MusicPlayerActions {
@@ -32,6 +34,7 @@ export interface MusicPlayerActions {
   prevTrack: () => void;
   nextTrack: () => void;
   addTrackAndPlay: () => void;
+  changePlayMode: () => void;
 }
 
 export type MusicPlayer = MusicPlayerState & MusicPlayerActions;

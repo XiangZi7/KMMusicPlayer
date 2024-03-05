@@ -33,6 +33,7 @@ export interface UserState {
 // setting
 export interface SettingState {
   loadLyric: boolean;
+  audioVisual: boolean;
 }
 
 // 使用 IThemeConfig 接口

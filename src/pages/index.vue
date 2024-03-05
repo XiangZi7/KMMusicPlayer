@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import MingcuteVip1Line from '~icons/mingcute/vip-1-line'
-import MaterialSymbolsSearch from '~icons/material-symbols/search'
+import MingcuteVip1Line from "~icons/mingcute/vip-1-line";
 import { cloudsearch } from "@/api";
 import { IState } from "@/pages/index";
 const router = useRouter();
@@ -28,23 +27,13 @@ function toDetail(id: number) {
     <div class="banner">
       <div class="des">
         <div class="des-title flex gap-1 items-center">
-         <MingcuteVip1Line/>
+          <MingcuteVip1Line />
           境界的彼方
         </div>
         <p class="des-text">
           《境界的彼方》是由鸟居奈古梦著作、鸭居知世插画的轻小说，于2012年6月9日，由KAESUMA文库文库（京都动画）发行。小说曾获得第2回京都动画大赏（小说部门）奖励赏。
           改编自小说的同名电视动画已于2013年10月至12月播出。
         </p>
-        <el-button
-          class="yx-tag mt-2"
-          round
-          @click="router.push({path:'/anim/intro'})"
-        >
-          <div class="flex gap-2 items-center">
-          <MaterialSymbolsSearch class="text-[0.9rem]"/>
-            查看详情
-          </div>
-        </el-button>
         <div class="danceMk">
           <img src="@/assets/danceMk.png" />
         </div>

@@ -1,9 +1,5 @@
 <script setup lang="ts">
 const settingStore = useSettingStore();
-// const state = reactive({
-//   list: [],
-// });
-// const { list } = toRefs(state);
 </script>
 <template>
   <!--  1.是否播放器显示歌词-->
@@ -13,6 +9,14 @@ const settingStore = useSettingStore();
       <el-switch
         v-model="settingStore.loadLyric"
         @change="settingStore.setLoadLyric"
+      />
+    </div>
+    <div class="setting-item rounded-xl">
+      <div>播放器切换成音频可视化</div>
+      <el-switch
+        v-model="settingStore.audioVisual"
+        :disabled="true"
+        @change="settingStore.setAudioVisua"
       />
     </div>
   </div>

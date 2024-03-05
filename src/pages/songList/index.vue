@@ -48,7 +48,7 @@ function catChange(e: []) {
 </script>
 <template>
   <div>
-    <div class="mt-2 mb-2">
+    <div v-if="Playlist.length > 0" class="mt-2 mb-2">
       <el-select-v2
         v-model="currentCat"
         filterable

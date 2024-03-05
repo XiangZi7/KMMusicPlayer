@@ -71,8 +71,10 @@ a {
   backdrop-filter: blur(30px);
   background-repeat: no-repeat;
   --track-cover: var(--track-cover-url, none);
+  .el-drawer__body {
+    padding: 0 ;
+  }
 }
-
 .drawer-bg::before {
   content: "";
   position: absolute;

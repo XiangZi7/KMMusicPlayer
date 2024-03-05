@@ -7,13 +7,21 @@ export interface MaybePlaylist {
   };
   description?: string;
   tags?: string[];
-  tracks?: Track[];
+  tracks: Track[];
   id?: number;
+  createTime: number;
+  playCount: [string, number];
+  subscribedCount: [string, number];
+  shareCount: [string, number];
+  trackCount: [string, number];
+  commentCount: [string, number];
 }
 
-export interface Playlist {
+export interface StorePlaylist {
   playlists?: MaybePlaylist;
+  activeName: string;
 }
+
 export interface Track {
   id: string;
   title: string;

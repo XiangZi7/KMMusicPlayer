@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup lang="ts">
+onMounted(() => {});
+</script>
 <template>
   <div>library</div>
 </template>

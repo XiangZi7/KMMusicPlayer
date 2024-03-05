@@ -51,3 +51,32 @@ export function formatCurrentDateTime(): string {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export function formatTimestamp(
+  timestamp: number,
+  format: string = "YYYY-MM-DD HH:mm:ss",
+): string {
+  const date: Date = new Date(timestamp);
+
+  // 定义一个补零函数
+  const padZero = (num: number): string =>
+    num < 10 ? `0${num}` : num.toString();
+
+  // 将年月日时分秒映射到对应的值
+  const replacements: { [key: string]: string } = {
+    YYYY: date.getFullYear().toString(),
+    MM: padZero(date.getMonth() + 1),
+    DD: padZero(date.getDate()),
+    HH: padZero(date.getHours()),
+    mm: padZero(date.getMinutes()),
+    ss: padZero(date.getSeconds()),
+  };
+
+  // 替换格式字符串中的标识符
+  let formattedDate: string = format;
+  Object.entries(replacements).forEach(([key, value]) => {
+    formattedDate = formattedDate.replace(key, value);
+  });
+
+  return formattedDate;
+}

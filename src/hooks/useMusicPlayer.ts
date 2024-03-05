@@ -1,10 +1,10 @@
 import { lyric, urlV1 } from "@/api/index.js";
 import { BilingualLyricLine } from "@/utils/interface";
 import { messagePro } from "@/utils/messagePro";
+
 /**
  * @description 音乐播放器hook
  * @author Yxcr
- * @returns {{play: (function(): void), isPlaying: Ref<UnwrapRef<boolean>>, prevTrack: (function(): void), changeCurrentTime: (function(): void), currentTrackSong: ComputedRef<*>, nextTrack: (function(): void), setVolume: (function(): void), pause: (function(): void), currentTime: Ref<UnwrapRef<number>>, duration: Ref<UnwrapRef<number>>, volume: Ref<UnwrapRef<number>>, lyricTranslateY: Ref<UnwrapRef<number>>, currentLyricIndex: Ref<UnwrapRef<number>>, LyricList: Ref<UnwrapRef<*[]>>, currentTrackIndex: Ref<UnwrapRef<number>>}}
  */
 export function useMusicPlayer() {
   // MusicStore
@@ -36,6 +36,21 @@ export function useMusicPlayer() {
   const lyricTranslateY = ref<number>(0);
   // 当前歌曲信息
   const currentTrackSong = computed(() => trackList[currentTrackIndex.value]);
+  // 枚举 播放模式
+  const PlayMode = {
+    SEQUENCE: 0, // 顺序播放
+    LOOP: 1, // 单曲循环
+    RANDOM: 2, // 随机播放
+  };
+  const playMode = ref(PlayMode.SEQUENCE);
+  const getRandomIndex = (length: number, currentIndex: number) => {
+    let randomIndex = Math.floor(Math.random() * length);
+    // 确保随机索引不等于当前索引，防止重复播放同一首歌
+    while (randomIndex === currentIndex) {
+      randomIndex = Math.floor(Math.random() * length);
+    }
+    return randomIndex;
+  };
   // 更新当前播放时间的方法
   const updateCurrentTime = () => {
     currentTime.value = audio.currentTime;
@@ -183,17 +198,41 @@ export function useMusicPlayer() {
 
   // 播放下一曲的方法
   const nextTrack = () => {
-    MusicStore.setCurrentIndex(
-      (currentTrackIndex.value + 1) % trackList.length,
-    );
+    switch (playMode.value) {
+      case PlayMode.SEQUENCE:
+        MusicStore.setCurrentIndex(
+          (currentTrackIndex.value + 1) % trackList.length,
+        );
+        break;
+      case PlayMode.LOOP:
+        // 单曲循环时不改变当前播放索引
+        break;
+      case PlayMode.RANDOM:
+        MusicStore.setCurrentIndex(
+          getRandomIndex(trackList.length, currentTrackIndex.value),
+        );
+        break;
+    }
     play();
   };
 
   // 播放上一曲的方法
   const prevTrack = () => {
-    MusicStore.setCurrentIndex(
-      (currentTrackIndex.value + trackList.length - 1) % trackList.length,
-    );
+    switch (playMode.value) {
+      case PlayMode.SEQUENCE:
+        MusicStore.setCurrentIndex(
+          (currentTrackIndex.value + trackList.length - 1) % trackList.length,
+        );
+        break;
+      case PlayMode.LOOP:
+        // 单曲循环时不改变当前播放索引
+        break;
+      case PlayMode.RANDOM:
+        MusicStore.setCurrentIndex(
+          getRandomIndex(trackList.length, currentTrackIndex.value),
+        );
+        break;
+    }
     play();
   };
   // 改变当前歌曲时间
@@ -206,12 +245,34 @@ export function useMusicPlayer() {
   };
 
   // 当一曲播放结束后，自动播放下一曲
-  audio.addEventListener("ended", nextTrack);
+  audio.addEventListener("ended", () => {
+    if (playMode.value === PlayMode.LOOP) {
+      // 如果是单曲循环, 重新播放当前歌曲
+      play();
+    } else {
+      // 如果不是单曲循环, 播放下一曲
+      nextTrack();
+    }
+  });
 
   const addTrackAndPlay = () => {
     // 更新当前音轨索引为最新添加的音轨
     MusicStore.setCurrentIndex(MusicStore.trackList.length - 1);
     play();
+  };
+  // 修改当前的播放模式
+  const changePlayMode = () => {
+    const PlayModeMessage: Record<number, string> = {
+      0: "顺序播放",
+      1: "单曲循环",
+      2: "随机播放",
+    };
+
+    // 循环切换播放模式
+    playMode.value = (playMode.value + 1) % 3;
+    // 显示当前播放模式的提示信息
+    const currentModeMessage = PlayModeMessage[playMode.value];
+    messagePro(200, `当前播放模式：${currentModeMessage}`);
   };
 
   // 初始化时加载当前索引的音轨
@@ -235,5 +296,7 @@ export function useMusicPlayer() {
     currentLyricIndex, // 当前高亮歌词的索引
     lyricTranslateY, // 用于居中显示当前歌词的 translateY 值
     addTrackAndPlay, // 添加并播放新的音轨
+    changePlayMode, //修改当前的播放模式
+    playMode, //修改当前的播放状态
   };
 }

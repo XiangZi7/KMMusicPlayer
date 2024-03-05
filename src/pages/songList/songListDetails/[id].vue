@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { playlistDetail, urlV1 } from "@/api";
-import { Playlist, Track } from "@/pages/songList/interface";
+import {playlistDetail, urlV1} from "@/api";
+import {StorePlaylist, Track} from "@/pages/songList/interface";
+import {formatTimestamp} from "@/utils/timeUtils";
+import Comment from "./comment.vue";
 
 const MusicStore = useMusicStore();
 const route = useRoute();
-const state = reactive<Playlist>({
-  playlists: undefined,
+const state = reactive<StorePlaylist>({
+  playlists: {},
+  activeName: "first",
 });
-const { playlists } = toRefs(state);
+const {playlists, activeName} = toRefs(state);
 
 watch(
   () => route.params.id,
   (id) => {
     state.playlists = undefined;
-    playlistDetail(id).then(({ playlist }) => {
+    playlistDetail(id).then(({playlist}) => {
       state.playlists = playlist;
     });
   },
-  { immediate: true },
+  {immediate: true},
 );
 // 校验对象是否是“空”的函数类型
 // 将 obj 任意类型改为 object 可能的类型
@@ -35,7 +38,7 @@ function playAll() {
   }
   let ids = state.playlists.tracks.map((item) => item.id).join();
   let storeSong: Track[] = [];
-  urlV1(ids).then(({ data }) => {
+  urlV1(ids).then(({data}) => {
     state.playlists.tracks.forEach((item1) => {
       let hasTarget = data.find((item2) => item1.id === item2.id);
       storeSong.push({
@@ -55,16 +58,14 @@ function playAll() {
 </script>
 <template>
   <div v-if="isEmpty(playlists)" class="playlist">
-    <div class="flex mb-3">
+    <div class="flex mb-3 bg-white shadow rounded">
       <div
         class="playlist-cover yx-col-6"
         :style="{
           backgroundImage: `url(${playlists?.coverImgUrl + '?param=500y500'})`,
         }"
       ></div>
-      <!-- Cover image on the left -->
       <div class="playlist-info">
-        <!-- Playlist info on the right -->
         <h2>{{ playlists?.name }}</h2>
         <div class="author">
           <el-avatar
@@ -79,20 +80,59 @@ function playAll() {
         <p class="playlist-description">
           {{ playlists?.description }}
         </p>
-        <ul class="tags">
-          <!-- Tags -->
-          <li v-for="(item1, index) in playlists?.tags" :key="index">
-            {{ item1 }}>钢琴
-          </li>
-        </ul>
+        <div class="flex items-center justify-between">
+          <ul class="tags">
+            <!-- Tags -->
+            <li v-for="(item1, index) in playlists?.tags" :key="index">
+              {{ item1 }}>钢琴
+            </li>
+          </ul>
+          <div class="flex items-center gap-1">
+            <i-material-symbols:calendar-month-outline/>
+            <span class="text-sm">
+            {{ formatTimestamp(playlists?.createTime) }}
+            </span>
+          </div>
+        </div>
+
         <!--Btn-->
-        <div class="Button-group mt-3">
+        <div class="Button-group mt-3 flex items-center gap-3 justify-between">
           <el-button type="primary" @click="playAll">播放全部</el-button>
+
+          <div class="flex items-center gap-2 ">
+            <div class="flex items-center gap-1">
+              <i-material-symbols:android-now-playing-outline
+                class="text-red-400"
+              />
+              <span class="text-sm">
+              ({{ playlists?.playCount }})
+              </span>
+            </div>
+            <div class="flex items-center gap-1">
+              <i-material-symbols:favorite class="text-red-400"/>
+              <span class="text-sm">
+              ({{ playlists?.subscribedCount }})
+              </span>
+            </div>
+            <div class="flex items-center gap-1">
+              <i-ic:twotone-share class="text-red-400"/>
+              <span class="text-sm">
+              ({{ playlists?.shareCount }})
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!--歌曲-->
-    <song-sheet v-if="isEmpty(playlists)" v-model="playlists.tracks" />
+    <el-tabs v-model="activeName" class="px-3">
+      <el-tab-pane :label="`歌曲 (${playlists?.trackCount})`" name="first">
+        <!--歌曲-->
+        <song-sheet v-if="isEmpty(playlists)" v-model="playlists.tracks"/>
+      </el-tab-pane>
+      <el-tab-pane :label="`评论 (${playlists?.commentCount})`" name="second">
+        <Comment v-model="playlists.id"/>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -104,9 +144,9 @@ function playAll() {
 .playlist {
   display: flex;
   flex-direction: column;
-  background: #fff;
+  //background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 

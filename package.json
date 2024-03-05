@@ -13,6 +13,7 @@
 
   "scripts": {
     "dev": "vite",
+    "MK-Music": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts,.vue src",

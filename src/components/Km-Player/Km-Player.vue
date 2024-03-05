@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { MusicPlayer } from "@/hooks/type";
 import { formatTimes } from "@/utils/timeUtils";
-
+import CilLoop1 from "~icons/cil/loop-1";
+import IcSharpReorder from "~icons/ic/sharp-reorder";
+import LetsIconsSortRandom from "~icons/lets-icons/sort-random";
 // 使用 inject 并设置一个合适的默认值，或者校验是否 undefined
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
 const settingStore = useSettingStore();
+const musicStore = useMusicStore();
 // 确保 musicPlayer 不是 undefined
 if (!musicPlayer) {
   // 提供了错误处理
@@ -19,12 +22,15 @@ const {
   isPlaying,
   LyricList,
   currentLyricIndex,
+  currentTrackIndex,
   changeCurrentTime,
   setVolume,
   play,
   pause,
   prevTrack,
   nextTrack,
+  changePlayMode,
+  playMode,
 } = musicPlayer;
 
 const MusicStore = useMusicStore();
@@ -47,6 +53,20 @@ function HandleShowDrawer() {
 function deleteSong(idx: number) {
   MusicStore.trackList.splice(idx, 1);
 }
+
+// 计算当前应当使用的组件
+const currentPlayModeIcon = computed(() => {
+  switch (playMode.value) {
+    case 0:
+      return IcSharpReorder;
+    case 1:
+      return CilLoop1;
+    case 2:
+      return LetsIconsSortRandom;
+    default:
+      return null; // 如果没有匹配的播放模式，可以返回null或默认的图标
+  }
+});
 </script>
 <template>
   <div class="music-player">
@@ -85,6 +105,7 @@ function deleteSong(idx: number) {
           @click="pause"
         />
         <i-fluent:previous-32-filled class="trfo" @click="nextTrack" />
+        <component :is="currentPlayModeIcon" @click="changePlayMode" />
       </div>
       <div class="flex items-center gap-3 slider-box w-full">
         <span class="text-sm left text-[var(--prism-color)]">{{
@@ -118,12 +139,14 @@ function deleteSong(idx: number) {
               清空
             </div>
           </div>
-          <el-scrollbar height="400">
+          <el-scrollbar height="400" :view-style="{ overflowX: 'hidden' }">
             <el-row
               v-for="(item, idx) in MusicStore.trackList"
               :key="item.id"
               :gutter="24"
               class="pt-3 pb-3 pl-1 pr-1 items-center current-item"
+              :class="{ activity: currentTrackIndex == idx }"
+              @dblclick="musicStore.setCurrentIndex(idx)"
             >
               <el-col :span="9">
                 <div class="flex items-center gap-2 text-ellipsis">

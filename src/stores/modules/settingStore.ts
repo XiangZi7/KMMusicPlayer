@@ -10,11 +10,15 @@ export const useSettingStore = defineStore({
   state: (): SettingState => {
     return {
       loadLyric: false,
+      audioVisual: false,
     };
   },
   actions: {
     setLoadLyric(isLoad: boolean) {
       this.loadLyric = isLoad;
+    },
+    setAudioVisua(isLoad: boolean) {
+      this.audioVisual = isLoad;
     },
   },
   persist: piniaPersistConfig("useSettingStore"),

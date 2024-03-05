@@ -90,9 +90,9 @@ export const plCount = () => httpGet<ResultData>(`/pl/count`);
 //歌单 ( 网友精选碟 )
 export const topPlaylist = (params: pages) =>
   httpGet<{ playlists: [] }>(
-    `/top/playlist?limit=30&offset=${((params.offset || 1) - 1) * 30}&cat=${
-      params.cat
-    }`,
+    `/top/playlist?limit=30&offset=${
+      (((params.offset || 1) as number) - 1) * 30
+    }&cat=${params.cat}`,
   );
 //歌单分类
 export const playlistCatList = () => httpGet<{ sub: [] }>(`/playlist/catlist`);
@@ -103,6 +103,20 @@ export const mvDetail = (mvid: number | string) =>
 export const commentMV = (params: CommentMVParams) =>
   httpGet<CommentMVPOJO>(
     `/comment/mv?id=${params.id}&limit=${params.limit || 30}&offset=${
-      ((params.offset || 1) - 1) * 30
+      (((params.offset || 1) as number) - 1) * 30
+    }`,
+  );
+// 歌曲 评论
+export const commentMusic = (params: CommentMVParams) =>
+  httpGet<CommentMVPOJO>(
+    `/comment/music?id=${params.id}&limit=${params.limit || 30}&offset=${
+      (((params.offset || 1) as number) - 1) * 30
+    }`,
+  );
+// 歌单 评论
+export const commentPlaylist = (params: CommentMVParams) =>
+  httpGet<CommentMVPOJO>(
+    `/comment/playlist?id=${params.id}&limit=${params.limit || 30}&offset=${
+      (((params.offset || 1) as number) - 1) * 30
     }`,
   );
