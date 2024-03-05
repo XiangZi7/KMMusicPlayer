@@ -1,1 +1,0 @@
-import{_ as e,c as r,o as c}from"./index-xuQRkY2E.js";const n={};function s(t,o){return c(),r("div",null,"test")}const _=e(n,[["render",s],["__file","/home/runner/work/KM-Music-Player/KM-Music-Player/src/pages/test/index.vue"]]);export{_ as default};

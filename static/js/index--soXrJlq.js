@@ -1,0 +1,1 @@
+import{d as e,b as r,c as n,o,_ as a}from"./index-NJTJORJk.js";const s=e({__name:"index",setup(c){return r(()=>{}),(t,_)=>(o(),n("div",null,"library"))}}),l=a(s,[["__file","/home/runner/work/KM-Music-Player/KM-Music-Player/src/pages/library/index.vue"]]);export{l as default};
