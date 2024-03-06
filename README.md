@@ -47,7 +47,7 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ### 项目截图 📷
 
-![QQ截图20240124111619](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/bb6dbeeb-18ee-452f-a6bd-5d23e347b65e)
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/1f69de68-1951-4909-8fba-70ab5ad74d3d)
 
 ![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/e35548c9-3c0a-48b6-9f41-4d637cddb917)
 
