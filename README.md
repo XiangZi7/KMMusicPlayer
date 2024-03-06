@@ -49,7 +49,7 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/1f69de68-1951-4909-8fba-70ab5ad74d3d)
 
-![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/e35548c9-3c0a-48b6-9f41-4d637cddb917)
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/c3ff41dc-ba3e-4b5f-a50a-19db239345a3)
 
 ![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/05b0ec6b-e6bc-4268-815c-c41656bc17d0)
 
