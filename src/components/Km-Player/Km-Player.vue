@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { MusicPlayer } from "@/hooks/type";
-import { formatTimes } from "@/utils/timeUtils";
 import CilLoop1 from "~icons/cil/loop-1";
 import IcSharpReorder from "~icons/ic/sharp-reorder";
 import LetsIconsSortRandom from "~icons/lets-icons/sort-random";
+import Popover from "./components/popover.vue";
 // 使用 inject 并设置一个合适的默认值，或者校验是否 undefined
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
 const settingStore = useSettingStore();
-const musicStore = useMusicStore();
 // 确保 musicPlayer 不是 undefined
 if (!musicPlayer) {
   // 提供了错误处理
@@ -22,7 +21,6 @@ const {
   isPlaying,
   LyricList,
   currentLyricIndex,
-  currentTrackIndex,
   changeCurrentTime,
   setVolume,
   play,
@@ -33,25 +31,14 @@ const {
   playMode,
 } = musicPlayer;
 
-const MusicStore = useMusicStore();
-
 function FormattingTime(time: number) {
   return formatTime(time);
-}
-
-function ListFormattingTime(time: number) {
-  return formatTimes(time);
 }
 
 const Emit = defineEmits(["showDrawer"]);
 
 function HandleShowDrawer() {
   Emit("showDrawer");
-}
-
-// 根据下标，删除歌曲
-function deleteSong(idx: number) {
-  MusicStore.trackList.splice(idx, 1);
 }
 
 // 计算当前应当使用的组件
@@ -127,48 +114,18 @@ const currentPlayModeIcon = computed(() => {
       <div class="w-[120px] flex items-center">
         <i-material-symbols:volume-up class="text-2xl mr-1" />
         <el-slider v-model="volume" @change="setVolume" />
-        <el-popover placement="top-start" :width="500" trigger="click">
+        <el-popover
+          :popper-style="{ padding: 5 + 'px', borderRadius: 10 + 'px' }"
+          placement="top-start"
+          :width="400"
+          trigger="click"
+        >
           <template #reference>
             <i-streamline:interface-setting-menu-1-button-parallel-horizontal-lines-menu-navigation-three-hamburger
               class="ml-3 text-2xl"
             />
           </template>
-          <div class="flex items-center justify-between pt-2 pb-2">
-            <div>当前播放：</div>
-            <div class="cursor-pointer" @click="MusicStore.clearAllSong">
-              清空
-            </div>
-          </div>
-          <el-scrollbar height="400" :view-style="{ overflowX: 'hidden' }">
-            <el-row
-              v-for="(item, idx) in MusicStore.trackList"
-              :key="item.id"
-              :gutter="24"
-              class="pt-3 pb-3 pl-1 pr-1 items-center current-item"
-              :class="{ activity: currentTrackIndex == idx }"
-              @dblclick="musicStore.setCurrentIndex(idx)"
-            >
-              <el-col :span="9">
-                <div class="flex items-center gap-2 text-ellipsis">
-                  {{ idx + 1 }} .
-                  <el-avatar :src="item.cover + '?param=50y50'" size="small" />
-                  {{ item.title }}
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="text-ellipsis">{{ item.singer }}</div>
-              </el-col>
-              <el-col :span="6">
-                <div>{{ ListFormattingTime(item.time) }}</div>
-              </el-col>
-              <el-col :span="3">
-                <i-material-symbols:delete-outline
-                  class="delete-icon"
-                  @click="deleteSong(idx)"
-                />
-              </el-col>
-            </el-row>
-          </el-scrollbar>
+          <Popover />
         </el-popover>
       </div>
     </div>

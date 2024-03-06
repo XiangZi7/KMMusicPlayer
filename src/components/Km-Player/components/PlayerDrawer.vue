@@ -20,27 +20,22 @@ const {
   isPlaying,
   currentTrackIndex,
 } = musicPlayer;
-const ModelValue = defineModel<boolean>();
 const observedElement = ref<HTMLElement[]>([]);
 const commList = ref<CommentMVPOJO>({
   comments: [],
   hotComments: [],
   total: 0,
 });
-
+const ModelValue = ref<boolean>(false);
 watch(
-  () => currentTrackIndex.value && ModelValue.value,
+  () => currentTrackIndex.value,
   () => {
-    if (!ModelValue.value) return;
     commList.value = { comments: [], hotComments: [], total: 0 }; // 重置评论列表
     commentMusic({ id: currentTrackSong.value.id }).then(
       (res: CommentMVPOJO) => {
         commList.value = res;
       },
     );
-  },
-  {
-    immediate: true,
   },
 );
 
@@ -65,6 +60,37 @@ useIntersectionObserver(
   },
   handleIntersect,
 );
+
+const acceptParam = () => {
+  ModelValue.value = !ModelValue.value;
+  if (commList.value.comments.length > 0) return;
+  commList.value = { comments: [], hotComments: [], total: 0 }; // 重置评论列表
+  commentMusic({ id: currentTrackSong.value.id }).then((res: CommentMVPOJO) => {
+    commList.value = res;
+  });
+};
+
+// 时间
+const currentTime = ref<string>(new Date().toLocaleTimeString());
+
+// 更新时间的函数
+function updateTime(): void {
+  currentTime.value = new Date().toLocaleTimeString();
+}
+
+// 计时器ID
+let intervalId: number;
+
+onMounted(() => {
+  // 组件挂载后，启动一个计时器，每秒更新时间
+  intervalId = setInterval(updateTime, 1000);
+});
+
+onUnmounted(() => {
+  // 组件卸载前，清除计时器
+  clearInterval(intervalId);
+});
+defineExpose({ acceptParam });
 </script>
 <template>
   <el-drawer
@@ -78,13 +104,39 @@ useIntersectionObserver(
     direction="ttb"
     size="calc(100% - 90px)"
   >
+    <template #header>
+      <div class="flex items-center justify-between mr-5">
+        <div class="flex items-center gap-3">
+          <i-mdi:arrow-left
+            class="cursor-pointer"
+            @click="ModelValue = false"
+          />
+          <div class="flex items-center gap-1">
+            <i-material-symbols:nest-clock-farsight-analog-outline />
+            {{ currentTime }}
+          </div>
+          <div class="flex items-center gap-1">
+            <i-fluent:weather-hail-day-20-regular />
+            27°
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <i-material-symbols:bluetooth />
+          <i-material-symbols:wifi />
+          <i-ic:baseline-battery-charging-80 />
+        </div>
+      </div>
+    </template>
     <el-scrollbar>
       <div class="h-full">
         <div class="flex min-w-0" style="flex-flow: row wrap">
           <!--  left  -->
           <div class="yx-col-12">
             <div class="flex items-center justify-center h-full">
-              <div class="relative" style="height: 350px; width: 350px">
+              <div
+                class="relative shadow-2xl"
+                style="height: 350px; width: 350px"
+              >
                 <el-image
                   lazy
                   loading="lazy"
@@ -120,7 +172,10 @@ useIntersectionObserver(
         </div>
       </div>
       <div v-if="commList.comments?.length > 0" class="p-3">
-        <h3 class="py-2">热门评论</h3>
+        <h3 class="py-2 flex items-center gap-1">
+          <i-iconamoon:comment-dots-light />
+          热门评论
+        </h3>
         <div
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
@@ -157,7 +212,10 @@ useIntersectionObserver(
             </div>
           </div>
         </div>
-        <h3 class="py-2">最新评论 ({{ commList.total }})</h3>
+        <h3 class="py-2 flex items-center gap-1">
+          <i-iconamoon:comment-dots-light />
+          最新评论 ({{ commList.total }})
+        </h3>
         <div
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >

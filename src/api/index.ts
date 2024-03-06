@@ -120,3 +120,5 @@ export const commentPlaylist = (params: CommentMVParams) =>
       (((params.offset || 1) as number) - 1) * 30
     }`,
   );
+// 所有榜单内容摘要
+export const toplistDetail = () => httpGet<ResultData>("/toplist/detail");

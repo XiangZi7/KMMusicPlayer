@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {commentPlaylist} from "@/api";
-import {CommentMVPOJO} from "@/api/interface";
+import { commentPlaylist } from "@/api";
+import { CommentMVPOJO } from "@/api/interface";
 
 const observedElement = ref([]);
 const ModelValue = defineModel();
@@ -11,7 +11,7 @@ const commList = ref<CommentMVPOJO>({
   total: 0,
 });
 const handleIntersect = (offset: number) => {
-  commentPlaylist({id: ModelValue.value as number, offset}).then((res) => {
+  commentPlaylist({ id: ModelValue.value as number, offset }).then((res) => {
     commList.value.comments.push(...res.comments);
   });
 };
@@ -29,11 +29,11 @@ useIntersectionObserver(
 watch(
   () => ModelValue.value,
   () => {
-    commentPlaylist({id: ModelValue.value as number}).then((res) => {
+    commentPlaylist({ id: ModelValue.value as number }).then((res) => {
       commList.value = res;
     });
   },
-  {immediate: true},
+  { immediate: true },
 );
 </script>
 <template>
@@ -46,7 +46,7 @@ watch(
         v-for="item in commList.hotComments"
         :key="item.commentId"
         ref="observedElement"
-        class="bg-white transition bg-opacity-40 hover:bg-[#D9DEE3] hover:bg-opacity-50 p-5 rounded-lg shadow-lg  flex flex-col justify-between"
+        class="bg-white transition bg-opacity-40 hover:bg-[#D9DEE3] hover:bg-opacity-50 p-5 rounded-lg shadow-lg flex flex-col justify-between"
       >
         <div class="header flex items-center gap-3">
           <el-avatar
@@ -66,7 +66,7 @@ watch(
         </p>
         <div class="like flex items-center gap-2 justify-between">
           <div class="flex items-center gap-1">
-            <i-material-symbols:favorite class="text-red-400"/>
+            <i-material-symbols:favorite class="text-red-400" />
             <span class="text-gray-800 text-xs"> {{ item.likedCount }}</span>
           </div>
           {{ item.ipLocation.location }}
@@ -81,7 +81,7 @@ watch(
         v-for="item in commList.comments"
         :key="item.commentId"
         ref="observedElement"
-        class="bg-white transition bg-opacity-40 hover:bg-[#D9DEE3] hover:bg-opacity-50 p-5 rounded-lg shadow-lg  flex flex-col justify-between"
+        class="bg-white transition bg-opacity-40 hover:bg-[#D9DEE3] hover:bg-opacity-50 p-5 rounded-lg shadow-lg flex flex-col justify-between"
       >
         <div class="header flex items-center gap-3">
           <el-avatar
@@ -101,7 +101,7 @@ watch(
         </p>
         <div class="like flex items-center gap-2 justify-between text-xs">
           <div class="flex items-center gap-1">
-            <i-material-symbols:favorite class="text-red-400"/>
+            <i-material-symbols:favorite class="text-red-400" />
             <span class="text-gray-800"> {{ item.likedCount }}</span>
           </div>
           {{ item.ipLocation.location }}

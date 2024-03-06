@@ -4,8 +4,11 @@ import SideBar from "./components/SideBar.vue";
 import PlayerDrawer from "@/components/Km-Player/components/PlayerDrawer.vue";
 // 共享播放器数据
 provide("musicPlayer", useMusicPlayer());
+const PlayerDrawerRef = ref();
 
-const ShowDrawer = ref(false);
+function showDrawer() {
+  PlayerDrawerRef.value.acceptParam();
+}
 </script>
 <template>
   <div class="Music-App">
@@ -25,14 +28,12 @@ const ShowDrawer = ref(false);
             <!-- ////  AppMain  ///// -->
             <!-- //////////////////// -->
             <router-view v-slot="{ Component, route }">
-              <!-- <transition appear name="fade-transform" mode="out-in"> -->
               <component :is="Component" :key="route.fullPath" />
-              <!-- </transition> -->
             </router-view>
           </div>
         </el-scrollbar>
-        <PlayerDrawer v-model="ShowDrawer" />
-        <km-player @show-drawer="ShowDrawer = !ShowDrawer" />
+        <PlayerDrawer ref="PlayerDrawerRef" />
+        <km-player @show-drawer="showDrawer" />
       </div>
     </div>
   </div>

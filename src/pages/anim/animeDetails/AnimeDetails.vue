@@ -2,7 +2,7 @@
 const props = defineProps({
   anime: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
 });
 const { anime } = toRefs(props);

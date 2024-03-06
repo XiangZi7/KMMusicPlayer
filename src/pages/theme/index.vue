@@ -25,8 +25,6 @@ onMounted(() => {
   });
 });
 
-function load() {}
-
 function changeColor(color) {
   themeStore.setPrimary(color);
   changePrimary(color);
@@ -67,7 +65,7 @@ function rgbaToHex(rgba) {
     <div class="list-item">
       <div class="list-title">主题颜色</div>
       <div class="list-content">
-        <div v-infinite-scroll="load" class="card-color">
+        <div class="card-color">
           <div
             v-for="item in colorList"
             :key="item.hex"

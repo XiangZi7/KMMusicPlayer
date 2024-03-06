@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {playlistDetail, urlV1} from "@/api";
-import {StorePlaylist, Track} from "@/pages/songList/interface";
-import {formatTimestamp} from "@/utils/timeUtils";
+import { playlistDetail, urlV1 } from "@/api";
+import { StorePlaylist, Track } from "@/pages/songList/interface";
+import { formatTimestamp } from "@/utils/timeUtils";
 import Comment from "./comment.vue";
 
 const MusicStore = useMusicStore();
@@ -10,17 +10,17 @@ const state = reactive<StorePlaylist>({
   playlists: {},
   activeName: "first",
 });
-const {playlists, activeName} = toRefs(state);
+const { playlists, activeName } = toRefs(state);
 
 watch(
   () => route.params.id,
   (id) => {
     state.playlists = undefined;
-    playlistDetail(id).then(({playlist}) => {
+    playlistDetail(id).then(({ playlist }) => {
       state.playlists = playlist;
     });
   },
-  {immediate: true},
+  { immediate: true },
 );
 // 校验对象是否是“空”的函数类型
 // 将 obj 任意类型改为 object 可能的类型
@@ -38,7 +38,7 @@ function playAll() {
   }
   let ids = state.playlists.tracks.map((item) => item.id).join();
   let storeSong: Track[] = [];
-  urlV1(ids).then(({data}) => {
+  urlV1(ids).then(({ data }) => {
     state.playlists.tracks.forEach((item1) => {
       let hasTarget = data.find((item2) => item1.id === item2.id);
       storeSong.push({
@@ -88,9 +88,9 @@ function playAll() {
             </li>
           </ul>
           <div class="flex items-center gap-1">
-            <i-material-symbols:calendar-month-outline/>
+            <i-material-symbols:calendar-month-outline />
             <span class="text-sm">
-            {{ formatTimestamp(playlists?.createTime) }}
+              {{ formatTimestamp(playlists?.createTime) }}
             </span>
           </div>
         </div>
@@ -99,26 +99,20 @@ function playAll() {
         <div class="Button-group mt-3 flex items-center gap-3 justify-between">
           <el-button type="primary" @click="playAll">播放全部</el-button>
 
-          <div class="flex items-center gap-2 ">
+          <div class="flex items-center gap-2">
             <div class="flex items-center gap-1">
               <i-material-symbols:android-now-playing-outline
                 class="text-red-400"
               />
-              <span class="text-sm">
-              ({{ playlists?.playCount }})
-              </span>
+              <span class="text-sm"> ({{ playlists?.playCount }}) </span>
             </div>
             <div class="flex items-center gap-1">
-              <i-material-symbols:favorite class="text-red-400"/>
-              <span class="text-sm">
-              ({{ playlists?.subscribedCount }})
-              </span>
+              <i-material-symbols:favorite class="text-red-400" />
+              <span class="text-sm"> ({{ playlists?.subscribedCount }}) </span>
             </div>
             <div class="flex items-center gap-1">
-              <i-ic:twotone-share class="text-red-400"/>
-              <span class="text-sm">
-              ({{ playlists?.shareCount }})
-              </span>
+              <i-ic:twotone-share class="text-red-400" />
+              <span class="text-sm"> ({{ playlists?.shareCount }}) </span>
             </div>
           </div>
         </div>
@@ -127,10 +121,10 @@ function playAll() {
     <el-tabs v-model="activeName" class="px-3">
       <el-tab-pane :label="`歌曲 (${playlists?.trackCount})`" name="first">
         <!--歌曲-->
-        <song-sheet v-if="isEmpty(playlists)" v-model="playlists.tracks"/>
+        <song-sheet v-if="isEmpty(playlists)" v-model="playlists.tracks" />
       </el-tab-pane>
       <el-tab-pane :label="`评论 (${playlists?.commentCount})`" name="second">
-        <Comment v-model="playlists.id"/>
+        <Comment v-model="playlists.id" />
       </el-tab-pane>
     </el-tabs>
   </div>
