@@ -49,7 +49,19 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ![QQ截图20240124111619](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/bb6dbeeb-18ee-452f-a6bd-5d23e347b65e)
 
-![QQ截图20240124111639](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/2cbbf647-bf18-4c60-82dd-982a95a2fc02)
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/e35548c9-3c0a-48b6-9f41-4d637cddb917)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/05b0ec6b-e6bc-4268-815c-c41656bc17d0)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/41140b04-f881-443c-a469-ddc95a39cd83)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/a532a28f-8bd3-4fb5-b795-b100a54b0e83)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/5b0b8baa-1f38-4b2d-8046-e1528d6902c3)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/b386941d-a551-4f6b-979a-7dc9e0c84314)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/4b4d24d4-4dba-4b0d-9c4c-05d30a85e1ac)
 
 
 ### 项目后台接口 🧩
