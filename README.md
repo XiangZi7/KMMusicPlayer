@@ -5,9 +5,7 @@
 
 ### 介绍 📖
 
-KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)
-
-基于 Vue3.4、Vite5、Pinia、Element-Plus 开源的Web音乐播放器，使用目前最新技术栈开发。
+KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)，是一款基于 Vue 3.4、Vite 5、Pinia 和 Element-Plus 开发的开源 Web 音乐播放器。它采用目前最新的技术栈，提供流畅且美观的音乐播放体验。
 
 ### 在线预览 👀
 
@@ -21,17 +19,16 @@ vercel：<https://kmmusic.vercel.app> (可能需要魔法)
 
 GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
-项目功能 🔨
+### 项目功能 🔨
 
-使用 Vue3.4 开发，单文件组件＜ script setup ＞
+- 支持上、下、循环、顺序、单曲播放
+- 支持 MV 显示
+- 正常动漫播放
+- 歌词滚动显示
+- 网易云二维码登录
+- 动态切换主题
+- 暗黑模式
 
-采用 Vite5 作为项目开发、打包工具
-
-使用 Pinia 轻量、简单、易用，集成 Pinia 持久化插件
-
-基于 Element Plus
-
-使用 VueRouter 路由懒加载
 
 ### 安装使用步骤 📔
 
@@ -50,9 +47,21 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ### 项目截图 📷
 
-![QQ截图20240124111619](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/bb6dbeeb-18ee-452f-a6bd-5d23e347b65e)
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/1f69de68-1951-4909-8fba-70ab5ad74d3d)
 
-![QQ截图20240124111639](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/2cbbf647-bf18-4c60-82dd-982a95a2fc02)
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/c3ff41dc-ba3e-4b5f-a50a-19db239345a3)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/05b0ec6b-e6bc-4268-815c-c41656bc17d0)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/41140b04-f881-443c-a469-ddc95a39cd83)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/a532a28f-8bd3-4fb5-b795-b100a54b0e83)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/5b0b8baa-1f38-4b2d-8046-e1528d6902c3)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/b386941d-a551-4f6b-979a-7dc9e0c84314)
+
+![image](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/4b4d24d4-4dba-4b0d-9c4c-05d30a85e1ac)
 
 
 ### 项目后台接口 🧩
