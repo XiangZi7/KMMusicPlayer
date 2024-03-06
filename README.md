@@ -5,9 +5,7 @@
 
 ### 介绍 📖
 
-KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)
-
-基于 Vue3.4、Vite5、Pinia、Element-Plus 开源的Web音乐播放器，使用目前最新技术栈开发。
+KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)，是一款基于 Vue 3.4、Vite 5、Pinia 和 Element-Plus 开发的开源 Web 音乐播放器。它采用目前最新的技术栈，提供流畅且美观的音乐播放体验。
 
 ### 在线预览 👀
 
@@ -23,15 +21,14 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 项目功能 🔨
 
-使用 Vue3.4 开发，单文件组件＜ script setup ＞
+- 支持上、下、循环、顺序、单曲播放
+- 支持 MV 显示
+- 正常动漫播放
+- 歌词滚动显示
+- 网易云二维码登录
+- 动态切换主题
+- 暗黑模式
 
-采用 Vite5 作为项目开发、打包工具
-
-使用 Pinia 轻量、简单、易用，集成 Pinia 持久化插件
-
-基于 Element Plus
-
-使用 VueRouter 路由懒加载
 
 ### 安装使用步骤 📔
 
