@@ -19,7 +19,7 @@ vercel：<https://kmmusic.vercel.app> (可能需要魔法)
 
 GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
-项目功能 🔨
+### 项目功能 🔨
 
 - 支持上、下、循环、顺序、单曲播放
 - 支持 MV 显示
