@@ -111,7 +111,7 @@ defineExpose({ acceptParam });
             class="cursor-pointer"
             @click="ModelValue = false"
           />
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1 w-[80px]">
             <i-material-symbols:nest-clock-farsight-analog-outline />
             {{ currentTime }}
           </div>

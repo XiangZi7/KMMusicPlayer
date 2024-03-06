@@ -84,7 +84,7 @@ function playAll() {
           <ul class="tags">
             <!-- Tags -->
             <li v-for="(item1, index) in playlists?.tags" :key="index">
-              {{ item1 }}>钢琴
+              {{ item1 }}
             </li>
           </ul>
           <div class="flex items-center gap-1">

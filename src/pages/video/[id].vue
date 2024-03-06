@@ -53,7 +53,7 @@ watch(
       <video class="w-full rounded-xl" :src="mvSrc" controls/>
     </div>
   </div>
-  <div class="max-w-5xl grid gap-6 p-2">
+  <div class="grid gap-6 p-2">
     <div class="grid gap-2">
       <h1 class="text-3xl font-bold tracking-tight">{{ mvInfo.name }}</h1>
       <p class="text-gray-500 dark:text-gray-400">
