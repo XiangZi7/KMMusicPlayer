@@ -1,126 +1,71 @@
-<script setup>
-import { userAccount, userLevel } from "@/api";
-const state = reactive({
-  list: [],
-  levelInfo: {},
-});
-const { list, levelInfo } = toRefs(state);
-
-onMounted(() => {
-  userAccount().then(({ profile }) => {
-    state.list = profile;
-  });
-  userLevel().then(({ data }) => {
-    state.levelInfo = data;
-  });
-});
-</script>
 <template>
-  <div class="container">
-    <div class="profile-header">
-      <img
-        :src="list.avatarUrl"
-        alt="Profile Picture"
-        width="120"
-        height="120"
-      />
-      <div>
-        <h1>{{ list.nickname }}</h1>
-        <h2>{{ list.description || "暂无描述" }}</h2>
+  <div class="w-full py-6 md:py-12 lg:py-24">
+    <div class="container flex flex-col gap-4 px-4 text-center md:px-6">
+      <div class="space-y-2">
+        <div class="inline-block rounded-full ring-2 ring-white">
+          <img
+            src="http://p2.music.126.net/ciXQIDgThBtsJO_bV_35Nw==/109951163141677343.jpg"
+            width="96"
+            height="96"
+            alt="Avatar"
+            class="rounded-full object-cover"
+            style="aspect-ratio:96/96;object-fit:cover"
+          />
+        </div>
+        <div class="space-y-1">
+          <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl">XiangZi7</h1>
+          <p class="text-gray-500 dark:text-gray-400">Miku Kuriyama is my wife hhh </p>
+        </div>
       </div>
-    </div>
-    <div class="profile-info">
-      <h3>user Info</h3>
-      <p>level:{{ levelInfo.level }}</p>
-    </div>
-    <div class="profile-info">
-      <h3>About Me</h3>
-      <p>该项目用于巩固技术学习，如果喜欢，请在GitHub点一个star。谢谢</p>
-    </div>
-    <div class="profile-info">
-      <h3>Contact Details</h3>
-      <p>Email: 793923048@qq.com</p>
-      <p>Phone: 13135xxxxx6666</p>
-    </div>
-    <div class="social-links">
-      <a href="https://github.com/XiangZi7/" target="_blank">
-        <div class="flex gap-1 items-center">
-          <i-logos:github-icon />
-          GitHub
-        </div>
-      </a>
-      <a href="https://space.bilibili.com/52419790" target="_blank">
-        <div class="flex gap-1 items-center">
-          <i-tabler:brand-bilibili />
-          bilibili
-        </div>
-      </a>
+      <div class="mx-auto space-y-4 max-w-[700px]">
+        <p class="text-gray-500/70 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400/70">
+          小小开源爱好者,如觉得项目能给予你帮助，烦请点个star <span class="text-red-400">❤</span>！
+        </p>
+      </div>
+      <div class="flex items-center justify-center gap-3">
+        <a href="https://github.com/XiangZi7/" target="_blank">
+          <div class="flex gap-1 items-center">
+            <i-logos:github-icon />
+            GitHub
+          </div>
+        </a>
+        <a href="https://space.bilibili.com/52419790" target="_blank">
+          <div class="flex gap-1 items-center">
+            <i-tabler:brand-bilibili />
+            bilibili
+          </div>
+        </a>
+      </div>
+      <div class="mx-auto space-y-4 max-w-[700px]">
+        <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl">Open Source Projects</h2>
+        <ul class="grid gap-4 list-none sm:grid-cols-2">
+          <li class="grid gap-1">
+            <a class="font-medium" href="https://github.com/XiangZi7/KM-Music-Player" rel="ugc">
+              KM-Music-Player
+            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-400">是一款基于 Vue 3.4、Vite 5、Pinia 和 Element-Plus 开发的开源 Web 音乐播放器。</p>
+          </li>
+          <li class="grid gap-1">
+            <a class="font-medium" href="https://github.com/XiangZi7/KM-Music-Player/tree/React-18" rel="ugc">
+              React 18 音乐播放器
+            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-400">基于React18、antd...开发的精美音乐播放器</p>
+          </li>
+          <li class="grid gap-1">
+            <a class="font-medium" href="https://github.com/XiangZi7/KM-Music-Player/tree/uniapp" rel="ugc">
+              UniApp 音乐播放器
+            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-400">基于uniapp、Vue3.2、Vite4、Pinia、图鸟开发音乐播放器。t</p>
+          </li>
+          <li class="grid gap-1">
+            <a class="font-medium" href="https://github.com/XiangZi7/KM-Music-Player/tree/vue2KM-Player" rel="ugc">
+              Vue2 音乐播放器
+            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-400">比较旧的项目了</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.container {
-  max-width: 700px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.profile-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.profile-header img {
-  border-radius: 50%;
-  margin-right: 20px;
-}
-.profile-header h1 {
-  margin: 0;
-  color: #333;
-}
-.profile-header h2 {
-  margin: 0;
-  font-size: 1rem;
-  color: #555;
-}
-.profile-info {
-  background: #f9f9f9;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-left: 4px solid #333;
-}
-.profile-info h3 {
-  margin: 0 0 5px 0;
-  color: #333;
-}
-.profile-info p {
-  margin: 0;
-  color: #666;
-}
-.contact-info {
-  text-align: center;
-}
-.contact-info a {
-  text-decoration: none;
-  color: #333;
-}
-.social-links {
-  margin-top: 20px;
-  text-align: center;
-}
-.social-links a {
-  margin: 0 10px;
-  display: inline-block;
-}
-.social-links img {
-  width: 24px;
-  height: auto;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-.social-links img:hover {
-  opacity: 1;
-}
-</style>
+
