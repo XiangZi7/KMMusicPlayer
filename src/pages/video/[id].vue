@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {commentMV, mvDetail, mvUrl} from "@/api";
-import {mvDetails} from "@/pages/video/interface";
+import { commentMV, mvDetail, mvUrl } from "@/api";
+import { mvDetails } from "@/pages/video/interface";
 
 const route = useRoute();
 const state = reactive<mvDetails>({
@@ -8,10 +8,10 @@ const state = reactive<mvDetails>({
   mvInfo: {},
   commentsList: {
     comments: [],
-    total: 0
+    total: 0,
   },
 });
-const {commentsList, mvSrc, mvInfo} = toRefs(state);
+const { commentsList, mvSrc, mvInfo } = toRefs(state);
 const observedElement = ref([]);
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
 // 使用hook并传入必要的参数
@@ -26,7 +26,7 @@ useIntersectionObserver(
 );
 
 function handleIntersect(PageNum: number | string) {
-  commentMV({offset: PageNum, id: route.params.id}).then(({comments}) => {
+  commentMV({ offset: PageNum, id: route.params.id }).then(({ comments }) => {
     state.commentsList.comments = state.commentsList.comments.concat(comments);
   });
 }
@@ -35,13 +35,13 @@ watch(
   () => route.params.id,
   () => {
     const id: number = route.params.id;
-    Promise.all([mvUrl(id), mvDetail(id), commentMV({id})]).then(res => {
+    Promise.all([mvUrl(id), mvDetail(id), commentMV({ id })]).then((res) => {
       state.mvSrc = res[0].data.url;
       state.mvInfo = res[1].data;
       state.commentsList = res[2];
-    })
+    });
   },
-  {immediate: true},
+  { immediate: true },
 );
 </script>
 <template>
@@ -50,7 +50,7 @@ watch(
     data-v0-t="card"
   >
     <div class="w-full">
-      <video class="w-full rounded-xl" :src="mvSrc" controls/>
+      <video class="w-full rounded-xl" :src="mvSrc" controls />
     </div>
   </div>
   <div class="grid gap-6 p-2">
@@ -67,19 +67,26 @@ watch(
         It was released on November 1, 2017.
       </p>
     </div>
-    <div class="grid gap-2" v-if="commentsList.comments.length>0">
-      <h2 class="text-xl font-semibold tracking-tight">评论 ({{commentsList.total}})</h2>
+    <div v-if="commentsList.comments.length > 0" class="grid gap-2">
+      <h2 class="text-xl font-semibold tracking-tight">
+        评论 ({{ commentsList.total }})
+      </h2>
       <div class="grid gap-5">
-        <div class="grid gap-2 bg-white rounded-xl shadow p-4" v-for="item in commentsList.comments"
-             :key="item.id"
-             ref="observedElement">
+        <div
+          v-for="item in commentsList.comments"
+          :key="item.id"
+          ref="observedElement"
+          class="grid gap-2 bg-white rounded-xl shadow p-4"
+        >
           <div class="flex items-center gap-4">
             <span
               class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border"
             >
-              <el-avatar :src="item.user.avatarUrl+'?param=60y60'" :alt="item.user.nickname"/>
-              </span
-              >
+              <el-avatar
+                :src="item.user.avatarUrl + '?param=60y60'"
+                :alt="item.user.nickname"
+              />
+            </span>
             <div class="grid gap-1.5">
               <div class="font-semibold">{{ item.user.nickname }}</div>
               <div class="text-gray-500 text-xs dark:text-gray-400">
@@ -92,10 +99,10 @@ watch(
           </div>
           <div class="flex justify-between text-xs">
             <div class="flex items-center gap-1">
-              <i-material-symbols:favorite class="text-red-400"/>
+              <i-material-symbols:favorite class="text-red-400" />
               {{ item.likedCount }}
             </div>
-            <div> {{ item.ipLocation.location }}</div>
+            <div>{{ item.ipLocation.location }}</div>
           </div>
         </div>
       </div>

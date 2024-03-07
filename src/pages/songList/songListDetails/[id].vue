@@ -59,42 +59,45 @@ function playAll() {
 <template>
   <div v-if="isEmpty(playlists)" class="playlist">
     <div class="flex mb-3 bg-white shadow rounded">
-      <div
-        class="playlist-cover yx-col-6"
-        :style="{
-          backgroundImage: `url(${playlists?.coverImgUrl + '?param=500y500'})`,
-        }"
-      ></div>
-      <div class="playlist-info">
-        <h2>{{ playlists?.name }}</h2>
-        <div class="author">
-          <el-avatar
-            class="mr-2"
-            :src="playlists?.creator?.avatarUrl + '?param=60y60'"
-            :alt="playlists?.creator?.nickname"
-          />
-          <!-- Author avatar -->
-          <span class="author-name">{{ playlists?.creator?.nickname }}</span>
-          <!-- Author name -->
-        </div>
-        <p class="playlist-description">
-          {{ playlists?.description }}
-        </p>
-        <div class="flex items-center justify-between">
-          <ul class="tags">
-            <!-- Tags -->
-            <li v-for="(item1, index) in playlists?.tags" :key="index">
-              {{ item1 }}
-            </li>
-          </ul>
-          <div class="flex items-center gap-1">
-            <i-material-symbols:calendar-month-outline />
-            <span class="text-sm">
-              {{ formatTimestamp(playlists?.createTime) }}
-            </span>
+      <div class="playlist-cover yx-col-6">
+        <img
+          alt="Sleep 4Ever"
+          class="rounded-lg w-full h-full"
+          :src="playlists?.coverImgUrl + '?param=500y500'"
+          style="aspect-ratio: 500/260; object-fit: cover"
+        />
+      </div>
+      <div class="playlist-info flex flex-col justify-between">
+        <div>
+          <h2>{{ playlists?.name }}</h2>
+          <div class="author">
+            <el-avatar
+              class="mr-2"
+              :src="playlists?.creator?.avatarUrl + '?param=60y60'"
+              :alt="playlists?.creator?.nickname"
+            />
+            <!-- Author avatar -->
+            <span class="author-name">{{ playlists?.creator?.nickname }}</span>
+            <!-- Author name -->
+          </div>
+          <p class="playlist-description">
+            {{ playlists?.description }}
+          </p>
+          <div class="flex items-center justify-between">
+            <ul class="tags">
+              <!-- Tags -->
+              <li v-for="(item1, index) in playlists?.tags" :key="index">
+                {{ item1 }}
+              </li>
+            </ul>
+            <div class="flex items-center gap-1">
+              <i-material-symbols:calendar-month-outline />
+              <span class="text-sm">
+                {{ formatTimestamp(playlists?.createTime) }}
+              </span>
+            </div>
           </div>
         </div>
-
         <!--Btn-->
         <div class="Button-group mt-3 flex items-center gap-3 justify-between">
           <el-button type="primary" @click="playAll">播放全部</el-button>
@@ -147,8 +150,6 @@ function playAll() {
 .playlist-cover {
   width: 300px;
   height: 300px;
-  background-size: cover;
-  background-position: center;
 }
 
 .playlist-info {

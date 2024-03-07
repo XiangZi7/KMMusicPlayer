@@ -1,4 +1,4 @@
-import {CommentMV} from "@/api/interface";
+import { CommentMV } from "@/api/interface";
 
 export interface MV {
   id: number;
@@ -21,5 +21,5 @@ export interface Artist {
 export interface mvDetails {
   mvSrc: string;
   mvInfo: MVDetail;
-  commentsList: { total: number, comments: CommentMV[] };
+  commentsList: { total: number; comments: CommentMV[] };
 }

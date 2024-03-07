@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {recommendResource, recommendSongs, toplistDetail, urlV1} from "@/api";
-import {Track} from "@/stores/interface";
-import {MusicPlayer} from "@/hooks/type";
-import {isEmptyObject} from "@/utils/utils";
+import { recommendResource, recommendSongs, toplistDetail, urlV1 } from "@/api";
+import { Track } from "@/stores/interface";
+import { MusicPlayer } from "@/hooks/type";
+import { isEmptyObject } from "@/utils/utils";
+import { libraryState } from "@/pages/library/interface";
 
 const router = useRouter();
 const musicStore = useMusicStore();
@@ -11,8 +12,8 @@ if (!musicPlayer) {
   // 提供了错误处理
   throw new Error("musicPlayer is not provided");
 }
-const {addTrackAndPlay} = musicPlayer;
-const state = reactive({
+const { addTrackAndPlay } = musicPlayer;
+const state = reactive<libraryState>({
   dailySongs: [],
   recommend: [],
   Toplist: {
@@ -20,12 +21,11 @@ const state = reactive({
     rewardToplist: [],
   },
 });
-const {dailySongs, recommend, Toplist} = toRefs(state);
+const { dailySongs, recommend, Toplist } = toRefs(state);
 
 onMounted(() => {
   Promise.all([recommendSongs(), recommendResource(), toplistDetail()]).then(
     (res) => {
-      console.log("=>(index.vue:21) res", res);
       state.dailySongs = res[0].data.dailySongs;
       state.recommend = res[1].recommend;
       state.Toplist = res[2];
@@ -38,7 +38,7 @@ function ListFormattingTime(time: number) {
 }
 
 function addMusic(item: any) {
-  urlV1(item.id).then(({data}) => {
+  urlV1(item.id).then(({ data }) => {
     let param: Track = {
       id: item.id,
       title: item.name,
@@ -99,7 +99,7 @@ function addMusic(item: any) {
                   </div>
                 </div>
                 <span class="text-xs text-gray-500"
-                >{{ ListFormattingTime(item.dt) }}
+                  >{{ ListFormattingTime(item.dt) }}
                 </span>
               </div>
             </el-scrollbar>
@@ -113,7 +113,9 @@ function addMusic(item: any) {
             v-for="item in recommend"
             :key="item.id"
             class="relative rounded-lg overflow-hidden group"
-            @click="router.push({ path: `/songList/songListDetails/${item.id}` })"
+            @click="
+              router.push({ path: `/songList/songListDetails/${item.id}` })
+            "
           >
             <img
               alt="cover"
@@ -124,7 +126,7 @@ function addMusic(item: any) {
             <div
               class="text-xs flex gap-1 items-center absolute top-0 right-0 text-white p-1 rounded-br-lg transition duration-300 ease-in-out group-hover:bg-opacity-70"
             >
-              <i-material-symbols:play-circle-outline/>
+              <i-material-symbols:play-circle-outline />
               {{ item.playcount }}
             </div>
             <!-- 歌单名字 -->
@@ -156,7 +158,7 @@ function addMusic(item: any) {
                 </p>
               </div>
             </div>
-            <i-ic:baseline-more-vert/>
+            <i-ic:baseline-more-vert />
           </div>
         </div>
       </section>
@@ -171,7 +173,7 @@ function addMusic(item: any) {
             class="flex items-center justify-between bg-white rounded-xl p-3"
           >
             <div class="flex items-center">
-              <el-avatar :src="item.album.picUrl + '?param=60y60'"/>
+              <el-avatar :src="item.album.picUrl + '?param=60y60'" />
               <div class="ml-2">
                 <h4 class="text-sm font-medium">{{ item.name }}</h4>
                 <p class="text-xs text-gray-500">
@@ -179,11 +181,10 @@ function addMusic(item: any) {
                 </p>
               </div>
             </div>
-            <i-ic:baseline-more-vert/>
+            <i-ic:baseline-more-vert />
           </div>
         </div>
       </section>
     </aside>
   </div>
 </template>
-<style lang="scss" scoped></style>

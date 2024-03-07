@@ -1,4 +1,4 @@
-export function isEmptyObject(obj: string) {
+export function isEmptyObject(obj: object) {
   // 当传入的不是对象或者是null/undefined时，直接返回true
   if (typeof obj !== "object" || obj === null) return true;
 
