@@ -16,13 +16,13 @@ const highlightStyle = reactive({
   height: "0px",
 }); // 添加 top 属性并初始化
 onMounted(() => {
-  switchTab(ModelValue.value as string)
+  switchTab(ModelValue.value as string);
 });
 
 function switchTab(tab: string) {
   ModelValue.value = tab;
   const activeIndex = tabs.value.findIndex((item) => item === tab);
-  const activeElement:HTMLElement = tabElements.value[activeIndex]; // 通过索引访问特定DOM元素
+  const activeElement: HTMLElement = tabElements.value[activeIndex]; // 通过索引访问特定DOM元素
   if (activeElement) {
     highlightStyle.width = `${activeElement.offsetWidth}px`;
     highlightStyle.height = `${activeElement.offsetHeight}px`;

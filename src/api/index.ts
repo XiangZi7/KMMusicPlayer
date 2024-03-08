@@ -135,16 +135,16 @@ export const artistList = (params: CommentMVParams) =>
  */
 // 获取歌手详情
 export const artistDetail = (id: number) =>
-  httpGet<ResultData>("/artist/detail", {id});
+  httpGet<ResultData>("/artist/detail", { id });
 // 获取歌手描述
 export const artistDesc = (id: number) =>
-  httpGet<artistDescModel>("/artist/desc", {id});
+  httpGet<artistDescModel>("/artist/desc", { id });
 // 获取歌手单曲
 export const artists = (id: number) =>
-  httpGet<artistDescModel>("/artists", {id});
+  httpGet<artistDescModel>("/artists", { id });
 // 获取歌手 MV
 export const artistMv = (id: number) =>
-  httpGet<artistDescModel>("/artist/mv", {id});
+  httpGet<artistDescModel>("/artist/mv", { id });
 // 获取歌手专辑
 export const artistAlbum = (id: number) =>
-  httpGet<artistDescModel>("/artist/album", {id});
+  httpGet<artistDescModel>("/artist/album", { id });

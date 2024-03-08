@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { artistList } from "@/api";
+import { isEmptyObject } from "@/utils/utils";
 const router = useRouter();
 const state = reactive({
   artistsList: [],
@@ -8,13 +9,12 @@ const { artistsList } = toRefs(state);
 
 onMounted(() => {
   artistList({ offset: 1 }).then((res) => {
-    console.log(res);
     state.artistsList = res.artists;
   });
 });
 </script>
 <template>
-  <section class="w-full">
+  <section v-if="!isEmptyObject(artistsList)" class="w-full">
     <div class="container px-4 md:px-6 mx-auto">
       <div class="mb-8">
         <h1 class="text-3xl font-bold tracking-tight">Famous Singers</h1>

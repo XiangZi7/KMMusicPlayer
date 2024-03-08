@@ -1,8 +1,7 @@
-
-
 .lyrics-container {
   overflow: hidden;
-  height: 600px;
+  // height: 600px;
+  height: calc(100% - 100px);
   width: 100%;
   position: relative;
 
@@ -13,7 +12,7 @@
 
 .lyrics-container::before,
 .lyrics-container::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -21,7 +20,6 @@
   pointer-events: none;
   /* 确保不会干扰到子元素的交互 */
 }
-
 
 .lyrics-container ul {
   transition: transform 0.3s ease;
@@ -39,7 +37,9 @@
   font-size: 12px;
   color: rgb(149 149 149);
   text-align: center;
-  transition: font-size 0.3s, color 0.3s;
+  transition:
+    font-size 0.3s,
+    color 0.3s;
 }
 
 .highlight {
@@ -65,6 +65,4 @@
 }
 
 .comment-card {
-
 }
-

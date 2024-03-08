@@ -65,7 +65,7 @@ function rgbaToHex(rgba) {
     <div class="list-item">
       <div class="list-title">主题颜色</div>
       <div class="list-content">
-        <div class="card-color">
+        <div class="card-color h-[500px]">
           <div
             v-for="item in colorList"
             :key="item.hex"

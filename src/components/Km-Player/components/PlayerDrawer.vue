@@ -63,6 +63,9 @@ useIntersectionObserver(
 
 const acceptParam = () => {
   ModelValue.value = !ModelValue.value;
+  // 如果是关闭模式就不请求评论
+  if (!ModelValue.value) return;
+  // 如果有评论数据就不加载数据
   if (commList.value.comments.length > 0) return;
   commList.value = { comments: [], hotComments: [], total: 0 }; // 重置评论列表
   commentMusic({ id: currentTrackSong.value.id }).then((res: CommentMVPOJO) => {
@@ -129,7 +132,7 @@ defineExpose({ acceptParam });
     </template>
     <el-scrollbar>
       <div class="h-full">
-        <div class="flex min-w-0" style="flex-flow: row wrap">
+        <div class="flex min-w-0 h-full">
           <!--  left  -->
           <div class="yx-col-12">
             <div class="flex items-center justify-center h-full">
