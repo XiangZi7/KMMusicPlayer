@@ -122,3 +122,11 @@ export interface CommentMV {
     location: string;
   };
 }
+// 歌手描述
+export interface artistDescModel {
+  topicData: [];
+  introduction: [];
+  code: number;
+  count: number;
+  briefDesc: string;
+}

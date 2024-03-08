@@ -14,6 +14,7 @@ import {
   pages,
   CommentMVParams,
   CommentMVPOJO,
+  artistDescModel,
 } from "./interface";
 
 // 搜索歌曲
@@ -122,3 +123,28 @@ export const commentPlaylist = (params: CommentMVParams) =>
   );
 // 所有榜单内容摘要
 export const toplistDetail = () => httpGet<ResultData>("/toplist/detail");
+// 歌手分类列表
+export const artistList = (params: CommentMVParams) =>
+  httpGet<{ artists: [] }>(
+    `/artist/list?limit=${params.limit || 30}&offset=${
+      (((params.offset || 1) as number) - 1) * 30
+    }`,
+  );
+/**
+ * @description 歌手详情
+ */
+// 获取歌手详情
+export const artistDetail = (id: number) =>
+  httpGet<ResultData>("/artist/detail", {id});
+// 获取歌手描述
+export const artistDesc = (id: number) =>
+  httpGet<artistDescModel>("/artist/desc", {id});
+// 获取歌手单曲
+export const artists = (id: number) =>
+  httpGet<artistDescModel>("/artists", {id});
+// 获取歌手 MV
+export const artistMv = (id: number) =>
+  httpGet<artistDescModel>("/artist/mv", {id});
+// 获取歌手专辑
+export const artistAlbum = (id: number) =>
+  httpGet<artistDescModel>("/artist/album", {id});
