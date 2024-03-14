@@ -1,6 +1,7 @@
 import { lyric, urlV1 } from "@/api/index.js";
 import { BilingualLyricLine } from "@/utils/interface";
 import { messagePro } from "@/utils/messagePro";
+import { getErrorMessage } from "@/hooks/AudioError";
 
 /**
  * @description 音乐播放器hook
@@ -57,7 +58,7 @@ export function useMusicPlayer() {
   };
 
   // 设置定期更新currentTime的定时器
-  const intervalId = setInterval(updateCurrentTime, 1000);
+  const intervalId = setInterval(updateCurrentTime, 500);
 
   // 组件卸载时清除定时器，防止内存泄露
   onUnmounted(() => {
@@ -67,38 +68,22 @@ export function useMusicPlayer() {
   });
   // 错误处理：定义用于处理audio错误事件的方法
   const handleAudioError = async () => {
-    // 错误处理逻辑
-    console.error("音频播放错误:", audio.error);
-
+    if (!audio.error) return;
     // 显示给用户的错误消息，可以根据 audio.error.code 提供更具体的错误信息
-    let errorMessage = "播放错误，请尝试其他音乐。";
-    if (audio.error) {
-      switch (audio.error.code) {
-        case audio.error.MEDIA_ERR_ABORTED:
-          errorMessage = "播放被终止。";
-          break;
-        case audio.error.MEDIA_ERR_NETWORK:
-          errorMessage = "下载过程中发生网络错误。";
-          break;
-        case audio.error.MEDIA_ERR_DECODE:
-          errorMessage = "解码过程中发生错误。";
-          break;
-        case audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-          errorMessage = "音频格式不支持。";
-          try {
-            const { data } = await urlV1(trackList[currentTrackIndex.value].id);
-            trackList[currentTrackIndex.value].source = data[0].url;
-            play();
-          } catch (e) {
-            console.error("获取新源失败：", e);
-          }
-          break;
-        default:
-          errorMessage = "发生了未知错误。";
-          break;
+    let errorMessage = getErrorMessage(audio.error);
+
+    if (audio.error.code === audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+      try {
+        // 尝试获取新的音源地址，然后重新播放
+        const { data } = await urlV1(trackList[currentTrackIndex.value].id);
+        trackList[currentTrackIndex.value].source = data[0].url;
+        play();
+      } catch (e) {
+        // 如果有获取新源失败的专用错误信息
+        errorMessage = "获取新源失败。";
       }
-      messagePro(audio.error.code, errorMessage);
     }
+    messagePro(audio.error.code, errorMessage);
   };
   // 加载音轨的方法，用于更新audio元素的src，并重置currentTime和duration
   const loadTrack = (index: number) => {
@@ -126,7 +111,7 @@ export function useMusicPlayer() {
     const CurrentSong = MusicStore.trackList[currentTrackIndex.value];
 
     // 如果当前歌曲没有歌词信息
-    if (isEmptyObject(CurrentSong?.Lyric as string)) {
+    if (isEmptyObject(CurrentSong?.Lyric as object)) {
       // 异步获取歌词
       lyric(id).then(({ lrc, tlyric }) => {
         // 一旦获取歌词，就将其设置为当前歌曲的歌词
@@ -161,8 +146,6 @@ export function useMusicPlayer() {
     });
     currentLyricIndex.value = index === -1 ? LyricList.value.length - 1 : index;
 
-    // 假定每行歌词的行高是 31px
-    // 计算当前歌词需要的 translateY 值以保持在中间
     // 这个值应该根据实际的样式设置
     const lineHeight = 46;
     // 歌词容器的高度（需要提前知道或者动态获取）

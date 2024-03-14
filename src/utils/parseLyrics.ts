@@ -32,7 +32,7 @@ const parseLyrics = (lyric: string): LyricLine[] => {
  */
 export const createBilingualData = (
   lrc: string,
-  tlyric: string,
+  tlyric?: string,
 ): BilingualLyricLine[] => {
   const lrcLines = parseLyrics(lrc || "");
   const tlyricLines = parseLyrics(tlyric || "");

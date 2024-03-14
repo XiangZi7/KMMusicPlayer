@@ -15,7 +15,6 @@ onMounted(() => {
     artistDetail(route.params.id),
     artists(route.params.id),
   ]).then((res) => {
-    console.log("🚀 => res:", res);
     state.artistsDetail = {
       artistAlbum: res[0],
       artistDetail: res[1].data,

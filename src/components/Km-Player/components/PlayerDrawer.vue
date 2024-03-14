@@ -1,16 +1,10 @@
 <script setup lang="ts">
-// 使用 inject 并设置一个合适的默认值，或者校验是否 undefined
 import { MusicPlayer } from "@/hooks/type";
 import { commentMusic } from "@/api";
 import { CommentMVPOJO } from "@/api/interface";
 
 const musicPlayer = inject<MusicPlayer>("musicPlayer");
-
-// 确保 musicPlayer 不是 undefined
-if (!musicPlayer) {
-  // 提供了错误处理
-  throw new Error("musicPlayer is not provided.");
-}
+if (!musicPlayer) throw new Error("musicPlayer is not provided.");
 
 const {
   LyricList,
@@ -82,11 +76,11 @@ function updateTime(): void {
 }
 
 // 计时器ID
-let intervalId: number;
+let intervalId: number | undefined;
 
 onMounted(() => {
   // 组件挂载后，启动一个计时器，每秒更新时间
-  intervalId = setInterval(updateTime, 1000);
+  intervalId = setInterval(updateTime, 1000) as unknown as number;
 });
 
 onUnmounted(() => {
@@ -159,17 +153,23 @@ defineExpose({ acceptParam });
           </div>
           <!--  right  -->
           <div class="yx-col-12">
-            <div class="lyrics-container">
-              <ul :style="{ transform: `translateY(${lyricTranslateY}px)` }">
-                <li
-                  v-for="(item, index) in LyricList"
-                  :key="index"
-                  :class="{ highlight: index === currentLyricIndex }"
-                >
-                  <div>{{ item.lrc }}</div>
-                  <div>{{ item.tlyric }}</div>
-                </li>
-              </ul>
+            <div class="flex items-center justify-center h-full">
+              <div class="lyrics-container">
+                <el-scrollbar>
+                  <ul
+                    :style="{ transform: `translateY(${lyricTranslateY}px)` }"
+                  >
+                    <li
+                      v-for="(item, index) in LyricList"
+                      :key="index"
+                      :class="{ highlight: index === currentLyricIndex }"
+                    >
+                      <div>{{ item.lrc }}</div>
+                      <div>{{ item.tlyric }}</div>
+                    </li>
+                  </ul>
+                </el-scrollbar>
+              </div>
             </div>
           </div>
         </div>
