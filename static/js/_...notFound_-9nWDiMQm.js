@@ -1,0 +1,1 @@
+import{d as e,c as o,o as n,_}from"./index-HYKU3d2m.js";const r=e({__name:"[...notFound]",setup(t){return(s,c)=>(n(),o("div",null,"404"))}}),u=_(r,[["__file","/home/runner/work/KM-Music-Player/KM-Music-Player/src/pages/[...notFound].vue"]]);export{u as default};
