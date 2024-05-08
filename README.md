@@ -78,4 +78,5 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ![未标题-1](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/023181cb-037d-434e-9ea6-1a3c2bcb52f6)
 
-
+## GitHub Star 趋势
+[![Stargazers over time](https://starchart.cc/XiangZi7/KM-Music-Player.svg?variant=adaptive)](https://starchart.cc/XiangZi7/KM-Music-Player)
