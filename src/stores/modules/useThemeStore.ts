@@ -1,27 +1,27 @@
-import { defineStore } from "pinia";
-import { ThemeState } from "../interface";
-import piniaPersistConfig from "@/config/piniaPersist";
+import { defineStore } from 'pinia'
+import piniaPersistConfig from '@/config/piniaPersist'
+import { themeState } from '../interface'
 
 /**
- * 全局设置
+ * 主题设置s
  */
 export const useThemeStore = defineStore({
-  id: "useThemeStore",
-  state: (): ThemeState => {
-    return {
-      // 主题
-      primary: "#409EFF",
-      // 深色模式
-      isDark: false,
-    };
-  },
-  actions: {
-    setIsDark(isDark: boolean) {
-      this.isDark = isDark;
+    id: 'useThemeStore',
+    state: (): themeState => ({
+        isDark: false,
+        primary: '#000000',
+        language: 'Chinese'
+    }),
+    actions: {
+        setDark(isDark: string | number | boolean) {
+            this.isDark = isDark
+        },
+        setPrimary(primary: string) {
+            this.primary = primary
+        },
+        setLanguage(language: string) {
+            this.language = language
+        },
     },
-    setPrimary(primary: string) {
-      this.primary = primary;
-    },
-  },
-  persist: piniaPersistConfig("useThemeStore"),
-});
+    persist: piniaPersistConfig('ThemeStore'),
+})

@@ -1,0 +1,103 @@
+.music-player-container {
+    display: inline-block;
+    height: 315px;
+    min-width: 325px;
+}
+
+.album {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.65);
+    height: 100%;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    border-radius: 8px;
+}
+
+// .album
+.album-art {
+    background: #fff var(--track-cover) center / cover no-repeat;
+    height: 315px;
+    position: relative;
+    width: 325px;
+    z-index: 10;
+    --track-cover: var(--track-cover-url, none);
+}
+
+.vinyl {
+    animation: spin 2s linear infinite;
+    transition: all 500ms;
+    background-image: url('@/assets/vinyl.png'), var(--track-cover);
+    background-position: center, center;
+    background-size: cover, 40% auto;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    height: 300px;
+    left: 5%;
+    position: absolute;
+    top: 8px;
+    width: 300px;
+    z-index: 5;
+    will-change: transform, left;
+    --track-cover: var(--track-cover-url, none);
+
+
+    .is-playing & {
+        left: 52%;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    display: flex;
+    transform: rotate(180deg);
+}
+
+.load {
+    width: 2px;
+    height: 33px;
+    background-color: limegreen;
+    animation: 1s move6 infinite;
+    border-radius: 5px;
+    margin: 0.1em;
+}
+
+.load:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.load:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.load:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+
+@keyframes move6 {
+    0% {
+        height: 0.2em;
+    }
+
+    25% {
+        height: 0.7em;
+    }
+
+    50% {
+        height: 1.5em;
+    }
+
+    100% {
+        height: 0.2em;
+    }
+}

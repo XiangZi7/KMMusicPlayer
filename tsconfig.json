@@ -1,35 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ESNext", // 将代码编译为最新版本的 JS
     "useDefineForClassFields": true,
     "lib": [
+      "ES2020",
       "DOM",
-      "DOM.Iterable",
-      "ESNext"
+      "DOM.Iterable"
     ],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    /* Strict Type-Checking Options */
-    "strict": true
-    /* Enable all strict type-checking options. */,
-    // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
-    // "strictNullChecks": true,              /* Enable strict null checks. */
-    // "strictFunctionTypes": true,           /* Enable strict checking of function types. */
-    // "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
-    // "strictPropertyInitialization": true,  /* Enable strict checking of property initialization in classes. */
-    // "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
-    // "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
-
-    "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    // 解析非相对模块名的基准目录
+    "skipLibCheck": true,
+    /* Bundler mode */
+    "moduleResolution": "node", // 使用 Node 的模块解析策略
+    "allowImportingTsExtensions": true, //允许在模块导入语句中使用Typescript文件的扩展名（.ts）
+    "allowJs": true, //允许使用js
+    "resolveJsonModule": true, // 允许引入 JSON 文件
+    "isolatedModules": true, // 要求所有文件都是 ES Module 模块。
+    "noEmit": true, // 不输出文件,即编译后不会生成任何js文件
+    "jsx": "react-jsx", //将JSX代码转换为普通的JavaScript代码
+    "esModuleInterop": true, // 允许使用 import 引入使用 export 导出
     "baseUrl": "./",
     // 模块名到基于 baseUrl的路径映射的列表。
     "paths": {
@@ -39,8 +27,18 @@
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    /* Linting */
+    "strict": true, // 开启所有严格的类型检查
+    "forceConsistentCasingInFileNames": true, // 不允许对同一个文件使用不一致格式的引用
+    "noUnusedLocals": true, //报告未使用的局部变量的错误
+    "noUnusedParameters": true, //报告函数中未使用参数的错误
+    "noFallthroughCasesInSwitch": true //确保switch语句中的任何非空情况都包含
   },
+  "types": [
+    "vite,client",
+    "element-plus/global"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
