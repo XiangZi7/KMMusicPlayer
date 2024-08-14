@@ -57,7 +57,9 @@ const formatMillisecondsToTimes = (time: number) => {
 }
 </script>
 <template>
-  <div class="h-full w-full">
+  <div
+    class="h-full w-full box-border flex flex-1 flex-col overflow-x-hidden overflow-auto"
+  >
     <el-table
       :data="tableData"
       style="
@@ -66,7 +68,7 @@ const formatMillisecondsToTimes = (time: number) => {
         --el-table-border-color: none;
       "
       @row-dblclick="playMusic"
-      class="!text-xs"
+      class="!text-xs !flex-1"
     >
       <el-table-column prop="name" label="歌名">
         <template #default="{ row }">
@@ -117,7 +119,7 @@ const formatMillisecondsToTimes = (time: number) => {
               type="primary"
               text
               circle
-              v-if="row.mv !== 0"
+              v-if="row.mv && row.mv !== 0"
               @click="router.push(`/video?id=${row.mv}`)"
             >
               <icon-solar:video-frame-linear class="text-lg text-gray-500" />

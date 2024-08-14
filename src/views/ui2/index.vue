@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full bg-gradient-to-r from-purple-300 via-pink-200 to-red-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 flex items-center justify-center"
+    class="h-full  flex items-center justify-center"
   >
     <div
       class="w-full max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden dark:bg-zinc-900"

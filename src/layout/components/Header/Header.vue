@@ -16,7 +16,9 @@ function userLogout() {
 }
 </script>
 <template>
-  <header class="flex bg-white justify-between p-2 items-center border-b">
+  <header
+    class="flex justify-between p-2 items-center border-b dark:border-gray-600"
+  >
     <div class="flex items-center">
       <div class="flex btncontainer mr-4 w-64">
         <div class="btn btn1" />
@@ -36,9 +38,10 @@ function userLogout() {
             placeholder="string"
             style="--el-input-border-radius: 30px; width: 300px"
             @keyup.enter="toSearch"
+            class="dark:text-white"
           >
             <template #prefix>
-              <icon-ion:search />
+              <icon-ion:search class="text-gray-700 dark:text-gray-300" />
             </template>
           </el-input>
         </div>
@@ -67,7 +70,6 @@ function userLogout() {
         </div>
       </div>
     </div>
-
     <div class="flex items-center gap-2">
       <el-dropdown v-if="userStore.userInfo && userStore.userInfo.userId">
         <el-avatar
@@ -81,15 +83,15 @@ function userLogout() {
             <el-dropdown-item>Action 1</el-dropdown-item>
             <el-dropdown-item divided>
               <el-popconfirm title="确定要退出登录?" @confirm="userLogout">
-                <template #reference> 退出 </template>
+                <template #reference>退出</template>
               </el-popconfirm>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-button class="mr-3" v-else type="primary" @click="showLogin = true"
-        >登录</el-button
-      >
+      <el-button class="mr-3" v-else type="primary" @click="showLogin = true">
+        登录
+      </el-button>
     </div>
     <LoginPopup v-if="showLogin" v-model="showLogin" />
   </header>

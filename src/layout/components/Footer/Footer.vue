@@ -30,24 +30,29 @@ function formatTime(seconds: number): string {
 }
 </script>
 <template>
-  <footer class="border-t shadow-sm bg-white">
+  <footer
+    class="border-t shadow-sm dark:border-gray-600"
+  >
     <div class="mx-auto flex items-center justify-between px-4 py-2">
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2 w-[240px]">
-          <img
+          <el-image
             :src="currentSong.cover"
             alt="Album cover"
-            width="40"
-            height="40"
-            class="rounded-md"
+            class="rounded-md w-9 h-9"
             style="aspect-ratio: 40 / 40; object-fit: cover"
             @click="Emit('show')"
           />
           <div>
-            <div class="text-sm font-medium line-clamp-1">
+            <div
+              class="text-sm font-medium line-clamp-1 dark:text-gray-200"
+              :title="currentSong.title"
+            >
               {{ currentSong.title }}
             </div>
-            <div class="text-xs text-gray-500">{{ currentSong.singer }}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              {{ currentSong.singer }}
+            </div>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -87,7 +92,9 @@ function formatTime(seconds: number): string {
           class="w-full"
           size="small"
         />
-        <div class="flex items-center gap-2 text-gray-500 text-xs">
+        <div
+          class="flex items-center gap-2 text-gray-500 text-xs dark:text-gray-400"
+        >
           <span>{{ formatTime(currentTime) }}</span>
           <span>/</span>
           <span>{{ formatTime(duration) }}</span>

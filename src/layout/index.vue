@@ -16,13 +16,13 @@ const handleShow = () => {
 </script>
 <template>
   <div
-    class="flex flex-col h-full w-full items-center justify-center py-6 px-10 overflow-hidden"
+    class="flex flex-col bg-[#dde2eb] dark:bg-[#333333] h-full w-full items-center justify-center py-6 px-10 "
   >
     <div
-      class="flex backdrop-blur-lg flex-col justify-center rounded-3xl overflow-hidden shadow-xl h-full w-full"
+      class="flex backdrop-blur-lg flex-col justify-center rounded-3xl shadow-xl h-full w-full overflow-hidden bg-white dark:bg-[--el-bg-color]"
     >
       <Header />
-      <section class="flex flex-1 overflow-hidden">
+      <section class="flex flex-1 overflow-x-hidden">
         <Menu />
         <Main />
       </section>

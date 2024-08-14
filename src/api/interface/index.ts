@@ -141,6 +141,8 @@ interface playlistDetail {
     subscribedCount: number;
     subscribed: boolean;
     subscribers: User[];
+    createTime: string;
+    commentCount: number
 }
 
 export interface playlistDetailResponse {
@@ -208,4 +210,66 @@ export interface userPlaylistRes {
     tracks: PlaylistTrack[] | null; // 包含的曲目，可能为空
     playCount: number; // 播放次数
     description: string | null; // 歌单描述
+}
+
+
+
+interface CommentUser {
+    locationInfo: any; // 根据实际情况定义更具体的类型
+    liveInfo: any; // 根据实际情况定义更具体的类型
+    anonym: number;
+    avatarDetail: any; // 根据实际情况定义更具体的类型
+    userType: number;
+    avatarUrl: string;
+    nickname: string;
+    userId: number;
+    commonIdentity?: any; // 根据实际情况定义更具体的类型
+    expertTags?: any; // 根据实际情况定义更具体的类型
+    followed: boolean;
+    mutual: boolean;
+    remarkName?: string; // 可选
+    socialUserId?: any; // 根据实际情况定义更具体的类型
+}
+
+interface IpLocation {
+    ip: string | null;
+    location: string;
+    userId: number;
+}
+
+export interface Comment {
+    user: CommentUser;
+    beReplied: any[]; // 根据实际情况定义更具体的类型
+    commentId: number;
+    commentLocationType: number;
+    content: string;
+    contentResource: any; // 根据实际情况定义更具体的类型
+    decoration: any; // 根据实际情况定义更具体的类型
+    expressionUrl: string | null;
+    grade: any; // 根据实际情况定义更具体的类型
+    ipLocation: IpLocation;
+    ip: string | null;
+    location: string;
+    liked: boolean;
+    likedCount: number;
+    medal?: any; // 根据实际情况定义更具体的类型
+    detailPage: string;
+    wearPic: string;
+    needDisplayTime: boolean;
+    owner: boolean;
+    parentCommentId: number;
+    pendantData?: any; // 根据实际情况定义更具体的类型
+    repliedMark?: any; // 根据实际情况定义更具体的类型
+    richContent?: any; // 根据实际情况定义更具体的类型
+    showFloorComment?: any; // 根据实际情况定义更具体的类型
+    status: number;
+    time: number; // 时间戳
+    timeStr: string;
+}
+
+export interface CommentResponse {
+    cnum: number;
+    code: number;
+    commentBanner: any | null; // 根据实际情况定义更具体的类型
+    comments: Comment[];
 }

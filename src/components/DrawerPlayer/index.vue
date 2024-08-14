@@ -57,12 +57,8 @@ function updateTime(): void {
   LocalhostcurrentTime.value = new Date().toLocaleTimeString()
 }
 
-// 计时器ID
-let intervalId: number | undefined
-
 onMounted(() => {
-  // 组件挂载后，启动一个计时器，每秒更新时间
-  intervalId = setInterval(updateTime, 1000) as unknown as number
+  setInterval(updateTime, 1000) as unknown as number
 })
 defineExpose({
   show,
@@ -83,7 +79,7 @@ defineExpose({
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-center gap-2">
           <el-button text circle @click="drawer = false">
-            <icon-material-symbols:arrow-back-ios />
+            <icon-material-symbols:arrow-back-ios class="rotate-90" />
           </el-button>
           <div class="flex items-center gap-1 w-[80px]">
             <icon-material-symbols:nest-clock-farsight-analog-outline />
@@ -208,7 +204,8 @@ defineExpose({
                       {
                         'text-[--el-color-primary]':
                           currentLyricIndex === index,
-                        'text-gray-500': currentLyricIndex !== index,
+                        'text-gray-500 dark:text-gray-400':
+                          currentLyricIndex !== index,
                       },
                     ]"
                   >
@@ -230,7 +227,7 @@ defineExpose({
           </template>
           <template v-else>
             <div
-              class="h-full flex items-center justify-center w-full text-[--el-color-primary-light-2] text-sm"
+              class="h-full flex items-center justify-center w-full text-[--el-color-primary-light-2] dark:text-gray-500 text-sm"
               v-html="parseLyricInfo(lyricsData.remark ?? '')"
               v-if="SettingStore.isOriginalParsed"
             ></div>
