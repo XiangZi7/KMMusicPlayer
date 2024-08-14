@@ -4,23 +4,27 @@
 
 ### 介绍 📖
 
-KM-Music-Player = Kuriyama Mirai Music Player(Mirai Kuriyama My Wife >///<)，是一款基于 Vue 3.4、Vite 5、Pinia 和 Element-Plus 开发的开源 Web 音乐播放器。它采用目前最新的技术栈，提供流畅且美观的音乐播放体验。
+**KM-Music-Player** (**Kuriyama Mirai Music Player**) 是一款基于 **Vue
+3.4**、**Vite 5**、**Pinia** 和 **Element-Plus** 开发的开源 Web 音乐播放器。它采
+用目前最新的技术栈，提供流畅且美观的音乐播放体验。
+
+### 系统需求 ⚙️
+
+- **Node.js** 版本需大于 **16**。
 
 ### 在线预览 👀
 
-Netlify：<https://kmmusic.netlify.app>
-
-github pages：<https://xiangzi7.github.io/KM-Music-Player/>
-
-vercel：<https://kmmusic.vercel.app> (可能需要魔法)
+- [Netlify 预览](https://kmmusic.netlify.app)
+- [GitHub Pages](https://xiangzi7.github.io/KM-Music-Player/)
+- [Vercel 预览](https://kmmusic.vercel.app) (可能需要魔法)
 
 ### 代码仓库 ⭐
 
-GitHub：<https://github.com/XiangZi7/KM-Music-Player>
+[GitHub 代码仓库](https://github.com/XiangZi7/KM-Music-Player)
 
 ### 项目功能 🔨
 
-- 支持上、下、循环、顺序、单曲播放
+- 支持上、下、循环、顺序、随机、单曲播放
 - 支持 MV 显示
 - 正常动漫播放
 - 歌词滚动显示
@@ -30,21 +34,39 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ### 安装使用步骤 📔
 
-*   Clone
+- Clone
 
 # Github
 
-`git clone https://github.com/XiangZi7/KM-Music-Player.git`
+使用 Git 克隆项目到本地：
 
-*   Install：
-    `pnpm install `
-*   Run：
-    `pnpm dev`
-*   文档说明
-    <https://neteasecloudmusicapi.vercel.app/#/>  （可能需魔法上网）
+```bash
+  git clone https://github.com/XiangZi7/KM-Music-Player.git
+```
+
+安装依赖
+
+进入项目目录并安装所需的依赖：
+
+```bash
+cd KM-Music-Player
+pnpm install
+```
+
+启动开发服务器
+
+启动本地开发服务器，为你提供实时预览：
+
+```bash
+pnpm dev
+```
+
+文档说明
+
+你可以查阅 [网易云音乐 API 文档](https://neteasecloudmusicapi.vercel.app/#/) 以
+获取更多信息和接口使用说明（可能需要魔法上网）。
 
 ### 项目截图 📷
-
 
 ![image](https://github.com/user-attachments/assets/5ec599a7-8c86-4548-8758-34f977637595)
 
@@ -74,11 +96,12 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ### 项目后台接口 🧩
 
-*   <https://neteasecloudmusicapi.vercel.app/#/>  （可能需魔法上网）
+- [https://neteasecloudmusicapi.vercel.app/#/](https://neteasecloudmusicapi.vercel.app/#/)
+  （可能需魔法上网）
 
 ### QQ交流群 👨‍👨‍👦‍👦
 
-![1686722147442.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ef2a97c45df4a6fa5c78b34a28a42fc~tplv-k3u1fbpfcp-watermark.image#?w=238\&h=250\&s=10821\&e=png\&a=1\&b=f8f8f8)
+![1686722147442.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ef2a97c45df4a6fa5c78b34a28a42fc~tplv-k3u1fbpfcp-watermark.image#?w=238&h=250&s=10821&e=png&a=1&b=f8f8f8)
 
 ### 捐赠 （❤
 
@@ -86,5 +109,16 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ![未标题-1](https://github.com/XiangZi7/KM-Music-Player/assets/67356803/023181cb-037d-434e-9ea6-1a3c2bcb52f6)
 
-## GitHub Star 趋势
+### GitHub Star 趋势
+
 [![Stargazers over time](https://starchart.cc/XiangZi7/KM-Music-Player.svg?variant=adaptive)](https://starchart.cc/XiangZi7/KM-Music-Player)
+
+### 常见问题 (FAQ) ❓
+
+- 如何解决启动错误？
+
+请确保你的 Node.js 版本满足要求，并检查安装依赖时的错误信息。
+
+- 播放器如何更改主题？
+
+在侧边菜单栏中选择“主题”选项，然后你可以选择不同的主题风格。
