@@ -10,10 +10,10 @@ const { qrImgUrl, qrStatus } = useLoginQr(closeLoginModal)
 </script>
 <template>
   <el-dialog v-model="dialogVisible" width="30%">
-    <div class="bg-white p-7 rounded-lg shadow-lg text-center">
+    <div class="p-7 rounded-lg shadow-lg text-center">
       <h1 class="text-xl text-black m-5">扫码登录</h1>
       <div
-        class="m-auto p-2 bg-white border rounded-lg flex items-center justify-center h-[180px]"
+        class="m-auto p-2 border rounded-lg flex items-center justify-center h-[180px]"
       >
         <img :src="qrImgUrl" alt="二维码登录" />
       </div>
