@@ -62,6 +62,8 @@ GitHub：<https://github.com/XiangZi7/KM-Music-Player>
 
 ![image](https://github.com/user-attachments/assets/8fdb041c-fec5-4992-bd91-d11aabbb7b37)
 
+![image](https://github.com/user-attachments/assets/241cc110-98ed-49e6-a9ce-68fa2aa9e18d)
+
 ![image](https://github.com/user-attachments/assets/dc3ee82d-696a-4924-b307-0711e10152e3)
 
 ![image](https://github.com/user-attachments/assets/69f09804-8fa4-4220-9bfc-a8e5594d3c81)
