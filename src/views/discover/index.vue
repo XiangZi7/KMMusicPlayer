@@ -12,7 +12,23 @@ const state = reactive({
 
 const { Playlist } = toRefs(state)
 const router = useRouter()
+// 使用hook并传入必要的参数
+const observedElement = ref([])
+useIntersectionObserver(
+  observedElement,
+  {
+    initialPageNum: 1, // 初始页码
+    pageSize: 10, // 页面大小
+    threshold: 0.1, // 可选阈值参数
+  },
+  handleIntersect
+)
 
+function handleIntersect(PageNum: number) {
+  topPlaylist({ offset: PageNum + 1 }).then(({ playlists }) => {
+    state.Playlist = state.Playlist.concat(playlists)
+  })
+}
 onMounted(() => {
   topPlaylist({ offset: 1, limit: 20 }).then(({ playlists }) => {
     state.Playlist = playlists
