@@ -87,5 +87,5 @@ export const useAudioStore = defineStore({
             this.trackList = [];
         },
     },
-    persist: piniaPersistConfig('audioStore')
+    persist: piniaPersistConfig('AudioStore')
 })
