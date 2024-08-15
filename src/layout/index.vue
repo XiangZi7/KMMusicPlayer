@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer.vue'
 
 const PlayerDrawerRef = ref<{ show: () => void }>()
 // 共享播放器状态
+
 provide('MusicPlayer', useMusicPlayer())
 
 const handleShow = () => {
@@ -16,7 +17,7 @@ const handleShow = () => {
 </script>
 <template>
   <div
-    class="flex flex-col bg-[#dde2eb] dark:bg-[#333333] h-full w-full items-center justify-center py-6 px-10 "
+    class="flex flex-col bg-[#dde2eb] dark:bg-[#333333] h-full w-full items-center justify-center py-6 px-10"
   >
     <div
       class="flex backdrop-blur-lg flex-col justify-center rounded-3xl shadow-xl h-full w-full overflow-hidden bg-white dark:bg-[--el-bg-color]"

@@ -13,7 +13,8 @@ export function useMusicPlayer() {
     // 当前播放模式的响应式变量
     const playMode = ref(PlayMode.Sequence);
     // 创建一个新的Audio实例
-    const audioElement = ref(new Audio());
+    const audio = new Audio();
+    // const audioElement = ref(new Audio());
     // 添加当前时间和总时间的响应式引用
     const currentTime = ref(0);
     const duration = ref(0);
@@ -31,31 +32,47 @@ export function useMusicPlayer() {
 
     // 在组件挂载时添加事件监听器
     onMounted(() => {
-        audioElement.value.src = currentSong.value.source
-        audioElement.value.ontimeupdate = () => {
-            currentTime.value = audioElement.value.currentTime;
+        audio.src = currentSong.value.source
+        audio.ontimeupdate = () => {
+            currentTime.value = audio.currentTime;
         };
 
-        audioElement.value.onloadedmetadata = () => {
-            duration.value = audioElement.value.duration;
+        audio.onloadedmetadata = () => {
+            duration.value = audio.duration;
         };
         // 初始化音量
-        audioElement.value.volume = volume.value / 100; // 将音量转换为 0 到 1 的范围
-
-        // 错误处理
-        audioElement.value.onerror = async () => {
-            const { data } = await urlV1(currentSong.value.id)
-            audioStore.setCurrentSongUrl(data[0].url)
-            audioElement.value.src = data[0].url
-            audioElement.value.play();
-            isPlaying.value = true;
-        };
+        audio.volume = volume.value / 100; // 将音量转换为 0 到 1 的范围
 
         // 歌曲播放完毕后自动切换
-        audioElement.value.onended = () => {
+        audio.onended = () => {
             playNext();
         };
+
+        // 添加错误监听
+        audio.onerror = async () => {
+            handleAudioError()
+        }
     });
+
+    const handleAudioError = async () => {
+        if (!audio.error) return;
+
+        if (audio.error.code === audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+            currentTime.value = 0;
+            duration.value = 0;
+            try {
+                // 尝试获取新的音源地址，然后重新播放
+                const { data } = await urlV1(currentSong.value.id);
+                audio.src = data[0].url;
+                audioStore.setCurrentSongUrl(data[0].url)
+                audio.load()
+                play()
+            } catch (e) {
+                // 如果有获取新源失败的专用错误信息
+                // errorMessage = "获取新源失败。";
+            }
+        }
+    };
 
     // 加载歌词
     async function Loadlyrics() {
@@ -126,13 +143,13 @@ export function useMusicPlayer() {
 
     // 播放音乐
     function play() {
-        audioElement.value.play();
+        audio.play();
         isPlaying.value = true;
     }
 
     // 暂停音乐
     function pause() {
-        audioElement.value.pause();
+        audio.pause();
         isPlaying.value = false;
     }
 
@@ -162,7 +179,7 @@ export function useMusicPlayer() {
                 playRandomSong();
                 break;
             case PlayMode.Single: // 单曲循环模式，重新播放当前歌曲
-                audioElement.value.currentTime = 0; // 回到开头
+                audio.currentTime = 0; // 回到开头
                 play();
                 break;
             default: // 对于顺序播放和列表循环模式，播放列表中的下一首歌
@@ -171,7 +188,7 @@ export function useMusicPlayer() {
                     nextIndex = 0; // 如果是最后一首歌，则回到列表的开始
                 }
                 audioStore.setCurrentSong(nextIndex);
-                audioElement.value.src = currentSong.value.source; // 更新audio元素的资源地址
+                audio.src = currentSong.value.source; // 更新audio元素的资源地址
                 Loadlyrics()
                 play();
                 break;
@@ -185,7 +202,7 @@ export function useMusicPlayer() {
             previousIndex = audioStore.trackList.length - 1; // 如果是第一首歌，则跳到列表的最后
         }
         audioStore.setCurrentSong(previousIndex);
-        audioElement.value.src = currentSong.value.source; // 更新audio元素的资源地址
+        audio.src = currentSong.value.source; // 更新audio元素的资源地址
         Loadlyrics()
         play();
     }
@@ -194,24 +211,24 @@ export function useMusicPlayer() {
     function playRandomSong() {
         const randomIndex = Math.floor(Math.random() * audioStore.trackList.length);
         audioStore.setCurrentSong(randomIndex); // 设置当前歌曲为随机选择的歌曲
-        audioElement.value.src = currentSong.value.source; // 更新audio元素的资源地址
+        audio.src = currentSong.value.source; // 更新audio元素的资源地址
         play();
     }
 
     // 改变当前歌曲时间
     const changeCurrentTime = (currentTime: number) => {
-        audioElement.value.currentTime = currentTime;
+        audio.currentTime = currentTime;
     };
 
     // 设置音量
     const setVolume = (newVolume: number) => {
         volume.value = newVolume;
-        audioElement.value.volume = newVolume / 100; // 将音量转换为 0 到 1 的范围
+        audio.volume = newVolume / 100; // 将音量转换为 0 到 1 的范围
     };
 
     // 添加播放歌曲的方法
     const playSong = (song: Track) => {
-        audioElement.value.src = song.source; // 确保您设置此歌曲的音频源
+        audio.src = song.source; // 确保您设置此歌曲的音频源
         play(); // 播放歌曲
     };
     return {
@@ -223,7 +240,7 @@ export function useMusicPlayer() {
         togglePlayPause,
         playMode,
         setPlayMode,
-        audioElement,
+        audio,
         currentTime, // 暴露当前播放时间
         duration, // 暴露歌曲总时间
         changeCurrentTime,

@@ -18,7 +18,7 @@ const playMusic = (id: number | string) => {
 <template>
   <el-popover :width="450" trigger="click" placement="top-end">
     <div class="py-4">
-      <h1 class="text-2xl font-bold mb-4 dark:text-white">最近播放</h1>
+      <h1 class="text-2xl font-bold mb-4 dark:text-white">最近播放 <span class="text-base">({{ audioStore.trackList.length }})</span></h1>
       <el-scrollbar class="!h-[300px]">
         <ul class="space-y-1">
           <li

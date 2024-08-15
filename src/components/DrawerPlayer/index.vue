@@ -2,6 +2,7 @@
 import { MusicPlayer } from '@/hooks/interface'
 import { Icon } from '@iconify/vue'
 import { PlayMode } from '@/enum'
+const userStore = useUserStore()
 
 const state = reactive({
   direction: 'ttb',
@@ -99,7 +100,16 @@ defineExpose({
             <icon-material-symbols:wifi />
             <icon-ic:baseline-battery-charging-80 />
           </div>
+
           <el-avatar
+            v-if="userStore.userInfo && userStore.userInfo.userId"
+            :src="userStore.userInfo.avatarUrl"
+            class="mr-2"
+            shape="circle"
+            :size="32"
+          />
+          <el-avatar
+            v-else
             src="https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png"
             class="mr-2"
             shape="circle"

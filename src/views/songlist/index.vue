@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { playlistDetail, commentPlaylist } from '@/api'
 import { playlistDetailResponse } from '@/api/interface'
+import { Track } from '@/stores/interface'
 import { Comment } from '@/api/interface'
 const route = useRoute()
-
+const audioStore = useAudioStore()
 const state = reactive({
   playlistData: {
     playlist: {
@@ -52,6 +53,22 @@ const showDrawer = () => {
   commentPlaylist({ offset: 1, id: route.query.id as string }).then((res) => {
     state.commentListData = res.comments
   })
+}
+
+const playMusic = () => {
+  let newArr = playlistData.value.playlist.tracks.map((row) => {
+    return {
+      id: row.id,
+      title: row.name,
+      singer: row.ar.map((ar: any) => ar.name).join(' / '),
+      album: row.al.name,
+      cover: row.al.picUrl,
+      time: row.dt,
+      source: '',
+      mv: row.mv as number,
+    }
+  })
+  audioStore.addTrack(newArr as unknown as Track[] )
 }
 </script>
 <template>
@@ -109,7 +126,7 @@ const showDrawer = () => {
           </p>
           <div class="flex items-center justify-center gap-1 w-full">
             <div class="flex items-center">
-              <el-button text circle class="!p-3">
+              <el-button text circle class="!p-3" @click="playMusic">
                 <icon-material-symbols:play-circle-outline
                   class="text-xl dark:text-white"
                 />
