@@ -14,8 +14,10 @@ jobs:
               with:
                   node-version: "16.x"
             - run: node -v
-            - run: npm install
-            - run: npm run build
+            - name: Install pnpm
+              run: npm install -g pnpm
+            - run: pnpm install
+            - run: pnpm run build
             - name: Deploy # 部署
               uses: JamesIves/github-pages-deploy-action@v4.3.3
               with:
