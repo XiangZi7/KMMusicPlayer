@@ -71,8 +71,18 @@ export const loginStatus = () => httpGet<ResultData>("/login/status");
 export const logout = () => httpGet<code>("/logout");
 
 // 歌单 评论
-export const commentPlaylist = <T>(params: CommentMVParams) => {
+export const commentPlaylist = (params: CommentMVParams) => {
     const limit = params.limit || 30; // 如果没有提供 limit，默认使用 30
     const offset = ((params.offset || 1) - 1) * 30; // 如果没有提供 offset，默认使用 1
     return httpGet<CommentResponse>(`/comment/playlist?id=${params.id}&limit=${limit}&offset=${offset}`);
+}
+// 喜欢音乐
+export const likeMusic = (id: number) => httpGet(`/like?id=${id}`);
+// 歌曲 评论
+export const commentMusic = (params: CommentMVParams) => {
+    const limit = params.limit || 30; // 如果没有提供 limit，默认使用 30
+    const offset = ((params.offset || 1) - 1) * 30; // 如果没有提供 offset，默认使用 1
+    return httpGet<CommentResponse>(
+        `/comment/music?id=${params.id}&limit=${limit}&offset=${offset}`,
+    );
 }

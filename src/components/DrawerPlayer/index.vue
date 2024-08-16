@@ -2,14 +2,21 @@
 import { MusicPlayer } from '@/hooks/interface'
 import { Icon } from '@iconify/vue'
 import { PlayMode } from '@/enum'
+import { Comment } from '@/api/interface'
+import { commentMusic } from '@/api'
+
 const userStore = useUserStore()
 
 const state = reactive({
   direction: 'ttb',
   drawer: false,
+  commentListData: [] as Comment[],
+  commenDrawer: false,
+  commenTotal: 0,
 })
 
-const { direction, drawer } = toRefs(state)
+const { direction, drawer, commentListData, commenDrawer, commenTotal } =
+  toRefs(state)
 
 const {
   currentSong,
@@ -58,8 +65,51 @@ function updateTime(): void {
   LocalhostcurrentTime.value = new Date().toLocaleTimeString()
 }
 
+// 打开评论抽屉
+const showDrawer = () => {
+  state.commenDrawer = true
+  if (state.commentListData.length > 0) return
+  commentMusic({ offset: 1, id: currentSong.value.id }).then((res) => {
+    state.commentListData = res.comments
+    state.commenTotal = res.total
+  })
+}
+
+function formatNumber(num: number): string {
+  if (num < 10000) {
+    return num.toString() // 直接返回小于10000的数字
+  } else if (num < 100000) {
+    const formatted = (num / 10000).toFixed(1)
+    return formatted.endsWith('.0')
+      ? formatted.slice(0, -2) + '万'
+      : formatted + '万' // 处理 1.0万 和 1.5万
+  } else {
+    return (num / 10000).toFixed(0) + '万' // 对于大于或等于100000的数字，直接显示为整数的万
+  }
+}
+
+const getCommentPlaylist = (pages: number = 1) => {
+  state.commentListData = []
+  state.commenTotal = 0
+  commentMusic({ offset: pages, id: currentSong.value.id }).then((res) => {
+    state.commentListData = state.commentListData.concat(res.comments)
+    state.commenTotal = res.total
+  })
+}
+
+function handlePlayNext() {
+  playNext()
+  getCommentPlaylist(1)
+}
+
+function handlePlayPrevious() {
+  playPrevious()
+  getCommentPlaylist(1)
+}
+
 onMounted(() => {
   setInterval(updateTime, 1000) as unknown as number
+  getCommentPlaylist(1)
 })
 defineExpose({
   show,
@@ -151,7 +201,7 @@ defineExpose({
                 <el-button text circle @click="setPlayMode(PlayMode.Random)">
                   <icon-lets-icons:sort-random />
                 </el-button>
-                <el-button text circle @click="playPrevious" class="!p-3">
+                <el-button text circle @click="handlePlayPrevious" class="!p-3">
                   <icon-solar:skip-previous-bold class="text-lg" />
                 </el-button>
                 <el-button text circle class="!p-3" @click="togglePlayPause">
@@ -164,7 +214,7 @@ defineExpose({
                     class="text-3xl"
                   />
                 </el-button>
-                <el-button text circle class="!p-3" @click="playNext">
+                <el-button text circle class="!p-3" @click="handlePlayNext">
                   <icon-solar:skip-previous-bold
                     class="transform scale-x-[-1] text-lg"
                   />
@@ -191,6 +241,19 @@ defineExpose({
                 <span class="text-xs w-10 text-foreground/50">{{
                   formatTime(duration)
                 }}</span>
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <el-button text circle class="!p-3" @click="showDrawer">
+                    <icon-uil:comment-dots class="text-xl dark:text-white" />
+                  </el-button>
+                  <span
+                    class="text-sm dark:text-gray-300"
+                    v-if="commenTotal !== 0"
+                  >
+                    {{ formatNumber(commenTotal) }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -245,6 +308,11 @@ defineExpose({
         </div>
       </div>
     </div>
+    <CommentPopup
+      v-model="commenDrawer"
+      :data="commentListData"
+      @DIntersect="getCommentPlaylist"
+    />
   </el-drawer>
 </template>
 <style lang="scss" scoped>

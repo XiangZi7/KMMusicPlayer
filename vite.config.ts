@@ -38,6 +38,7 @@ export default defineConfig({
     }
   },
   esbuild: {
+    // 取消consol
     drop: ['console', 'debugger'],
   },
 })

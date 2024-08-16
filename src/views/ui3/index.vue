@@ -23,7 +23,7 @@
             <circle cx="12" cy="13" r="3"></circle>
           </svg>
         </button>
-        <div class="h-10 w-32 bg-gray-200"></div>
+        <div class="h-10 w-32 flex items-center justify-center">栗山未来</div>
         <button class="focus:outline-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,10 @@
       <main class="flex-grow overflow-y-auto">
         <div class="flex flex-col gap-4 p-4">
           <div
-            class="w-full h-64 rounded-md overflow-hidden border-2 border-gray-300 bg-gray-200"
-          ></div>
+            class="w-full h-80 rounded-md overflow-hidden border-2 border-gray-300"
+          >
+            <img src="@/assets/gthub-avatar.png" class="w-full h-full" />
+          </div>
           <div class="flex items-center gap-2">
             <button class="focus:outline-none">
               <svg
@@ -203,7 +205,9 @@
           </svg>
         </button>
         <div class="relative">
-          <div class="h-6 w-6 rounded-full overflow-hidden bg-gray-200"></div>
+          <div class="h-6 w-6 rounded-full overflow-hidden">
+            <img src="@/assets/gthub-avatar.png" class="w-full h-full" alt="" />
+          </div>
           <span
             class="absolute bottom-0 right-0 w-2 h-2 bg-red-500 rounded-full"
           ></span>

@@ -272,4 +272,5 @@ export interface CommentResponse {
     code: number;
     commentBanner: any | null; // 根据实际情况定义更具体的类型
     comments: Comment[];
+    total: number
 }
