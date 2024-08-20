@@ -75,6 +75,16 @@ const router = createRouter({
           name: 'ui3',
           component: () => import('@/views/ui3/index.vue')
         },
+        {
+          path: '/ui3',
+          name: 'ui3',
+          component: () => import('@/views/ui3/index.vue')
+        },
+        {
+          path: '/eq',
+          name: 'eq',
+          component: () => import('@/views/eq/index.vue')
+        },
       ]
     },
   ]

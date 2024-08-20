@@ -30,7 +30,7 @@ function formatTime(seconds: number): string {
 }
 </script>
 <template>
-  <footer class="border-t shadow-sm dark:border-gray-600">
+  <footer class="footer-player border-t shadow-sm dark:border-gray-600">
     <div class="mx-auto flex items-center justify-between px-4 py-2">
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2 w-[240px]">
@@ -84,6 +84,7 @@ function formatTime(seconds: number): string {
       <div class="flex-1 mx-4 flex gap-3 w-full items-center">
         <el-slider
           v-model="currentTime"
+          :step="1"
           :show-tooltip="false"
           @change="changeCurrentTime"
           :max="duration"
@@ -122,4 +123,4 @@ function formatTime(seconds: number): string {
 .el-button + .el-button {
   margin-left: 0;
 }
-</style>
+</style>  

@@ -90,7 +90,10 @@ function userLogout() {
         </template>
       </el-dropdown>
       <el-button class="mr-3" v-else type="primary" @click="showLogin = true">
-        登录
+        <div class="flex items-center gap-1">
+          <icon-ic:baseline-person-pin />
+          登录
+        </div>
       </el-button>
     </div>
     <LoginPopup v-if="showLogin" v-model="showLogin" />

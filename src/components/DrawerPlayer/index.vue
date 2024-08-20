@@ -39,6 +39,7 @@ const SettingStore = useSettingStore()
 const show = () => {
   state.drawer = true
   Loadlyrics()
+  getCommentPlaylist()
 }
 
 // 格式化时间
@@ -89,8 +90,7 @@ function formatNumber(num: number): string {
 }
 
 const getCommentPlaylist = (pages: number = 1) => {
-  state.commentListData = []
-  state.commenTotal = 0
+  if (state.commentListData.length > 0) return
   commentMusic({ offset: pages, id: currentSong.value.id }).then((res) => {
     state.commentListData = state.commentListData.concat(res.comments)
     state.commenTotal = res.total
@@ -98,18 +98,21 @@ const getCommentPlaylist = (pages: number = 1) => {
 }
 
 function handlePlayNext() {
+  state.commentListData = []
+  state.commenTotal = 0
   playNext()
   getCommentPlaylist(1)
 }
 
 function handlePlayPrevious() {
+  state.commentListData = []
+  state.commenTotal = 0
   playPrevious()
   getCommentPlaylist(1)
 }
 
 onMounted(() => {
   setInterval(updateTime, 1000) as unknown as number
-  getCommentPlaylist(1)
 })
 defineExpose({
   show,

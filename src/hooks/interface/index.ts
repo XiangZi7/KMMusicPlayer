@@ -23,6 +23,8 @@ export interface MusicPlayer {
     Loadlyrics: () => Promise<void>;                   // 加载歌词
     currentLyricIndex: Ref<number>;                   // 当前歌词索引
     scrollStyle: Ref<{ transform: string }>;          // 用于滚动歌词的样式
+    eqSettings: Ref<{ bass: number; mid: number; treble: number }>; // EQ 设置
+    updateEQ: (band: 'bass' | 'mid' | 'treble', value: number) => void; // 更新EQ的方法
 }
 
 // 登陆状态模型

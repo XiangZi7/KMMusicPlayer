@@ -24,6 +24,7 @@ export const MenuData = [
         title: "设置",
         children: [
             { title: "设置", icon: "hugeicons:settings-03", router: "/setting" },
+            { title: "EQ均衡器", icon: "hugeicons:settings-03", router: "/eq" },
             { title: "测试", icon: "ph:test-tube-duotone", router: "/test", },
             { title: "主题", icon: "unjs:theme-colors", router: "/theme", shortcut: '⌘+Q' },
         ]
