@@ -1,1 +1,0 @@
-import{_ as e}from"./index-Ccz55_AV.js";const r={};function n(c,i){return null}const _=e(r,[["render",n],["__file","/home/runner/work/KM-Music-Player/KM-Music-Player/src/views/animation/index.vue"]]);export{_ as default};
