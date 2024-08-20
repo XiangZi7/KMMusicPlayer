@@ -53,6 +53,7 @@
     "sass": "^1.77.8",
     "start-server-and-test": "^2.0.4",
     "tailwindcss": "^3.4.6",
+    "terser": "^5.31.6",
     "typescript": "~5.4.0",
     "typescript-eslint": "^7.16.1",
     "unplugin-auto-import": "^0.18.0",
