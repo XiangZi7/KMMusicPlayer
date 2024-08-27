@@ -41,7 +41,7 @@
 使用 Git 克隆项目到本地：
 
 ```bash
-  git clone https://github.com/XiangZi7/KM-Music-Player.git
+git clone https://github.com/XiangZi7/KM-Music-Player.git
 ```
 
 安装依赖
@@ -51,6 +51,13 @@
 ```bash
 cd KM-Music-Player
 pnpm install
+```
+
+修改.env的VITE_APP_BASE_API
+
+```
+# 本地环境接口地址
+VITE_APP_BASE_API = '你的网易云接口地址'
 ```
 
 启动开发服务器
