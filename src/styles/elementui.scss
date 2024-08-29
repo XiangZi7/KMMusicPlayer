@@ -5,7 +5,11 @@
 .footer-player .el-slider__button-wrapper {
     display: none;
 }
-    
+
+.drawer-bg .el-slider__button-wrapper {
+    display: none;
+}
+
 .mask-gradient {
     mask-image: linear-gradient(#000, #000, transparent 0, #000 var(--scroll-shadow-size), #000 calc(100% - var(--scroll-shadow-size)), transparent);
 }
