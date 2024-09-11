@@ -123,4 +123,4 @@ function formatTime(seconds: number): string {
 .el-button + .el-button {
   margin-left: 0;
 }
-</style>  
+</style>

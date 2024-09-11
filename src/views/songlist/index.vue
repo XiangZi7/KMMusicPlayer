@@ -68,7 +68,7 @@ const playMusic = () => {
       mv: row.mv as number,
     }
   })
-  audioStore.addTrack(newArr as unknown as Track[] )
+  audioStore.addTrack(newArr as unknown as Track[])
 }
 </script>
 <template>
