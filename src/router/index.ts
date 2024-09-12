@@ -24,6 +24,7 @@ const router = createRouter({
           name: 'discover',
           component: () => import('@/views/discover/index.vue'),
         },
+
         {
           path: '/discover/songlist',
           name: 'disonglist',
@@ -91,6 +92,11 @@ const router = createRouter({
           component: () => import('@/views/eq/index.vue'),
         },
       ],
+    },
+    {
+      path: '/dataScreen',
+      name: 'dataScreen',
+      component: () => import('@/views/dataScreen/index.vue'),
     },
   ],
 })

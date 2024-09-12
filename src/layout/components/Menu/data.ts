@@ -3,7 +3,7 @@ export const MenuData = [
     title: '',
     children: [
       { title: '首页', icon: 'solar:home-smile-broken', router: '/' },
-      { title: '数据大屏', icon: 'solar:home-smile-broken', router: '/dataScreen' }
+      { title: '数据大屏', icon: 'material-symbols:screen-search-desktop-outline-rounded', router: '/dataScreen' }
     ],
   },
   {
@@ -32,7 +32,7 @@ export const MenuData = [
     title: '设置',
     children: [
       { title: '设置', icon: 'hugeicons:settings-03', router: '/setting' },
-      { title: 'EQ均衡器', icon: 'hugeicons:settings-03', router: '/eq' },
+      { title: 'EQ均衡器', icon: 'ri:equalizer-line', router: '/eq' },
       { title: '测试', icon: 'ph:test-tube-duotone', router: '/test' },
       {
         title: '主题',

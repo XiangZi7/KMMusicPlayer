@@ -33,13 +33,13 @@ const handleKeyDown = (event: KeyboardEvent): void => {
   if (event.ctrlKey && event.key === 'd') {
     event.preventDefault()
     router.push('/discover')
-    menuStore.setMenuIndex('2-0')
+    menuStore.setMenuIndex('1-0')
   }
-  // 监听 Ctrl + T
+  // 监听 Ctrl + Q
   if (event.ctrlKey && event.key === 'q') {
     event.preventDefault()
     router.push('/theme')
-    menuStore.setMenuIndex('3-2')
+    menuStore.setMenuIndex('2-3')
   }
 }
 </script>
