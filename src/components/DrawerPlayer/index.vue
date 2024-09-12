@@ -121,7 +121,7 @@ defineExpose({
 <template>
   <el-drawer
     :style="{
-      '--track-cover-url': `url(${currentSong.cover })`,
+      '--track-cover-url': `url(https://q0.itc.cn/q_70/images03/20240814/2544ea72400a472798ad81610ca4440e.jpeg)`,
     }"
     v-model="drawer"
     :direction="direction"
