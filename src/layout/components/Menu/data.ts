@@ -3,7 +3,11 @@ export const MenuData = [
     title: '',
     children: [
       { title: '首页', icon: 'solar:home-smile-broken', router: '/' },
-      { title: '数据大屏', icon: 'material-symbols:screen-search-desktop-outline-rounded', router: '/dataScreen' }
+      {
+        title: '数据大屏',
+        icon: 'material-symbols:screen-search-desktop-outline-rounded',
+        router: '/dataScreen',
+      },
     ],
   },
   {

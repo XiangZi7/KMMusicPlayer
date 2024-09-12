@@ -72,13 +72,24 @@ const playMusic = () => {
 }
 </script>
 <template>
-  <div class="container h-full px-4 md:px-6 py-12 w-full box-border flex flex-1 flex-col overflow-x-hidden">
+  <div
+    class="container h-full px-4 md:px-6 py-12 w-full box-border flex flex-1 flex-col overflow-x-hidden"
+  >
     <div class="flex flex-col md:flex-row h-full gap-8 md:gap-12 lg:gap-16">
-      <div class="lg:flex flex-col items-center gap-4 relative hidden w-[320px]" v-if="playlistData.playlist.id">
-        <img :src="playlistData.playlist.coverImgUrl + '?param=560y560'" alt="Summer Vibes Playlist" width="300"
-          height="300" class="rounded-lg object-cover aspect-square" />
+      <div
+        class="lg:flex flex-col items-center gap-4 relative hidden w-[320px]"
+        v-if="playlistData.playlist.id"
+      >
+        <img
+          :src="playlistData.playlist.coverImgUrl + '?param=560y560'"
+          alt="Summer Vibes Playlist"
+          width="300"
+          height="300"
+          class="rounded-lg object-cover aspect-square"
+        />
         <div
-          class="absolute top-2 right-2 bg-gray-400/50 dark:bg-gray-600/50 px-2 py-1 rounded-md text-white text-sm flex items-center gap-1">
+          class="absolute top-2 right-2 bg-gray-400/50 dark:bg-gray-600/50 px-2 py-1 rounded-md text-white text-sm flex items-center gap-1"
+        >
           <icon-ic:outline-play-circle />
           {{ formatNumber(playlistData.playlist.playCount) }}
         </div>
@@ -87,24 +98,39 @@ const playMusic = () => {
             {{ playlistData.playlist.name }}
           </h1>
           <div
-            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base">
-            <img :src="playlistData.playlist.creator?.avatarUrl" alt="DJ Sunny" width="24" height="24"
-              class="rounded-full" style="aspect-ratio: 24 / 24; object-fit: cover" />
+            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
+          >
+            <img
+              :src="playlistData.playlist.creator?.avatarUrl"
+              alt="DJ Sunny"
+              width="24"
+              height="24"
+              class="rounded-full"
+              style="aspect-ratio: 24 / 24; object-fit: cover"
+            />
             <span>{{ playlistData.playlist.creator?.nickname }}</span>
           </div>
           <div
-            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base">
-            <span class="bg-muted dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
-              v-for="item in playlistData.playlist.tags">{{ item }}</span>
+            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
+          >
+            <span
+              class="bg-muted dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
+              v-for="item in playlistData.playlist.tags"
+              >{{ item }}</span
+            >
           </div>
-          <p class="text-muted-foreground dark:text-gray-300 text-sm md:line-clamp-5"
-            :title="playlistData.playlist.description">
+          <p
+            class="text-muted-foreground dark:text-gray-300 text-sm md:line-clamp-5"
+            :title="playlistData.playlist.description"
+          >
             {{ playlistData.playlist.description }}
           </p>
           <div class="flex items-center justify-center gap-1 w-full">
             <div class="flex items-center">
               <el-button text circle class="!p-3" @click="playMusic">
-                <icon-material-symbols:play-circle-outline class="text-xl dark:text-white" />
+                <icon-material-symbols:play-circle-outline
+                  class="text-xl dark:text-white"
+                />
               </el-button>
               <span class="text-sm dark:text-gray-300">
                 {{ formatNumber(playlistData.playlist.playCount) }}
@@ -141,6 +167,10 @@ const playMusic = () => {
         </div>
       </div>
     </div>
-    <CommentPopup v-model="drawer" :data="commentListData" @DIntersect="getCommentPlaylist" />
+    <CommentPopup
+      v-model="drawer"
+      :data="commentListData"
+      @DIntersect="getCommentPlaylist"
+    />
   </div>
 </template>

@@ -110,29 +110,28 @@
 </template>
 
 <script setup lang="ts" name="dataScreen">
-import AgeRatioChart from "./components/AgeRatioChart.vue";
-import AnnualUseChart from "./components/AnnualUseChart.vue";
-import ChinaMapChart from "./components/ChinaMapChart.vue";
-import HotPlateChart from "./components/HotPlateChart.vue";
-import MaleFemaleRatioChart from "./components/MaleFemaleRatioChart.vue";
-import OverNext30Chart from "./components/OverNext30Chart.vue";
-import PlatformSourceChart from "./components/PlatformSourceChart.vue";
-import RealTimeAccessChart from "./components/RealTimeAccessChart.vue";
-import dayjs from "dayjs";
+import AgeRatioChart from './components/AgeRatioChart.vue'
+import AnnualUseChart from './components/AnnualUseChart.vue'
+import ChinaMapChart from './components/ChinaMapChart.vue'
+import HotPlateChart from './components/HotPlateChart.vue'
+import MaleFemaleRatioChart from './components/MaleFemaleRatioChart.vue'
+import OverNext30Chart from './components/OverNext30Chart.vue'
+import PlatformSourceChart from './components/PlatformSourceChart.vue'
+import RealTimeAccessChart from './components/RealTimeAccessChart.vue'
+import dayjs from 'dayjs'
 
-const router = useRouter();
-const dataScreenRef = ref<HTMLElement | null>(null);
+const router = useRouter()
+const dataScreenRef = ref<HTMLElement | null>(null)
 const menuStore = useMenuStore()
 
 onMounted(() => {
   if (dataScreenRef.value) {
-    dataScreenRef.value.style.transform = `scale(${getScale()}) translate(-50%, -50%)`;
-    dataScreenRef.value.style.width = `1920px`;
-    dataScreenRef.value.style.height = `1080px`;
+    dataScreenRef.value.style.transform = `scale(${getScale()}) translate(-50%, -50%)`
+    dataScreenRef.value.style.width = `1920px`
+    dataScreenRef.value.style.height = `1080px`
   }
-  window.addEventListener("resize", resize);
-});
-
+  window.addEventListener('resize', resize)
+})
 
 const goHome = () => {
   router.push('/home')
@@ -141,29 +140,29 @@ const goHome = () => {
 // 设置响应式
 const resize = () => {
   if (dataScreenRef.value) {
-    dataScreenRef.value.style.transform = `scale(${getScale()}) translate(-50%, -50%)`;
+    dataScreenRef.value.style.transform = `scale(${getScale()}) translate(-50%, -50%)`
   }
-};
+}
 
 // 根据浏览器大小推断缩放比例
 const getScale = (width = 1920, height = 1080) => {
-  let ww = window.innerWidth / width;
-  let wh = window.innerHeight / height;
-  return ww < wh ? ww : wh;
-};
+  let ww = window.innerWidth / width
+  let wh = window.innerHeight / height
+  return ww < wh ? ww : wh
+}
 
 // 获取当前时间
-let timer: NodeJS.Timer | null = null;
-let time = ref<string>(dayjs().format("YYYY年MM月DD HH:mm:ss"));
+let timer: NodeJS.Timer | null = null
+let time = ref<string>(dayjs().format('YYYY年MM月DD HH:mm:ss'))
 timer = setInterval(() => {
-  time.value = dayjs().format("YYYY年MM月DD HH:mm:ss");
-}, 1000);
+  time.value = dayjs().format('YYYY年MM月DD HH:mm:ss')
+}, 1000)
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", resize);
-  clearInterval(timer as unknown as number);
-});
+  window.removeEventListener('resize', resize)
+  clearInterval(timer as unknown as number)
+})
 </script>
 <style lang="scss" scoped>
-@import "./index.scss";
+@import './index.scss';
 </style>
