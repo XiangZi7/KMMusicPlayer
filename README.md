@@ -1,10 +1,10 @@
-# KM-Music-Player Player
+# KMMusicPlayer
 
 ![image](https://github.com/user-attachments/assets/fd134863-7f30-4f43-8ff7-83563df27221)
 
 ### 介绍 📖
 
-**KM-Music-Player** (**Kuriyama Mirai Music Player**) 是一款基于 **Vue
+**KMMusicPlayer** (**Kuriyama Mirai Music Player**) 是一款基于 **Vue
 3.4**、**Vite 5**、**Pinia** 和 **Element-Plus** 开发的开源 Web 音乐播放器。它采
 用目前最新的技术栈，提供流畅且美观的音乐播放体验。
 
