@@ -6,7 +6,6 @@ import Footer from './components/Footer/Footer.vue'
 
 const PlayerDrawerRef = ref<{ show: () => void }>()
 // 共享播放器状态
-
 provide('MusicPlayer', useMusicPlayer())
 
 const handleShow = () => {

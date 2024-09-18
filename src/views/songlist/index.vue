@@ -68,7 +68,7 @@ const playMusic = () => {
       mv: row.mv as number,
     }
   })
-  audioStore.addTrack(newArr as unknown as Track[] )
+  audioStore.addTrack(newArr as unknown as Track[])
 }
 </script>
 <template>
@@ -78,6 +78,7 @@ const playMusic = () => {
     <div class="flex flex-col md:flex-row h-full gap-8 md:gap-12 lg:gap-16">
       <div
         class="lg:flex flex-col items-center gap-4 relative hidden w-[320px]"
+        v-if="playlistData.playlist.id"
       >
         <img
           :src="playlistData.playlist.coverImgUrl + '?param=560y560'"

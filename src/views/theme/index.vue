@@ -5,37 +5,37 @@ import axios from 'axios'
 
 // 定义颜色列表的类型
 interface ColorItem {
-  hex: string;
-  name: string;
-  pinyin: string;
+  hex: string
+  name: string
+  pinyin: string
 }
 
-const themeStore = useThemeStore();
-const { switchDark, changePrimary } = useTheme();
+const themeStore = useThemeStore()
+const { switchDark, changePrimary } = useTheme()
 
 const state = reactive({
   colorList: [] as ColorItem[], // 使用类型注解定义颜色列表
-});
+})
 
-const { colorList } = toRefs(state);
+const { colorList } = toRefs(state)
 
 // 更改主题
 const changePrimarys = (e: string) => {
-  const resultHex = rgbaToHex(e);
-  changePrimary(resultHex);
-};
+  const resultHex = rgbaToHex(e)
+  changePrimary(resultHex)
+}
 
 // 更改主题
 function changeColor(color: string): void {
-  themeStore.setPrimary(color);
-  changePrimary(color);
+  themeStore.setPrimary(color)
+  changePrimary(color)
 }
 
 // 重置
 const reset = (): void => {
-  themeStore.setPrimary('#000000');
-  changePrimary('#000000');
-};
+  themeStore.setPrimary('#000000')
+  changePrimary('#000000')
+}
 
 /**
  * Rgba 转换 hex
@@ -43,16 +43,16 @@ const reset = (): void => {
  * @returns 返回处理后的颜色值
  */
 function rgbaToHex(rgba: string): string {
-  const regex = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)$/;
-  const match = rgba.match(regex);
+  const regex = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)$/
+  const match = rgba.match(regex)
   if (!match) {
-    throw new Error('Invalid RGBA string');
+    throw new Error('Invalid RGBA string')
   }
-  const r = parseInt(match[1], 10);
-  const g = parseInt(match[2], 10);
-  const b = parseInt(match[3], 10);
-  const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  return `#${hex}`;
+  const r = parseInt(match[1], 10)
+  const g = parseInt(match[2], 10)
+  const b = parseInt(match[3], 10)
+  const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+  return `#${hex}`
 }
 
 onMounted(() => {
@@ -60,9 +60,9 @@ onMounted(() => {
     method: 'get',
     url: 'https://mock.mengxuegu.com/mock/634f6425369a770d74bbf7b9/example/colorsList',
   }).then(({ data }: { data: ColorItem[] }) => {
-    state.colorList = data;
-  });
-});
+    state.colorList = data
+  })
+})
 </script>
 <template>
   <div class="w-full">
@@ -84,7 +84,7 @@ onMounted(() => {
             v-for="item in colorList"
             :key="item.name"
             @click="changeColor(item.hex)"
-            class="bg-lightblue text-center rounded-md transition-transform duration-200 ease-in-out hover:scale-105 "
+            class="bg-lightblue text-center rounded-md transition-transform duration-200 ease-in-out hover:scale-105"
           >
             <div
               class="w-full h-32 rounded-lg"
