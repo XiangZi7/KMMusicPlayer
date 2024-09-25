@@ -1,9 +1,9 @@
 {
-  "name": "geeker-admin",
+  "name": "kmmusicplayer",
   "private": true,
   "version": "1.2.0",
   "type": "module",
-  "description": "geeker-admin open source management system",
+  "description": "KMMusicPlayer",
   "author": {
     "name": "Yxcr",
     "email": "793923048@qq.com",
