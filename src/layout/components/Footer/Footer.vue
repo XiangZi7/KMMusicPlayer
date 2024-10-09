@@ -37,7 +37,7 @@ function formatTime(seconds: number): string {
           <el-image
             :src="currentSong.cover"
             alt="Album cover"
-            class="rounded-md w-9 h-9"
+            class="rounded-md w-9 h-9 cursor-pointer"
             style="aspect-ratio: 40 / 40; object-fit: cover"
             @click="Emit('show')"
           />

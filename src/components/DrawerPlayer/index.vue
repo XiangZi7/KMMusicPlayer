@@ -353,14 +353,12 @@ defineExpose({
           v-model="SettingStore.isTranslatedParsed"
           @change="SettingStore.setTranslatedParsed"
           class="ml-2"
-          style="--el-switch-on-color: #13ce66"
           active-text="翻译"
         />
         <el-switch
           v-model="SettingStore.isRomaParsed"
           @change="SettingStore.setRomaParsed"
           class="ml-2"
-          style="--el-switch-on-color: #13ce66"
           active-text="罗马音"
         />
       </div>
