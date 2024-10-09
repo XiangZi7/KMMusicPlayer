@@ -21,6 +21,7 @@ export interface MusicPlayer {
   volume: Ref<number> // 当前音量
   lyricsData: Ref<LyricData> // 歌词数据
   Loadlyrics: () => Promise<void> // 加载歌词
+  scrollToCurrentLyric: (el1: HTMLElement) => void // 加载歌词
   currentLyricIndex: Ref<number> // 当前歌词索引
   scrollStyle: Ref<{ transform: string }> // 用于滚动歌词的样式
   eqSettings: Ref<{ bass: number; mid: number; treble: number }> // EQ 设置

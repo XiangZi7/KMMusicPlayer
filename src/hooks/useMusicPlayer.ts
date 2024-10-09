@@ -16,7 +16,6 @@ export function useMusicPlayer() {
   const playMode = ref(PlayMode.Sequence)
   // 创建一个新的Audio实例
   const audio = new Audio()
-  // const audioElement = ref(new Audio());
   // 添加当前时间和总时间的响应式引用
   const currentTime = ref(0)
   const duration = ref(0)
@@ -28,9 +27,6 @@ export function useMusicPlayer() {
   })
   // 用于追踪当前歌词索引
   const currentLyricIndex = ref(0)
-
-  const lyricTranslateY = ref<number>(0) // 用于控制歌词偏移的 translateY 值
-  const containerHeight = 600 // 歌词容器的高度
 
   // EQ相关的响应式变量
   const eqSettings = ref({
@@ -85,6 +81,7 @@ export function useMusicPlayer() {
 
   // 加载歌词
   async function Loadlyrics() {
+    // 初始化歌词当前坐标
     lyricsData.value = { lines: [] }
     try {
       if (
@@ -109,24 +106,6 @@ export function useMusicPlayer() {
     }
   }
 
-  // 计算歌词的行高
-  const lineHeight = computed(() => {
-    const currentLine = lyricsData.value.lines[currentLyricIndex.value]
-
-    if (!currentLine) return 0 // 避免出现 undefined
-
-    // 计算该行的显示高度
-    // 假设每行的单个文本行（例如，仅包括 `text`）的高度默认为 28px，
-    // 如果有翻译和罗马音，则根据需要调整
-    const numberOfLines = [
-      currentLine.text,
-      currentLine.translation || '',
-      currentLine.romaLrc || '',
-    ].filter((line) => line).length
-
-    return numberOfLines === 1 ? 28 : numberOfLines === 2 ? 48 : 68 // 自定义您的高度
-  })
-
   // 用于查找当前歌词索引并计算 translateY 值
   function findCurrentLyricIndex(newTime = 0) {
     if (lyricsData.value.lines.length === 0) return
@@ -136,25 +115,18 @@ export function useMusicPlayer() {
     )
     currentLyricIndex.value =
       targetIndex === -1 ? lyricsData.value.lines.length - 1 : targetIndex - 1
-
-    // 计算歌词位置偏移以确保居中
-    const centerPosition = containerHeight / 2
-    const currentLyricPosition = currentLyricIndex.value * lineHeight.value
-
-    lyricTranslateY.value = -(
-      currentLyricPosition -
-      centerPosition +
-      lineHeight.value / 2
-    )
   }
 
-  // 计算用于歌词滚动的样式
-  const scrollStyle = computed(() => {
-    return {
-      transform: `translateY(${lyricTranslateY.value}px)`,
-      transition: 'transform 0.3s ease-in-out', // 添加平滑过渡效果
+  // 函数计算当前高亮歌词的位置，并将其滚动到中间。使用 offsetTop 属性获取元素距离顶部的距离，并设置 scrollTop。
+  function scrollToCurrentLyric(el: HTMLDivElement) {
+    if (!el) return
+
+    const activeLyric = el.querySelector('.activeLyric') as HTMLElement
+
+    if (activeLyric) {
+      el.scrollTop = activeLyric.offsetTop - (el.clientHeight / 2) - (activeLyric.clientHeight);
     }
-  })
+  }
 
   // 更新currentLyricIndex
   watch(currentTime, (newTime) => {
@@ -237,7 +209,9 @@ export function useMusicPlayer() {
 
   // 改变当前歌曲时间
   const changeCurrentTime = (currentTime: number) => {
-    audio.currentTime = currentTime
+    nextTick(() => {
+      audio.currentTime = Math.round(currentTime)
+    })
   }
 
   // 设置音量
@@ -302,8 +276,8 @@ export function useMusicPlayer() {
     Loadlyrics,
     lyricsData,
     currentLyricIndex,
-    scrollStyle,
     updateEQ,
     eqSettings,
+    scrollToCurrentLyric
   }
 }

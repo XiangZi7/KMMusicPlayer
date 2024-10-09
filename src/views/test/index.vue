@@ -42,6 +42,16 @@ const SwitchingRole = (role: Role) => {
     <el-button type="primary" @click="SwitchingRole('admin')"
       >切换管理员</el-button
     >
+
+    <el-carousel height="200px" motion-blur>
+      <el-carousel-item v-for="item in 3" :key="item">
+        <div class="grid grid-cols-3 h-full">
+          <div class="bg-red-400">1</div>
+          <div class="bg-blue-300">2</div>
+          <div class="bg-slate-500">3</div>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 

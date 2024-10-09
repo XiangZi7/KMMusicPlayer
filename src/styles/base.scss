@@ -77,3 +77,12 @@ html {
 .border-surface {
   border-color: var(--p-content-border-color);
 }
+
+.activeLyric {
+  @apply text-[--el-color-primary]; // 应用自定义颜色
+  @apply text-base;
+}
+
+.inactiveLyric {
+  @apply text-gray-500 dark:text-gray-400; // 应用灰色文本
+}

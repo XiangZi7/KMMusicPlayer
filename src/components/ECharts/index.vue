@@ -67,7 +67,6 @@ const resize = () => {
 
 const debouncedResize = useDebounceFn(resize, 300, { maxWait: 800 })
 
-
 onMounted(() => {
   nextTick(() => init())
   window.addEventListener('resize', debouncedResize)

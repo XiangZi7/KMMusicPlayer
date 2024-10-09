@@ -4,15 +4,19 @@ import { Icon } from '@iconify/vue'
 import { PlayMode } from '@/enum'
 import { Comment } from '@/api/interface'
 import { commentMusic } from '@/api'
+import { useDebounceFn } from '@vueuse/core'
 
 const userStore = useUserStore()
+const SettingStore = useSettingStore()
 
+const scrollContainer = ref()
 const state = reactive({
   direction: 'ttb',
   drawer: false,
   commentListData: [] as Comment[],
   commenDrawer: false,
   commenTotal: 0,
+  isUserScrolling: false,
 })
 
 const { direction, drawer, commentListData, commenDrawer, commenTotal } =
@@ -30,11 +34,9 @@ const {
   Loadlyrics,
   lyricsData,
   currentLyricIndex,
-  scrollStyle,
   setPlayMode,
+  scrollToCurrentLyric,
 } = inject('MusicPlayer') as MusicPlayer
-
-const SettingStore = useSettingStore()
 
 const show = () => {
   state.drawer = true
@@ -66,16 +68,19 @@ function updateTime(): void {
   LocalhostcurrentTime.value = new Date().toLocaleTimeString()
 }
 
-// 打开评论抽屉
+// 打开评论抽屉并加载相应的评论数据
 const showDrawer = () => {
-  state.commenDrawer = true
-  if (state.commentListData.length > 0) return
+  state.commenDrawer = true // 打开评论抽屉
+  if (state.commentListData.length > 0) return // 如果已有评论数据，则不再请求
+
+  // 请求评论数据，并更新评论列表和评论总数
   commentMusic({ offset: 1, id: currentSong.value.id }).then((res) => {
-    state.commentListData = res.comments
-    state.commenTotal = res.total
+    state.commentListData = res.comments // 更新评论列表
+    state.commenTotal = res.total // 更新评论总数
   })
 }
 
+// 格式化数字函数，将数字转换为易读的字符串（如 1.5万）
 function formatNumber(num: number): string {
   if (num < 10000) {
     return num.toString() // 直接返回小于10000的数字
@@ -89,31 +94,61 @@ function formatNumber(num: number): string {
   }
 }
 
+// 获取评论列表的函数，默认请求第一页，如果已有评论则不再请求
 const getCommentPlaylist = (pages: number = 1) => {
-  if (state.commentListData.length > 0) return
+  if (state.commentListData.length > 0) return // 如果已有评论数据，则不再请求
+
+  // 请求评论数据，并合并到现有评论列表中
   commentMusic({ offset: pages, id: currentSong.value.id }).then((res) => {
-    state.commentListData = state.commentListData.concat(res.comments)
-    state.commenTotal = res.total
+    state.commentListData = state.commentListData.concat(res.comments) // 更新评论列表
+    state.commenTotal = res.total // 更新评论总数
   })
 }
-
+// 播放下一首歌曲的处理函数
 function handlePlayNext() {
-  state.commentListData = []
-  state.commenTotal = 0
-  playNext()
-  getCommentPlaylist(1)
+  state.commentListData = [] // 清空评论列表
+  state.commenTotal = 0 // 重置评论总数
+  playNext() // 播放下一首歌曲
+  getCommentPlaylist(1) // 获取新的评论列表
 }
 
+// 播放上一首歌曲的处理函数
 function handlePlayPrevious() {
-  state.commentListData = []
-  state.commenTotal = 0
-  playPrevious()
-  getCommentPlaylist(1)
+  state.commentListData = [] // 清空评论列表
+  state.commenTotal = 0 // 重置评论总数
+  playPrevious() // 播放上一首歌曲
+  getCommentPlaylist(1) // 获取新的评论列表
 }
 
+// 防抖函数，用户滚动歌词时停止歌词滚动，3秒后继续
+const debouncedFn = useDebounceFn(() => {
+  state.isUserScrolling = false // 重新设置用户滚动状态
+  scrollToCurrentLyric(scrollContainer.value) // 恢复歌词滚动
+}, 3000) // 防抖延时：3000毫秒
+
+// 处理滚动事件，触发防抖函数
+function handleScroll() {
+  state.isUserScrolling = true // 标记用户正在滚动
+  debouncedFn() // 调用防抖函数
+}
+
+// 监听播放当前时间，并用于歌词滚动
+watch(
+  () => currentTime.value,
+  () => {
+    // 仅在 currentTime 有效且用户未滚动时滚动歌词
+    if (currentTime.value && !state.isUserScrolling) {
+      scrollToCurrentLyric(scrollContainer.value) // 滚动到当前歌词
+    }
+  }
+)
+
+// 组件挂载时设置定时器以每秒更新时间
 onMounted(() => {
-  setInterval(updateTime, 1000) as unknown as number
+  setInterval(updateTime, 1000) as unknown as number // 每秒更新一次本地时间
 })
+
+// 允许在父组件中访问这个方法
 defineExpose({
   show,
 })
@@ -265,42 +300,36 @@ defineExpose({
         </div>
         <div
           class="flex-[50%] max-w-[50%] md:flex hidden h-full items-center justify-center"
+          style="--scroll-shadow-size: 40px"
         >
           <template v-if="lyricsData.lines.length > 0">
-            <div class="items-center justify-center flex h-full">
-              <el-scrollbar
-                class="flex items-center justify-center w-full"
-                wrap-class="mask-gradient w-full text-center !h-[600px]"
-                style="--scroll-shadow-size: 40px"
+            <div
+              class="mask-gradient !h-[600px] overflow-y-auto w-full"
+              ref="scrollContainer"
+              @scroll="handleScroll"
+            >
+              <ul
+                class="text-center h-full w-full"
+                style="--scroll-shadow-size: 40px; width: calc(100% - 50px)"
               >
-                <ul :style="scrollStyle">
-                  <li
-                    v-for="(item, index) in lyricsData.lines"
-                    :key="index"
-                    :class="[
-                      'text-sm py-1 transition-all duration-300 ease-in-out font-body',
-                      {
-                        'text-[--el-color-primary]':
-                          currentLyricIndex === index,
-                        'text-gray-500 dark:text-gray-400':
-                          currentLyricIndex !== index,
-                      },
-                    ]"
-                  >
-                    <p v-if="item.text && SettingStore.isOriginalParsed">
-                      {{ item.text }}
-                    </p>
-                    <p
-                      v-if="item.translation && SettingStore.isTranslatedParsed"
-                    >
-                      {{ item.translation }}
-                    </p>
-                    <p v-if="item.romaLrc && SettingStore.isRomaParsed">
-                      {{ item.romaLrc }}
-                    </p>
-                  </li>
-                </ul>
-              </el-scrollbar>
+                <li
+                  v-for="(item, index) in lyricsData.lines"
+                  :key="index"
+                  :class="[
+                    `text-sm py-1 transition-all duration-300 ease-in-out ${currentLyricIndex === index ? 'activeLyric' : 'inactiveLyric'}`,
+                  ]"
+                >
+                  <p v-if="item.text && SettingStore.isOriginalParsed">
+                    {{ item.text }}
+                  </p>
+                  <p v-if="item.translation && SettingStore.isTranslatedParsed">
+                    {{ item.translation }}
+                  </p>
+                  <p v-if="item.romaLrc && SettingStore.isRomaParsed">
+                    {{ item.romaLrc }}
+                  </p>
+                </li>
+              </ul>
             </div>
           </template>
           <template v-else>
@@ -318,6 +347,24 @@ defineExpose({
       :data="commentListData"
       @DIntersect="getCommentPlaylist"
     />
+    <template #footer>
+      <div class="flex justify-end">
+        <el-switch
+          v-model="SettingStore.isTranslatedParsed"
+          @change="SettingStore.setTranslatedParsed"
+          class="ml-2"
+          style="--el-switch-on-color: #13ce66"
+          active-text="翻译"
+        />
+        <el-switch
+          v-model="SettingStore.isRomaParsed"
+          @change="SettingStore.setRomaParsed"
+          class="ml-2"
+          style="--el-switch-on-color: #13ce66"
+          active-text="罗马音"
+        />
+      </div>
+    </template>
   </el-drawer>
 </template>
 <style lang="scss" scoped>
