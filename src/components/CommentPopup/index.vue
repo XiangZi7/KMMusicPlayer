@@ -32,46 +32,39 @@ function handleIntersect(PageNum: number) {
 </script>
 <template>
   <el-drawer
-    v-model="drawer"
     title="评论"
+    v-model="drawer"
     :direction="direction"
-    class="!w-[50%]"
+    class="!w-[100%]"
   >
-    <div class="space-y-8">
-      <div>
-        <h2 class="text-3xl font-bold">Comments</h2>
-        <p class="text-muted-foreground">
-          Share your thoughts and feedback on this article.
-        </p>
-      </div>
-      <div class="space-y-6">
+    <div class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">
+      <div
+        class="transform md:translate-y-4 transition-all duration-300 hover:scale-105"
+        v-for="item in data"
+        :key="item.commentId"
+        ref="observedElement"
+      >
         <div
-          class="flex items-start gap-4"
-          v-for="item in data"
-          :key="item.commentId"
-          ref="observedElement"
+          class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-6 h-full shadow-lg border border-white border-opacity-20"
         >
-          <span
-            class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10 border"
-          >
+          <div class="flex items-center mb-4 space-x-2">
             <el-avatar
               :src="item.user.avatarUrl + '?param=60y60'"
               :alt="item.user.nickname"
             />
-          </span>
-          <div class="grid gap-2">
-            <div class="flex items-center gap-2">
+            <div>
               <div class="font-medium text-base">{{ item.user.nickname }}</div>
               <div class="text-xs text-muted-foreground">
                 {{ item.timeStr }}
               </div>
-              <div class="text-xs text-muted-foreground">
-                IP: {{ item.ipLocation.location }}
-              </div>
             </div>
-            <p class="text-sm">
-              {{ item.content }}
-            </p>
+          </div>
+          <p class="text-base">
+            {{ item.content }}
+          </p>
+          <div class="flex justify-between items-center text-xs text-gray-500">
+            <span>{{ item.timeStr }}</span
+            ><span>IP: {{ item.ipLocation.location }}</span>
           </div>
         </div>
       </div>

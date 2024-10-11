@@ -72,98 +72,96 @@ const playMusic = () => {
 }
 </script>
 <template>
-  <div
-    class="container h-full px-4 md:px-6 py-12 w-full box-border flex flex-1 flex-col overflow-x-hidden"
-  >
-    <div class="flex flex-col md:flex-row h-full gap-8 md:gap-12 lg:gap-16">
-      <div
-        class="lg:flex flex-col items-center gap-4 relative hidden w-[320px]"
-        v-if="playlistData.playlist.id"
-      >
+  <div class="container p-6 overflow-hidden h-full flex-1">
+    <div class="flex gap-6 h-full">
+      <div class="flex-[20%] max-w-[20%] space-y-4 relative">
         <img
+          alt="Album cover"
+          class="w-full aspect-square object-cover rounded-lg shadow-xl"
           :src="playlistData.playlist.coverImgUrl + '?param=560y560'"
-          alt="Summer Vibes Playlist"
-          width="300"
-          height="300"
-          class="rounded-lg object-cover aspect-square"
         />
         <div
-          class="absolute top-2 right-2 bg-gray-400/50 dark:bg-gray-600/50 px-2 py-1 rounded-md text-white text-sm flex items-center gap-1"
+          class="absolute top-0 right-2 bg-gray-400/50 dark:bg-gray-600/50 px-2 py-1 rounded-md text-white text-sm flex items-center gap-1"
         >
           <icon-ic:outline-play-circle />
           {{ formatNumber(playlistData.playlist.playCount) }}
         </div>
-        <div class="text-center flex flex-col gap-3">
-          <h1 class="text-2xl font-bold tracking-tight dark:text-white">
-            {{ playlistData.playlist.name }}
-          </h1>
-          <div
-            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
+
+        <div class="flex items-center space-x-4">
+          <span
+            class="relative flex shrink-0 overflow-hidden rounded-full w-12 h-12"
           >
             <img
+              class="aspect-square h-full w-full"
+              alt="Creator avatar"
               :src="playlistData.playlist.creator?.avatarUrl"
-              alt="DJ Sunny"
-              width="24"
-              height="24"
-              class="rounded-full"
-              style="aspect-ratio: 24 / 24; object-fit: cover"
             />
-            <span>{{ playlistData.playlist.creator?.nickname }}</span>
-          </div>
-          <div
-            class="flex items-center justify-center gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
-          >
-            <span
-              class="bg-muted dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
-              v-for="item in playlistData.playlist.tags"
-              >{{ item }}</span
-            >
-          </div>
-          <p
-            class="text-muted-foreground dark:text-gray-300 text-sm md:line-clamp-5"
-            :title="playlistData.playlist.description"
-          >
-            {{ playlistData.playlist.description }}
-          </p>
-          <div class="flex items-center justify-center gap-1 w-full">
-            <div class="flex items-center">
-              <el-button text circle class="!p-3" @click="playMusic">
-                <icon-material-symbols:play-circle-outline
-                  class="text-xl dark:text-white"
-                />
-              </el-button>
-              <span class="text-sm dark:text-gray-300">
-                {{ formatNumber(playlistData.playlist.playCount) }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <el-button text circle class="!p-3">
-                <icon-mdi:cards-heart-outline class="text-xl dark:text-white" />
-              </el-button>
-              <span class="text-sm dark:text-gray-300">
-                {{ formatNumber(playlistData.playlist.subscribedCount) }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <el-button text circle class="!p-3" @click="showDrawer">
-                <icon-uil:comment-dots class="text-xl dark:text-white" />
-              </el-button>
-              <span class="text-sm dark:text-gray-300">
-                {{ formatNumber(playlistData.playlist.commentCount) }}
-              </span>
-            </div>
-          </div>
-          <p class="text-muted-foreground dark:text-gray-300 text-sm">
-            {{ formattedDate(playlistData.playlist.createTime) }}
-          </p>
-          <span class="text-muted-foreground dark:text-gray-300 text-sm">
-            {{ playlistData.playlist.trackCount }} songs
           </span>
+          <div>
+            <p class="text-sm font-medium">Created by</p>
+            <p class="text-lg font-semibold">
+              {{ playlistData.playlist.creator?.nickname }}
+            </p>
+          </div>
         </div>
+        <h1 class="text-2xl font-bold tracking-tight dark:text-white">
+          {{ playlistData.playlist.name }}
+        </h1>
+        <div
+          class="flex gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
+        >
+          <span
+            class="bg-muted dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
+            v-for="item in playlistData.playlist.tags"
+            >{{ item }}</span
+          >
+        </div>
+        <p
+          class="text-muted-foreground dark:text-gray-300 text-sm md:line-clamp-5"
+          :title="playlistData.playlist.description"
+        >
+          {{ playlistData.playlist.description }}
+        </p>
+        <div class="flex gap-1 w-full">
+          <div class="flex items-center">
+            <el-button text circle class="!p-3" @click="playMusic">
+              <icon-material-symbols:play-circle-outline
+                class="text-xl dark:text-white"
+              />
+            </el-button>
+            <span class="text-sm dark:text-gray-300">
+              {{ formatNumber(playlistData.playlist.playCount) }}
+            </span>
+          </div>
+          <div class="flex items-center">
+            <el-button text circle class="!p-3">
+              <icon-mdi:cards-heart-outline class="text-xl dark:text-white" />
+            </el-button>
+            <span class="text-sm dark:text-gray-300">
+              {{ formatNumber(playlistData.playlist.subscribedCount) }}
+            </span>
+          </div>
+          <div class="flex items-center">
+            <el-button text circle class="!p-3" @click="showDrawer">
+              <icon-uil:comment-dots class="text-xl dark:text-white" />
+            </el-button>
+            <span class="text-sm dark:text-gray-300">
+              {{ formatNumber(playlistData.playlist.commentCount) }}
+            </span>
+          </div>
+        </div>
+        <p class="text-muted-foreground dark:text-gray-300 text-sm">
+          {{ formattedDate(playlistData.playlist.createTime) }}
+        </p>
+        <span class="text-muted-foreground dark:text-gray-300 text-sm">
+          {{ playlistData.playlist.trackCount }} songs
+        </span>
       </div>
-      <div class="gap-6 flex flex-1">
-        <div class="relative w-full h-full overflow-hidden">
-          <MusicList v-model="playlistData.playlist.tracks" />
+      <div class="flex flex-col flex-1 overflow-x-hidden">
+        <div class="gap-6 flex flex-1">
+          <div class="relative w-full h-full">
+            <MusicList v-model="playlistData.playlist.tracks" />
+          </div>
         </div>
       </div>
     </div>
