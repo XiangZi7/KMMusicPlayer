@@ -111,7 +111,7 @@ const playMusic = () => {
           class="flex gap-2 text-muted-foreground dark:text-gray-300 text-sm md:text-base"
         >
           <span
-            class="bg-muted dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
+            class="bg-[var(--el-color-primary)] text-white dark:bg-gray-700 px-2 py-1 rounded-md text-sm"
             v-for="item in playlistData.playlist.tags"
             >{{ item }}</span
           >
@@ -151,10 +151,10 @@ const playMusic = () => {
           </div>
         </div>
         <p class="text-muted-foreground dark:text-gray-300 text-sm">
-          {{ formattedDate(playlistData.playlist.createTime) }}
+          创建于{{ formattedDate(playlistData.playlist.createTime) }}
         </p>
         <span class="text-muted-foreground dark:text-gray-300 text-sm">
-          {{ playlistData.playlist.trackCount }} songs
+          共{{ playlistData.playlist.trackCount }}首歌曲
         </span>
       </div>
       <div class="flex flex-col flex-1 overflow-x-hidden">
