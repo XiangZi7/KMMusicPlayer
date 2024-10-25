@@ -150,6 +150,9 @@ importers:
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.5)(jsdom@24.1.0)(sass@1.77.8)(terser@5.31.6)
+      vue-eslint-parser:
+        specifier: ^9.4.3
+        version: 9.4.3(eslint@9.7.0)
       vue-tsc:
         specifier: ^2.0.21
         version: 2.0.21(typescript@5.4.2)

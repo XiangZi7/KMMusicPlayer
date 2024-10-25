@@ -4,6 +4,7 @@ import { Track } from '@/stores/interface'
 import { urlV1, lyric } from '@/api'
 import { ElNotification } from 'element-plus'
 import { LyricData } from '@/utils/parseLyrics'
+
 export function useMusicPlayer() {
   const audioStore = useAudioStore()
   // 计算属性，用来获取当前播放的歌曲
@@ -55,7 +56,7 @@ export function useMusicPlayer() {
 
     // 添加错误监听
     audio.onerror = async () => {
-      handleAudioError()
+      await handleAudioError()
     }
   })
 
@@ -124,7 +125,8 @@ export function useMusicPlayer() {
     const activeLyric = el.querySelector('.activeLyric') as HTMLElement
 
     if (activeLyric) {
-      el.scrollTop = activeLyric.offsetTop - (el.clientHeight / 2) - (activeLyric.clientHeight);
+      el.scrollTop =
+        activeLyric.offsetTop - el.clientHeight / 2 - activeLyric.clientHeight
     }
   }
 
@@ -278,6 +280,6 @@ export function useMusicPlayer() {
     currentLyricIndex,
     updateEQ,
     eqSettings,
-    scrollToCurrentLyric
+    scrollToCurrentLyric,
   }
 }

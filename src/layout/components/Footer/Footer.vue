@@ -4,6 +4,7 @@ import localhostSong from './components/localhostSong.vue'
 import Volume from './components/volume.vue'
 import { MusicPlayer } from '@/hooks/interface'
 import { PlayMode } from '@/enum'
+import router from '@/router'
 
 const {
   currentSong,
@@ -43,12 +44,16 @@ function formatTime(seconds: number): string {
           />
           <div>
             <div
-              class="text-sm font-medium line-clamp-1 dark:text-gray-200"
+              class="text-sm font-medium line-clamp-1 dark:text-gray-200 cursor-pointer"
               :title="currentSong.title"
+              @click="router.push(`/search?kw=${currentSong.title}`)"
             >
               {{ currentSong.title }}
             </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400">
+            <div
+              class="text-xs text-gray-500 dark:text-gray-400 cursor-pointer"
+              @click="router.push(`/search?kw=${currentSong.singer}`)"
+            >
               {{ currentSong.singer }}
             </div>
           </div>

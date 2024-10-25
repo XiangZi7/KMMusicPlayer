@@ -3,6 +3,7 @@ import { urlV1 } from '@/api'
 import { MusicPlayer } from '@/hooks/interface'
 import { Song } from '@/api/interface'
 import { Track } from '@/stores/interface'
+
 const tableData = defineModel<Song[]>()
 const AudioStore = useAudioStore()
 const router = useRouter()
@@ -70,6 +71,7 @@ const formatMillisecondsToTimes = (time: number) => {
       @row-dblclick="playMusic"
       class="!text-xs !flex-1"
     >
+      <!--歌名-->
       <el-table-column prop="name" label="歌名">
         <template #default="{ row }">
           <div class="flex items-center gap-1">
@@ -81,18 +83,31 @@ const formatMillisecondsToTimes = (time: number) => {
                 :alt="row.al.name"
               />
             </div>
-            <span class="line-clamp-1" :title="row.name">{{ row.name }}</span>
+            <span
+              class="line-clamp-1 cursor-pointer"
+              @click="router.push(`/search?kw=${row.name}`)"
+              :title="row.name"
+              >{{ row.name }}</span
+            >
           </div>
         </template>
       </el-table-column>
       <el-table-column label="歌手">
         <template #default="{ row }">
-          <span
-            class="line-clamp-1"
-            :title="row.ar.map((ar: any) => ar.name).join(' / ')"
-          >
-            {{ row.ar.map((ar: any) => ar.name).join(' / ') }}
-          </span>
+          <div class="line-clamp-1">
+            <template v-if="row.ar && row.ar.length">
+              <router-link
+                v-for="(item, index) in row.ar"
+                :key="item.id"
+                class="cursor-pointer"
+                :to="`/search?kw=${item.name}`"
+              >
+                {{ item.name }}
+                <!-- 在这里添加分隔符 -->
+                <span v-if="index < row.ar.length - 1"> \ </span>
+              </router-link>
+            </template>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="al.name" label="专辑">

@@ -3,6 +3,7 @@ import 'vue3-video-play/dist/style.css'
 import { videoPlay } from 'vue3-video-play'
 import { mvDetail, mvUrl, commentMV } from '@/api'
 import { MVDetail, CommentResponse } from './interface'
+
 const route = useRoute()
 
 const state = reactive({

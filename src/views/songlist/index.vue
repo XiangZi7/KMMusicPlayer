@@ -3,6 +3,7 @@ import { playlistDetail, commentPlaylist } from '@/api'
 import { playlistDetailResponse } from '@/api/interface'
 import { Track } from '@/stores/interface'
 import { Comment } from '@/api/interface'
+
 const route = useRoute()
 const audioStore = useAudioStore()
 const state = reactive({
