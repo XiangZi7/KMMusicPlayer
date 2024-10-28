@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import 'vue3-video-play/dist/style.css'
 import { videoPlay } from 'vue3-video-play'
-import { mvDetail, mvUrl, commentMV } from '@/api'
-import { MVDetail, CommentResponse } from './interface'
+import { mvDetail, mvUrl, commentMV, similarPlaylists } from '@/api'
+import {
+  MVDetail,
+  CommentResponse,
+  SimilarPlaylistsResponse,
+  SimilarPlaylistsPlaylist,
+} from './interface'
 
 const route = useRoute()
 
@@ -10,9 +15,10 @@ const state = reactive({
   mvUrls: '',
   mvDetails: {} as MVDetail,
   mvCommentsList: {} as CommentResponse,
+  mvs: [] as SimilarPlaylistsPlaylist[],
 })
 
-const { mvUrls, mvDetails, mvCommentsList } = toRefs(state)
+const { mvUrls, mvDetails, mvCommentsList, mvs } = toRefs(state)
 
 const observedElement = ref([])
 // 使用hook并传入必要的参数
@@ -53,6 +59,14 @@ watch(
   },
   { immediate: true }
 )
+
+onMounted(() => {
+  similarPlaylists<SimilarPlaylistsResponse>(
+    route.query.id as unknown as number
+  ).then((res) => {
+    state.mvs = res.mvs
+  })
+})
 </script>
 <template>
   <div class="w-full grid grid-rows-[auto_1fr_auto] gap-6 pb-10">
@@ -81,28 +95,34 @@ watch(
                   v-if="mvDetails.artists && mvDetails.artists.length > 0"
                   alt="Thumbnail"
                   class="rounded-full object-cover aspect-square border w-10 h-10"
-                  :src="mvDetails.artists[0].img1v1Url"
+                  :src="mvDetails.cover + '?param=90y90'"
                 />
-                <div class="text-sm">
+                <div class="text-base">
                   <div
                     class="font-semibold"
                     v-if="mvDetails.artists && mvDetails.artists.length > 0"
                   >
                     {{ mvDetails.artists.map((item) => item.name).join() }}
                   </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">
-                    70K subscribers
+                  <div class="text-gray-500 dark:text-gray-400 flex gap-2">
+                    <!-- 70K subscribers -->
+                    <span
+                      class="bg-[var(--el-color-primary)] text-white dark:bg-gray-700 px-2 py-1 rounded-md text-xs"
+                      v-for="item in mvDetails.videoGroup"
+                      >{{ item.name }}</span
+                    >
                   </div>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
+              <!-- 关注 -->
+              <!-- <div class="flex items-center gap-3">
                 <el-button type="primary">
                   <div class="flex gap-1 items-center">
                     <icon-ic:baseline-favorite-border class="text" />
                     <span>Subscribe</span>
                   </div>
                 </el-button>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="grid gap-4 text-sm leading-relaxed">
@@ -151,45 +171,27 @@ watch(
         </div>
       </div>
       <div class="col-span-2 grid gap-6">
-        <div class="flex items-start gap-4 relative group">
+        <div class="flex items-start gap-4 relative group" v-for="item in mvs">
           <a class="absolute inset-0 z-10" href="#">
             <span class="sr-only">View</span>
           </a>
           <img
             alt="Thumbnail"
             class="aspect-video rounded-lg object-cover w-28 h-16"
-            src="https://generated.vusercontent.net/placeholder.svg"
+            :src="item.cover"
           />
           <div class="text-sm">
             <div class="font-medium line-clamp-2">
-              Introducing v0: Generative UI
+              {{ item.name }}
             </div>
             <div class="text-xs text-gray-500 line-clamp-1 dark:text-gray-400">
-              Vercel
+              {{ item.artistName }}
             </div>
-            <div class="text-xs text-gray-500 line-clamp-1 dark:text-gray-400">
-              300K views · 5 days ago
-            </div>
-          </div>
-        </div>
-        <div class="flex items-start gap-4 relative group">
-          <a class="absolute inset-0 z-10" href="#">
-            <span class="sr-only">View</span>
-          </a>
-          <img
-            alt="Thumbnail"
-            class="aspect-video rounded-lg object-cover w-28 h-16"
-            src="https://generated.vusercontent.net/placeholder.svg"
-          />
-          <div class="text-sm">
-            <div class="font-medium line-clamp-2">
-              Introducing the frontend cloud
-            </div>
-            <div class="text-xs text-gray-500 line-clamp-1 dark:text-gray-400">
-              Vercel
-            </div>
-            <div class="text-xs text-gray-500 line-clamp-1 dark:text-gray-400">
-              1.2M views · 5 days ago
+            <div
+              class="text-xs text-gray-500 line-clamp-1 dark:text-gray-400 flex gap-1 items-center"
+            >
+              <icon-material-symbols:android-now-playing-outline />
+              {{ item.playCount }}
             </div>
           </div>
         </div>

@@ -144,7 +144,7 @@ interface playlistDetail {
   commentCount: number
 }
 
-export interface playlistDetailResponse {
+export interface PlaylistDetailResponse {
   code: number
   fromUserCount: number
   fromUsers: null | any
@@ -268,4 +268,52 @@ export interface CommentResponse {
   commentBanner: any | null // 根据实际情况定义更具体的类型
   comments: Comment[]
   total: number
+}
+
+
+
+export interface SearchResult {
+  action: number;
+  alg: string;
+  bizQueryInfo: string; // Json 字符串，如果需要可以解析为 BizQueryInfo 类型
+  gap: number;
+  imageUrl: null | string;
+  logInfo: null | string;
+  realkeyword: string;
+  searchType: number;
+  showKeyword: string;
+  source: null | string;
+  styleKeyword: {
+    keyWord: null | string;
+    descWord: string;
+  };
+  descWord: string;
+  keyWord: null | string;
+  trp_id: null | string;
+  trp_type: null | string;
+}
+
+
+// 定义获取MV的参数类型
+export interface MVAllParams {
+  area?: '全部' | '内地' | '港台' | '欧美' | '日本' | '韩国'; // 区域可选值
+  type?: '全部' | '官方版' | '原生' | '现场版' | '网易出品'; // 类型可选值
+  order?: '上升最快' | '最热' | '最新'; // 排序可选值
+  limit?: number; // 取出数量
+  offset?: number; // 偏移数量
+}
+
+// 定义MV的信息结构
+interface MV {
+  id: number;
+  name: string;
+  artistName: string; // 艺术家名称
+  cover: string; // 封面图
+  playCount: number; // 播放次数
+}
+
+// 定义获取MV列表的响应类型
+export interface MVAllResponse {
+  count: number; // MV的总数
+  mvs: MV[]; // MV的数组
 }

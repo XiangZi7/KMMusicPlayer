@@ -9,6 +9,9 @@ yarn-error.log*
 
 package-lock.json
 
+# env
+.env.development
+
 # Runtime data
 pids
 *.pid
@@ -101,3 +104,6 @@ sw.*
 
 # vite编译后生成的配置
 vite.config.js.timestamp*
+.env.development
+.env.development
+.env.development

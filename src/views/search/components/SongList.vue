@@ -24,7 +24,7 @@ let modelValue = defineModel<Item[]>()
       class="group relative overflow-hidden"
       v-for="item in modelValue"
       :key="item.id"
-      :to="`/songlist?id=${item.id}`"
+      :to="`/playlist?id=${item.id}`"
     >
       <el-image
         :src="item.coverImgUrl + '?param=200y200'"

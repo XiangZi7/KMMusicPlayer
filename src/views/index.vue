@@ -55,7 +55,7 @@ const progress = (type: 'back' | 'forward') => {
           class="flex flex-col gap-2"
           v-for="item in SongList.playlists"
           :key="item.id"
-          :to="`/songlist?id=${item.id}`"
+          :to="`/playlist?id=${item.id}`"
         >
           <el-image
             :src="item.coverImgUrl + '?param=160y160'"

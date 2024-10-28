@@ -84,7 +84,7 @@ function catChange(e: []) {
         v-for="item in Playlist"
         :key="item.id"
         ref="observedElement"
-        @click="router.push(`/songlist?id=${item.id}`)"
+        @click="router.push(`/playlist?id=${item.id}`)"
       >
         <el-image
           :src="item.coverImgUrl + '?param=260y260'"

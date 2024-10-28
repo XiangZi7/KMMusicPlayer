@@ -3,6 +3,7 @@ import { userPlaylistRes } from '@/api/interface'
 import { MenuData } from './data'
 import { userPlaylist } from '@/api'
 import { Icon } from '@iconify/vue'
+
 const menuStore = useMenuStore()
 const router = useRouter()
 const userStore = useUserStore()
@@ -13,13 +14,21 @@ onMounted(() => {
 
 watch(
   () => userStore.userInfo,
-  () => {
-    if (Object.keys(userStore.userInfo).length > 0) {
-      userPlaylist<{ playlist: userPlaylistRes[] }>({
-        id: userStore.userInfo.userId,
-      }).then(({ playlist }) => {
+  async () => {
+    const userInfo = userStore.userInfo
+
+    // 检查用户信息是否有效
+    if (Object.keys(userInfo).length > 0) {
+      try {
+        const { playlist } = await userPlaylist<{
+          playlist: userPlaylistRes[]
+        }>({
+          id: userInfo.userId,
+        })
         playlists.value = playlist
-      })
+      } catch (error) {
+        console.error('Failed to fetch user playlist:', error)
+      }
     }
   },
   {
@@ -29,18 +38,20 @@ watch(
 
 // 监听快捷键
 const handleKeyDown = (event: KeyboardEvent): void => {
-  // 监听 Ctrl + D
-  if (event.ctrlKey && event.key === 'd') {
-    event.preventDefault()
-    router.push('/discover')
-    menuStore.setMenuIndex('1-0')
-  }
-  // 监听 Ctrl + Q
-  if (event.ctrlKey && event.key === 'q') {
-    event.preventDefault()
-    router.push('/theme')
-    menuStore.setMenuIndex('2-3')
-  }
+  MenuData.some((menuItem) => {
+    menuItem.children.some((childItem) => {
+      if (
+        childItem.shortcut &&
+        event.ctrlKey &&
+        childItem.shortcut.toLowerCase() === event.key
+      ) {
+        event.preventDefault()
+        router.push(childItem.router)
+        return true
+      }
+      return false
+    })
+  })
 }
 </script>
 <template>
@@ -83,14 +94,12 @@ const handleKeyDown = (event: KeyboardEvent): void => {
           class="rounded-lg w-full py-2 px-2 flex items-center space-x-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-[#414243] transition ease-in-out duration-200"
           :to="item2.router"
           v-for="(item2, index2) in item.children"
-          :data-index="index + '-' + index2"
           :key="index2"
           :class="
             menuStore.menuIndex == index + '-' + index2
               ? 'bg-gray-200 dark:bg-[#414243]'
               : ''
           "
-          @click="menuStore.setMenuIndex(index + '-' + index2)"
         >
           <Icon :icon="item2.icon" />
           <span class="text-sm">{{ item2.title }}</span>
@@ -98,7 +107,7 @@ const handleKeyDown = (event: KeyboardEvent): void => {
             v-if="item2.shortcut"
             class="!ml-auto text-[10px] text-muted-color bg-emphasis border-surface p-1 rounded-lg dark:bg-gray-700 dark:text-white"
           >
-            {{ item2.shortcut }}
+            ⌘+{{ item2.shortcut }}
           </span>
         </router-link>
       </div>
@@ -110,7 +119,7 @@ const handleKeyDown = (event: KeyboardEvent): void => {
           <router-link
             class="rounded-lg w-full py-2 px-2 flex items-center space-x-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 transition ease-in-out duration-200"
             v-for="(item, index) in playlists"
-            :to="`/songlist?id=${item.id}`"
+            :to="`/playlist?id=${item.id}`"
             :key="index"
           >
             <el-image

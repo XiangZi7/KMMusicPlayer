@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { playlistDetail, commentPlaylist } from '@/api'
-import { playlistDetailResponse } from '@/api/interface'
+import { PlaylistDetailResponse } from '@/api/interface'
 import { Track } from '@/stores/interface.ts'
 import { Comment } from '@/api/interface'
 
@@ -11,7 +11,7 @@ const state = reactive({
     playlist: {
       tracks: [],
     },
-  } as unknown as playlistDetailResponse,
+  } as unknown as PlaylistDetailResponse,
   commentListData: [] as Comment[],
   drawer: false,
 })

@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { logout } from '@/api'
+import { logout, searchDefault } from '@/api'
+
 const userStore = useUserStore()
 const router = useRouter()
 const keyWord = ref('')
+
+// 默认搜索关键词
+const searchKW = ref<SearchResult>()
 
 const showLogin = ref(false)
 const toSearch = () => {
@@ -14,6 +18,12 @@ function userLogout() {
     userStore.setUserInfo({})
   })
 }
+
+onMounted(() => {
+  searchDefault().then((res) => {
+    searchKW.value = res.data
+  })
+})
 </script>
 <template>
   <header
@@ -35,7 +45,7 @@ function userLogout() {
         <div class="flex items-center">
           <el-input
             v-model="keyWord"
-            placeholder="string"
+            :placeholder="searchKW?.showKeyword"
             style="--el-input-border-radius: 30px; width: 300px"
             @keyup.enter="toSearch"
             class="dark:text-white"

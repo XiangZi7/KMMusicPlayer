@@ -63,7 +63,7 @@ onMounted(() => {
           class="group relative rounded-lg overflow-hidden cursor-pointer"
           v-for="item in Playlist"
           :key="item.id"
-          @click="router.push(`/songlist?id=${item.id}`)"
+          @click="router.push(`/playlist?id=${item.id}`)"
           ref="observedElement"
         >
           <img
