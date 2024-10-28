@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { playlistDetail, commentPlaylist } from '@/api'
 import { playlistDetailResponse } from '@/api/interface'
-import { Track } from '@/stores/interface'
+import { Track } from '@/stores/interface.ts'
 import { Comment } from '@/api/interface'
 
 const route = useRoute()
