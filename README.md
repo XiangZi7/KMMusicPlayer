@@ -106,6 +106,13 @@ pnpm dev
 - [https://neteasecloudmusicapi.vercel.app/#/](https://neteasecloudmusicapi.vercel.app/#/)
   （可能需魔法上网）
 
+### 免责声明  ⚠️
+KMMusicPlayer（Kuriyama Mirai Music Player）项目仅用于学习和研究目的。使用该项目的用户需自行承担相关风险。
+本项目所使用的相关API和数据源均为第三方提供，使用时请遵循相关法律法规及第三方的使用条款。本项目不得用于任何商业目的，
+我们不对任何由于使用本项目而引起的直接或间接的损失或法律责任负责。
+
+请在使用之前仔细阅读该免责声明，并确保遵守以上条款。谢谢您的理解与支持。
+
 ### QQ交流群 👨‍👨‍👦‍👦
 
 ![1686722147442.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ef2a97c45df4a6fa5c78b34a28a42fc~tplv-k3u1fbpfcp-watermark.image#?w=238&h=250&s=10821&e=png&a=1&b=f8f8f8)
