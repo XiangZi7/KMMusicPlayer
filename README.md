@@ -1,6 +1,6 @@
 # KMMusicPlayer
 
-![image](https://github.com/user-attachments/assets/fd134863-7f30-4f43-8ff7-83563df27221)
+![image](https://github.com/user-attachments/assets/32acc6db-4a70-49bf-a1ce-8209e8489da1)
 
 ### 介绍 📖
 
