@@ -223,7 +223,7 @@ onMounted(() => {
         <div class="h-full w-full rounded-[inherit]">
           <div style="min-width: 100%; display: table">
             <div
-              :class="`p-3 cursor-pointer hover:bg-gray-100 transition-colors duration-200 ${activeConversationId === index ? 'bg-purple-100 text-purple-800' : 'duration-200 text-gray-700'} flex items-center gap-2`"
+              :class="`p-3 text-sm cursor-pointer hover:bg-gray-100 transition-colors duration-200 ${activeConversationId === index ? 'bg-purple-100 text-purple-800' : 'duration-200 text-gray-700'} flex items-center gap-2`"
               v-for="(item, index) in conversations"
               :key="item.id"
               @click="chatStore.activeConversationId = index"
@@ -260,7 +260,10 @@ onMounted(() => {
         <span
           class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
         >
-          <el-avatar src="src/assets/gthub-avatar.png" />
+          <img
+            class="aspect-square h-full w-full rounded-full"
+            src="@/assets/gthub-avatar.png"
+          />
         </span>
       </header>
       <div class="relative overflow-hidden flex-1 p-4 bg-[#F9FAFB]">
@@ -283,11 +286,14 @@ onMounted(() => {
                     v-if="item.role === 'system'"
                     class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full mt-1 mx-2"
                   >
-                    <el-avatar src="src/assets/gthub-avatar.png" />
+                    <img
+                      class="aspect-square h-full w-full rounded-full"
+                      src="@/assets/gthub-avatar.png"
+                    />
                   </span>
 
                   <div
-                    :class="`p-3 rounded-lg ${item.role === 'system' ? 'bg-white border border-gray-200 text-gray-800' : 'bg-purple-600 text-white'}`"
+                    :class="`text-sm p-3 rounded-lg ${item.role === 'system' ? 'bg-white border border-gray-200 text-gray-800' : 'bg-purple-600 text-white'}`"
                   >
                     <p class="mb-1" v-html="marked(item.content)"></p>
                   </div>
@@ -295,7 +301,10 @@ onMounted(() => {
                     v-if="item.role === 'user'"
                     class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full mt-1 mx-2"
                   >
-                    <el-avatar src="src/assets/gthub-avatar.png" />
+                    <img
+                      class="aspect-square h-full w-full rounded-full"
+                      src="@/assets/gthub-avatar.png"
+                    />
                   </span>
                 </div>
               </div>
