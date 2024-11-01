@@ -75,31 +75,30 @@ pnpm dev
 
 ### 项目截图 📷
 
-![image](https://github.com/user-attachments/assets/5ec599a7-8c86-4548-8758-34f977637595)
+![image](https://github.com/user-attachments/assets/32acc6db-4a70-49bf-a1ce-8209e8489da1)
 
-![image](https://github.com/user-attachments/assets/be15d4ab-671d-4b8d-bd69-b06190c14d2a)
+![image](https://github.com/user-attachments/assets/7fd7d3f4-1b10-4cba-abc4-2fe8e2be679d)
 
-![image](https://github.com/user-attachments/assets/d924961b-cc41-4db7-9e31-c674cf489de5)
+![image](https://github.com/user-attachments/assets/2c71aa45-00bb-42f4-b1b3-dcff8cb52c97)
 
-![image](https://github.com/user-attachments/assets/b78a1098-a14e-48cf-a113-a2284574816a)
+![image](https://github.com/user-attachments/assets/22d01b96-6396-463e-a3fb-1c5aa42b155d)
 
-![image](https://github.com/user-attachments/assets/7ccc9faa-c44b-455e-bda5-129e86860534)
+![image](https://github.com/user-attachments/assets/af25b635-382b-41cc-b854-415455714840)
 
-![image](https://github.com/user-attachments/assets/1909652c-6bf0-472d-998a-68d8b1e795a8)
+![image](https://github.com/user-attachments/assets/fa0725ae-daa3-4da3-82a4-1b446db94c12)
 
-![image](https://github.com/user-attachments/assets/bc3c4441-d3d6-4dbf-b2a2-85e59abe370b)
+![image](https://github.com/user-attachments/assets/ef6ca0e4-31f7-467d-a4da-035a32adc2e1)
 
-![image](https://github.com/user-attachments/assets/8fdb041c-fec5-4992-bd91-d11aabbb7b37)
+![image](https://github.com/user-attachments/assets/d775e745-0304-41bc-a182-6607a3cbfd47)
 
-![image](https://github.com/user-attachments/assets/241cc110-98ed-49e6-a9ce-68fa2aa9e18d)
+![image](https://github.com/user-attachments/assets/5b79f12e-d3ae-4b09-9711-2a54b784f945)
 
-![image](https://github.com/user-attachments/assets/dc3ee82d-696a-4924-b307-0711e10152e3)
+![image](https://github.com/user-attachments/assets/d9f4695f-bd3a-47a7-a36e-6c8cea336a6f)
 
-![image](https://github.com/user-attachments/assets/69f09804-8fa4-4220-9bfc-a8e5594d3c81)
+![image](https://github.com/user-attachments/assets/54657969-0b07-4c94-9f48-e723f94e6695)
 
-![image](https://github.com/user-attachments/assets/f83dca28-f940-4602-a1e5-04b011c78892)
+![image](https://github.com/user-attachments/assets/7bb5482f-5384-4d03-b2be-7949e0ce7f59)
 
-![image](https://github.com/user-attachments/assets/c60070ab-8a23-4b06-8ec1-6a714200aaf2)
 
 ### 项目后台接口 🧩
 
