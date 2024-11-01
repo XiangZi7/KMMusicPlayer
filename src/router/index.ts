@@ -15,11 +15,21 @@ const router = createRouter({
           name: 'home',
           component: () => import('@/views/index.vue'),
         },
-        // {
-        //   path: '/animation',
-        //   name: 'animation',
-        //   component: () => import('@/views/animation/index.vue'),
-        // },
+        {
+          path: '/animation',
+          name: 'animation',
+          component: () => import('@/views/discover/animation/index.vue'),
+        },
+        {
+          path: '/chat',
+          name: 'chat',
+          component: () => import('@/views/chatGPT/index.vue'),
+        },
+        {
+          path: '/animation/play',
+          name: 'aniplay',
+          component: () => import('@/views/discover/animation/play.vue'),
+        },
         {
           path: '/discover',
           name: 'discover',
@@ -109,12 +119,12 @@ router.beforeEach(async (to, _from, next) => {
   MenuData.some((menuItem, i) => {
     return menuItem.children.some((childItem, j) => {
       if (to.path === childItem.router) {
-        menuStore.setMenuIndex(`${i}-${j}`);
-        return true; // 找到后返回 true 停止遍历
+        menuStore.setMenuIndex(`${i}-${j}`)
+        return true // 找到后返回 true 停止遍历
       }
-      return false; // 没有找到
-    });
-  });
+      return false // 没有找到
+    })
+  })
   next()
 })
 

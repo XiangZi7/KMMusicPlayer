@@ -8,6 +8,11 @@ export const MenuData = [
         icon: 'material-symbols:screen-search-desktop-outline-rounded',
         router: '/dataScreen',
       },
+      {
+        title: 'ChatGPT',
+        icon: 'mdi:robot-angry-outline',
+        router: '/chat',
+      },
     ],
   },
   {
@@ -25,7 +30,7 @@ export const MenuData = [
         icon: 'streamline:song-recommendation',
         router: '/discover/disonglist',
       },
-      // { title: "动漫", icon: "tdesign:film", router: "/animation" },
+      { title: "动漫", icon: "tdesign:film", router: "/animation" },
     ],
   },
   {

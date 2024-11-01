@@ -47,7 +47,7 @@ async function fetchMVs(selectedValues: {
     limit: selectedValues.pageNum,
   }
   const response = await getAllMV(params)
-  MVS.value = response.mvs // 更新 MV 数据
+  MVS.value = response.data // 更新 MV 数据
 }
 
 // 组件挂载后初次加载数据
