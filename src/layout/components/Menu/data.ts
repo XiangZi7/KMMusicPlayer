@@ -24,7 +24,7 @@ export const MenuData = [
         router: '/discover',
         shortcut: 'D',
       },
-      { title: "MV", icon: "ph:film-strip", router: "/mv", shortcut: 'V' },
+      { title: "MV", icon: "ph:film-strip", router: "/mv" },
       {
         title: '歌单',
         icon: 'streamline:song-recommendation',

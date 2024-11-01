@@ -86,3 +86,40 @@ html {
 .inactiveLyric {
   @apply text-gray-500 dark:text-gray-400; // 应用灰色文本
 }
+
+pre.hljs {
+  padding: 10px;
+  //padding: 12px 2px 12px 40px !important;
+  border-radius: 5px !important;
+  position: relative;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  overflow: hidden !important;
+  code {
+    display: block !important;
+    margin: 0 10px !important;
+    overflow-x: auto !important;
+    &::-webkit-scrollbar {
+      z-index: 11;
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      width: 6px;
+      background: #666;
+    }
+    &::-webkit-scrollbar-corner,&::-webkit-scrollbar-track {
+      background: #1E1E1E;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background: #1E1E1E;
+      width: 6px
+    }
+  }
+
+
+}
+

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
-
+import hljs from 'highlight.js'
+import MarkdownIt from 'markdown-it'
+import 'highlight.js/styles/github-dark.css' // 可随个人喜好更换主题
 const chatStore = useChatStore()
 
 const {
@@ -129,6 +131,62 @@ const createNewChat = () => {
 const deleteChat = (index: number) => {
   chatStore.deleteConversation(index)
 }
+
+// 创建具有代码高亮功能的 MarkdownIt 实例
+const md = new MarkdownIt({
+  highlight: function (str, lang) {
+    const buttonHTML = `<button class="absolute top-2 right-2 " onclick="copyToClipboard(\`${str}\`)">复制代码</button>`
+
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return (
+          '<pre class="hljs"><code>' +
+          buttonHTML +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          '</code></pre>'
+        )
+      } catch (__) {
+        /* empty */
+      }
+    }
+    return (
+      '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
+    )
+  },
+})
+// 定义返回 HTML 函数
+const marked = (texttomake: string) => {
+  let parsedHtml = ''
+  parsedHtml = md.render(texttomake)
+  parsedHtml = parsedHtml.replace(
+    /<a\s+([^>]*\s+)?href="([^"]*\.m3u8)"\s*([^>]*)>/g,
+    '<a $1href="#/video?videoUrl=$2&videoType=application/x-mpegURL" $3>'
+  )
+  parsedHtml = parsedHtml.replace(/<a /g, '<a target="_blank" ')
+  return parsedHtml
+}
+
+// 复制到剪贴板的函数
+window.copyToClipboard = function (code) {
+  navigator.clipboard
+    .writeText(code)
+    .then(() => {
+      ElNotification({
+        title: '复制成功',
+        message: '代码已复制到剪贴板',
+        type: 'success',
+      })
+    })
+    .catch((err) => {
+      console.error('复制失败:', err)
+      ElNotification({
+        title: '复制失败',
+        message: '无法复制代码',
+        type: 'error',
+      })
+    })
+}
+
 // Fetch models on mount
 
 onMounted(() => {
@@ -231,7 +289,7 @@ onMounted(() => {
                   <div
                     :class="`p-3 rounded-lg ${item.role === 'system' ? 'bg-white border border-gray-200 text-gray-800' : 'bg-purple-600 text-white'}`"
                   >
-                    <p class="mb-1">{{ item.content }}</p>
+                    <p class="mb-1" v-html="marked(item.content)"></p>
                   </div>
                   <span
                     v-if="item.role === 'user'"
