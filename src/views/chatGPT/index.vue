@@ -4,6 +4,12 @@ import { ElNotification } from 'element-plus'
 import hljs from 'highlight.js'
 import MarkdownIt from 'markdown-it'
 import 'highlight.js/styles/github-dark.css' // 可随个人喜好更换主题
+
+type Message = {
+  role: 'system' | 'user'
+  content: string
+}
+
 const chatStore = useChatStore()
 
 const {
@@ -14,7 +20,7 @@ const {
   apiToken,
 } = storeToRefs(chatStore)
 const dialogVisible = ref<boolean>(false)
-const modelList = ref<string[]>([])
+const modelList = ref<{ id: string }[]>([])
 const newMessage = ref<string>('')
 const hoveredIndex = ref<number>(-1)
 
@@ -72,7 +78,10 @@ const sendMessage = async () => {
     conversations.value[activeConversationId.value].messages.push(systemMessage)
 
     // 处理流式数据
-    await processStreamedData(reader, decoder)
+    await processStreamedData(
+      reader as ReadableStreamDefaultReader<Uint8Array>,
+      decoder
+    )
   } catch (error) {
     console.error('发送消息时出错:', error)
   } finally {
@@ -167,7 +176,7 @@ const marked = (texttomake: string) => {
 }
 
 // 复制到剪贴板的函数
-window.copyToClipboard = function (code) {
+window.copyToClipboard = function (code: string) {
   navigator.clipboard
     .writeText(code)
     .then(() => {

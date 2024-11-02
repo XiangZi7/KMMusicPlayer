@@ -8,7 +8,8 @@ import { useDebounceFn } from '@vueuse/core'
 
 const userStore = useUserStore()
 const SettingStore = useSettingStore()
-
+const themeStore = useThemeStore()
+const { switchDark } = useTheme()
 const scrollContainer = ref()
 const state = reactive({
   direction: 'ttb',
@@ -104,6 +105,7 @@ const getCommentPlaylist = (pages: number = 1) => {
     state.commenTotal = res.total // 更新评论总数
   })
 }
+
 // 播放下一首歌曲的处理函数
 function handlePlayNext() {
   state.commentListData = [] // 清空评论列表
@@ -349,6 +351,12 @@ defineExpose({
     />
     <template #footer>
       <div class="flex justify-end">
+        <el-switch
+          v-model="themeStore.isDark"
+          @change="switchDark"
+          active-text="暗黑模式"
+          class="ml-2"
+        />
         <el-switch
           v-model="SettingStore.isTranslatedParsed"
           @change="SettingStore.setTranslatedParsed"

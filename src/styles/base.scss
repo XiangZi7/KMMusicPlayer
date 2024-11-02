@@ -108,13 +108,13 @@ pre.hljs {
       width: 6px;
       background: #666;
     }
-    &::-webkit-scrollbar-corner,&::-webkit-scrollbar-track {
-      background: #1E1E1E;
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-track {
+      background: #1e1e1e;
     }
     &::-webkit-scrollbar-track-piece {
-      background: #1E1E1E;
-      width: 6px
+      background: #1e1e1e;
+      width: 6px;
     }
   }
 }
-

@@ -4,16 +4,16 @@ import piniaPersistConfig from '@/config/piniaPersist'
 /**
  * chat
  */
-type Role = 'user' | 'system';
+type Role = 'user' | 'system'
 
 interface Message {
-  role: Role;
-  content: string;
+  role: Role
+  content: string
 }
 
 interface Conversation {
-  id: number;
-  messages: Message[];
+  id: number
+  messages: Message[]
 }
 
 // Chat Store
@@ -38,28 +38,28 @@ export const useChatStore = defineStore({
   }),
   actions: {
     setApiBaseUrl(url: string) {
-      this.apiBaseUrl = url;
+      this.apiBaseUrl = url
     },
     setApiToken(token: string) {
-      this.apiToken = token;
+      this.apiToken = token
     },
     addConversation() {
-      const newChatId = this.conversations.length + 1;
-      this.conversations.push({ id: newChatId, messages: [] });
-      this.activeConversationId = this.conversations.length - 1;
+      const newChatId = this.conversations.length + 1
+      this.conversations.push({ id: newChatId, messages: [] })
+      this.activeConversationId = this.conversations.length - 1
     },
     deleteConversation(index: number) {
       if (this.conversations.length === 1) {
-        this.conversations = [];
-        this.activeConversationId = -1; // or null
+        this.conversations = []
+        this.activeConversationId = -1 // or null
       } else {
-        this.conversations.splice(index, 1);
+        this.conversations.splice(index, 1)
         if (this.activeConversationId >= index) {
-          this.activeConversationId = Math.max(0, this.activeConversationId - 1);
+          this.activeConversationId = Math.max(0, this.activeConversationId - 1)
         }
       }
     },
     // Additional methods to handle messages can be added here
   },
   persist: piniaPersistConfig('ChatStore'),
-});
+})

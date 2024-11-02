@@ -32,14 +32,13 @@ export interface CommentResponse {
   total: number
 }
 
-
 export interface SimilarPlaylistsResponse {
-  mvs: SimilarPlaylistsPlaylist[]; // Array of similar playlists
+  mvs: SimilarPlaylistsPlaylist[] // Array of similar playlists
 }
 export interface SimilarPlaylistsPlaylist {
-  id: number;
-  name: string;
-  cover: string;
-  artistName: string;
-  playCount: number; // Number of plays
+  id: number
+  name: string
+  cover: string
+  artistName: string
+  playCount: number // Number of plays
 }

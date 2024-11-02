@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { logout, searchDefault } from '@/api'
+import { logout, searchDefault, loginStatus } from '@/api'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -22,6 +22,13 @@ function userLogout() {
 onMounted(() => {
   searchDefault().then((res) => {
     searchKW.value = res.data
+  })
+
+  // 登陆状态
+  loginStatus().then(({ data }) => {
+    if (data.profile == null) {
+      userStore.setUserInfo({})
+    }
   })
 })
 </script>

@@ -172,3 +172,4 @@ export const aniPlay = (params: Params) => {
   // 移除空参数
   return httpGet(`/animation/play?${query}`)
 }
+

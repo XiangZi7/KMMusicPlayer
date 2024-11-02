@@ -24,13 +24,13 @@ export const MenuData = [
         router: '/discover',
         shortcut: 'D',
       },
-      { title: "MV", icon: "ph:film-strip", router: "/mv" },
+      { title: 'MV', icon: 'ph:film-strip', router: '/mv' },
       {
         title: '歌单',
         icon: 'streamline:song-recommendation',
         router: '/discover/disonglist',
       },
-      { title: "动漫", icon: "tdesign:film", router: "/animation" },
+      { title: '动漫', icon: 'tdesign:film', router: '/animation' },
     ],
   },
   {
