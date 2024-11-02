@@ -31,8 +31,6 @@
 - 网易云二维码登录
 - 动态切换主题
 - 暗黑模式
-- 颜色自适应
-- ChatGPT
 
 ### 安装使用步骤 📔
 
@@ -77,6 +75,31 @@ pnpm dev
 
 ### 项目截图 📷
 
+![image](https://github.com/user-attachments/assets/5ec599a7-8c86-4548-8758-34f977637595)
+
+![image](https://github.com/user-attachments/assets/be15d4ab-671d-4b8d-bd69-b06190c14d2a)
+
+![image](https://github.com/user-attachments/assets/d924961b-cc41-4db7-9e31-c674cf489de5)
+
+![image](https://github.com/user-attachments/assets/b78a1098-a14e-48cf-a113-a2284574816a)
+
+![image](https://github.com/user-attachments/assets/7ccc9faa-c44b-455e-bda5-129e86860534)
+
+![image](https://github.com/user-attachments/assets/1909652c-6bf0-472d-998a-68d8b1e795a8)
+
+![image](https://github.com/user-attachments/assets/bc3c4441-d3d6-4dbf-b2a2-85e59abe370b)
+
+![image](https://github.com/user-attachments/assets/8fdb041c-fec5-4992-bd91-d11aabbb7b37)
+
+![image](https://github.com/user-attachments/assets/241cc110-98ed-49e6-a9ce-68fa2aa9e18d)
+
+![image](https://github.com/user-attachments/assets/dc3ee82d-696a-4924-b307-0711e10152e3)
+
+![image](https://github.com/user-attachments/assets/69f09804-8fa4-4220-9bfc-a8e5594d3c81)
+
+![image](https://github.com/user-attachments/assets/f83dca28-f940-4602-a1e5-04b011c78892)
+
+![image](https://github.com/user-attachments/assets/c60070ab-8a23-4b06-8ec1-6a714200aaf2)
 
 ### 项目后台接口 🧩
 
