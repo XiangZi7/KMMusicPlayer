@@ -148,7 +148,7 @@ export const getAllMV = (params: MVAllParams = {}) => {
 }
 
 // 动漫搜索
-export const aniSearch = (params: Params) => {
+export const aniSearch = <T>(params: { kw: string; type: string }) => {
   const { kw, type } = params
   // 生成查询字符串
   const query = new URLSearchParams({
@@ -156,20 +156,20 @@ export const aniSearch = (params: Params) => {
     type: type || '',
   }).toString()
 
-  return httpGet(`/animation/search?${query}`)
+  return httpGet<T>(`/animation/search?${query}`)
 }
-// 动漫播放地址
-export const aniPlay = (params: Params) => {
-  const { id, type, ep } = params
+// 动漫播放地址的 API 函数
+export const aniPlay = <T>(params: { id: number | string | undefined, type: string, ep?: number | string }) => {
+  const { id, type, ep } = params; // 解构参数
 
   // 生成查询字符串
   const query = new URLSearchParams({
-    id: id || '',
-    type: type || '',
-    ...(ep ? { ep } : {}), // 仅在 ep 有值时添加
-  }).toString()
+    id: id !== undefined ? id.toString() : '', // 将 id 转换为字符串，如果未定义则使用空字符串
+    type: type || '', // 将 type 赋值，确保为字符串，如果未提供则使用空字符串
+    ...(ep !== undefined ? { ep: ep.toString() } : {}) // 仅在 ep 存在时，将其添加为字符串
+  }).toString(); // 生成 URL 查询字符串
 
-  // 移除空参数
-  return httpGet(`/animation/play?${query}`)
-}
+  // 调用 httpGet 函数并移除空参数
+  return httpGet<T>(`/animation/play?${query}`);
+};
 

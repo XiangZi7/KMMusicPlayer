@@ -43,8 +43,8 @@ onMounted(() => {
 // 切换视频播放源
 function changeVideo(index: number) {
   aniPlay({
-    id: route.query.id,
-    type: route.query.type,
+    id: route.query.id as string,
+    type: route.query.type as string,
     ep: index,
   }).then((res) => {
     detailList.value = res.data

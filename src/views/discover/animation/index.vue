@@ -4,9 +4,14 @@ import { aniSearch } from '@/api/index'
 const router = useRouter()
 type vidioType = 'nnyy' | 'xfani'
 
+interface AnimeItem {
+  id: number
+  title: string
+  img: string
+}
 const kw = ref('')
 const type = ref<vidioType>('nnyy')
-const aniList = ref([])
+const aniList = ref<AnimeItem[]>([])
 
 const options = ref([
   {
@@ -21,9 +26,11 @@ const options = ref([
 
 function toSearch() {
   aniList.value = []
-  aniSearch({ kw: kw.value, type: type.value }).then((res) => {
-    aniList.value = res.data
-  })
+  aniSearch<{ data: AnimeItem[] }>({ kw: kw.value, type: type.value }).then(
+    (res) => {
+      aniList.value = res.data
+    }
+  )
 }
 </script>
 <template>
@@ -66,10 +73,7 @@ function toSearch() {
           </div>
         </el-button>
       </div>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-        data-id="10"
-      >
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-6">
         <div
           class="overflow-hidden"
           v-for="item in aniList"
