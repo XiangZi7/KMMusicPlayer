@@ -7,9 +7,15 @@ import { LyricData } from '@/utils/parseLyrics'
 
 export function useMusicPlayer() {
   const audioStore = useAudioStore()
+  // 默认数据
+  const defaultSong = {
+    title: '未选择歌曲',
+    singer: '未知歌手',
+    cover: new URL(`@/assets/default_album.jpg`, import.meta.url).href
+  };
   // 计算属性，用来获取当前播放的歌曲
   const currentSong = computed(
-    () => audioStore.trackList[audioStore.currentSongIndex as number]
+    () => audioStore.trackList[audioStore.currentSongIndex as number] || defaultSong
   )
   // 用于追踪播放状态的响应式变量
   const isPlaying = ref(false)

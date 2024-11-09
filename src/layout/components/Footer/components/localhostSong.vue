@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { MusicPlayer } from '@/hooks/interface'
+import { formatMillisecondsToTime } from '@/utils/time'
 const router = useRouter()
 
 const audioStore = useAudioStore()
 
 const { playSong } = inject('MusicPlayer') as MusicPlayer
+
+const mouseOverIndex = ref(-1) // 用于跟踪鼠标悬停的索引
 
 const playMusic = (id: number | string) => {
   const existingIndex = audioStore.trackList.findIndex(
@@ -18,10 +21,24 @@ const playMusic = (id: number | string) => {
 <template>
   <el-popover :width="450" trigger="click" placement="top-end">
     <div class="py-4">
-      <h1 class="text-xl font-bold mb-4 dark:text-white">
-        最近播放
-        <span class="text-base">({{ audioStore.trackList.length }})</span>
-      </h1>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold mb-4 dark:text-white">
+            最近播放
+            <span class="text-base">({{ audioStore.trackList.length }})</span>
+          </h1>
+        </div>
+        <div
+          class="flex items-center cursor-pointer"
+          @click="audioStore.clearAllSong"
+        >
+          <icon-material-symbols:delete-outline-rounded
+            class="text-lg text-gray-500"
+          />
+          清空
+        </div>
+      </div>
+
       <el-scrollbar class="!h-[300px]">
         <ul class="space-y-1">
           <li
@@ -29,6 +46,8 @@ const playMusic = (id: number | string) => {
             :key="index"
             class="flex items-center px-4 py-1 hover:bg-gray-300 dark:hover:bg-[#414243] rounded-lg transition justify-between"
             @click="playMusic(song.id)"
+            @mouseover="mouseOverIndex = index"
+            @mouseleave="mouseOverIndex = -1"
           >
             <div class="flex items-center">
               <img
@@ -46,7 +65,12 @@ const playMusic = (id: number | string) => {
               </div>
             </div>
 
-            <div class="flex items-center">
+            <!-- 默认显示时间 -->
+            <div v-show="mouseOverIndex !== index">
+              {{ formatMillisecondsToTime(song.time) }}
+            </div>
+            <!-- 高亮显示图标 -->
+            <div class="flex items-center" v-show="mouseOverIndex == index">
               <el-button type="primary" text circle @click="playMusic(song.id)">
                 <icon-mingcute:play-circle-line class="text-lg text-gray-500" />
               </el-button>
@@ -59,11 +83,22 @@ const playMusic = (id: number | string) => {
               >
                 <icon-solar:video-frame-linear class="text-lg text-gray-500" />
               </el-button>
+              <el-button
+                type="primary"
+                text
+                circle
+                @click="audioStore.deleteTrack(song.id)"
+              >
+                <icon-material-symbols:delete-outline-rounded
+                  class="text-lg text-gray-500"
+                />
+              </el-button>
             </div>
           </li>
         </ul>
       </el-scrollbar>
     </div>
+    <!-- 显示的图标 -->
     <template #reference>
       <el-button text circle>
         <icon-icon-park-outline:music-list class="dark:text-white" />

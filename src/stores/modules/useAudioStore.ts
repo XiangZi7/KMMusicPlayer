@@ -85,6 +85,10 @@ export const useAudioStore = defineStore({
         this.setCurrentSong(addedIndex)
       }
     },
+    // 删除指定歌曲
+    deleteTrack(id: number | string) {
+      this.trackList = this.trackList.filter(track => track.id !== id)
+    },
     clearAllSong() {
       this.trackList = []
     },
