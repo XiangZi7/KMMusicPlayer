@@ -37,7 +37,6 @@ export interface SettingState {
 }
 
 // 用户
-
 export interface userModel {
   avatarUrl?: string
   nickname?: string
@@ -45,4 +44,5 @@ export interface userModel {
 }
 export interface UserState {
   userInfo: userModel
+  isLoggedIn: boolean
 }

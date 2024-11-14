@@ -1,35 +1,24 @@
 <script setup lang="ts">
-import { logout, searchDefault, loginStatus } from '@/api'
+import { searchDefault } from '@/api'
 
 const userStore = useUserStore()
 const router = useRouter()
 const keyWord = ref('')
 
 // 默认搜索关键词
-const searchKW = ref<SearchResult>()
+const searchKW = ref()
 
 const showLogin = ref(false)
 const toSearch = () => {
   router.push(`/search?kw=${keyWord.value}`)
 }
 
-function userLogout() {
-  logout().then(() => {
-    userStore.setUserInfo({})
-  })
-}
-
-onMounted(() => {
+onMounted(async () => {
   searchDefault().then((res) => {
     searchKW.value = res.data
   })
 
-  // 登陆状态
-  loginStatus().then(({ data }) => {
-    if (data.profile == null) {
-      userStore.setUserInfo({})
-    }
-  })
+  await userStore.checkLoginStatus() // 检查登录状态
 })
 </script>
 <template>
@@ -99,7 +88,10 @@ onMounted(() => {
           <el-dropdown-menu>
             <el-dropdown-item>Action 1</el-dropdown-item>
             <el-dropdown-item divided>
-              <el-popconfirm title="确定要退出登录?" @confirm="userLogout">
+              <el-popconfirm
+                title="确定要退出登录?"
+                @confirm="userStore.userLogout"
+              >
                 <template #reference>退出</template>
               </el-popconfirm>
             </el-dropdown-item>

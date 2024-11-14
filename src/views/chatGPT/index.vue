@@ -197,8 +197,8 @@ window.copyToClipboard = function (code: string) {
 }
 
 // Fetch models on mount
-
 onMounted(() => {
+  if (!chatStore.apiBaseUrl || !chatStore.apiToken) return
   axios
     .get(`${chatStore.apiBaseUrl}/v1/models`, {
       headers: {

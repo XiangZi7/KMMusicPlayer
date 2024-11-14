@@ -4,18 +4,6 @@ import piniaPersistConfig from '@/config/piniaPersist'
 /**
  * chat
  */
-type Role = 'user' | 'system'
-
-interface Message {
-  role: Role
-  content: string
-}
-
-interface Conversation {
-  id: number
-  messages: Message[]
-}
-
 // Chat Store
 export const useChatStore = defineStore({
   id: 'useChatStore',
@@ -34,7 +22,7 @@ export const useChatStore = defineStore({
       },
     ],
     activeConversationId: 0,
-    modelSelect: 'gpt-3.5-turbo-1106',
+    modelSelect: '',
   }),
   actions: {
     setApiBaseUrl(url: string) {
@@ -59,7 +47,6 @@ export const useChatStore = defineStore({
         }
       }
     },
-    // Additional methods to handle messages can be added here
   },
   persist: piniaPersistConfig('ChatStore'),
 })

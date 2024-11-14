@@ -12,28 +12,24 @@ onMounted(() => {
   document.addEventListener('keydown', handleKeyDown)
 })
 
-watch(
-  () => userStore.userInfo,
-  async () => {
-    const userInfo = userStore.userInfo
+// 计算属性获取用户 ID 和登录状态
+const userId = computed(() => userStore.userInfo.userId)
+const isLoggedIn = computed(() => userStore.isLoggedIn) // 获取登录状态
 
-    // 检查用户信息是否有效
-    if (Object.keys(userInfo).length > 0) {
-      try {
-        const { playlist } = await userPlaylist<{
-          playlist: userPlaylistRes[]
-        }>({
-          id: userInfo.userId,
-        })
-        playlists.value = playlist
-      } catch (error) {
-        console.error('Failed to fetch user playlist:', error)
-      }
+watch(
+  () => [userId.value, isLoggedIn.value], // 监测用户 ID 和登录状态的变化
+  async ([newUserId, loggedIn]) => {
+    if (loggedIn && newUserId !== undefined) {
+      // 只有在用户登录且用户 ID 有效时才触发
+      const { playlist } = await userPlaylist<{
+        playlist: userPlaylistRes[]
+      }>({ id: newUserId as number })
+      playlists.value = playlist
+    } else {
+      playlists.value = [] // 清空播放列表或其他处理逻辑
     }
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 )
 
 // 监听快捷键
@@ -111,7 +107,7 @@ const handleKeyDown = (event: KeyboardEvent): void => {
           </span>
         </router-link>
       </div>
-      <div class="w-full flex flex-col gap-1 overflow-x-hidden">
+      <div class="w-full flex flex-col gap-1">
         <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
           我的歌单
         </h3>
