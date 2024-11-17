@@ -121,7 +121,7 @@ KMMusicPlayer（Kuriyama Mirai Music Player）项目仅用于学习和研究目�
 
 ### 捐赠 （❤
 
-如果觉得该项目能对你有帮助或喜欢 可投食
+如果觉得该项目能对你有帮助或喜欢可投食
 |                                        微信                                        |                                       支付宝                                       |
 | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
 | <img src="https://github.com/user-attachments/assets/46d07565-72b9-4d48-bea2-4a7242e5ada0" alt="Alipay QRcode" width=170> | <img src="https://github.com/user-attachments/assets/7c3e1e96-cfc3-460d-b534-8a1da636cc09" alt="Wechat QRcode" width=170> |
