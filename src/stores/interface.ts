@@ -7,7 +7,7 @@ export interface themeState {
 
 export interface AudioStore {
   trackList: Track[] // 歌曲列表
-  currentSongIndex: Number // 当前正在播放的歌曲的索引
+  currentSongIndex: number // 当前正在播放的歌曲的索引
 }
 
 // 定义单个音轨的接口
@@ -30,10 +30,10 @@ export interface menuState {
 
 // 设置
 export interface SettingState {
-  isOriginalParsed: Boolean
-  isTranslatedParsed: Boolean
-  isRomaParsed: Boolean
-  isDrawerCover: Boolean
+  isOriginalParsed: boolean
+  isTranslatedParsed: boolean
+  isRomaParsed: boolean
+  isDrawerCover: boolean
 }
 
 // 用户
