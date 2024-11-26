@@ -4,6 +4,8 @@ import Components from "unplugin-vue-components/vite";
 import IconsResolver from 'unplugin-icons/resolver' // 集成图标集
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vite'
+import { visualizer } from "rollup-plugin-visualizer";
+
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
@@ -31,7 +33,13 @@ export default defineConfig({
     }),
     Icons({
       autoInstall: true // 自动安装所需图标集
-    })],
+    }),
+    visualizer({
+      open: true, //build后，是否自动打开分析页面，默认false
+      gzipSize: true, //是否分析gzip大小
+      brotliSize: true, //是否分析brotli大小
+      //filename: 'stats.html'//分析文件命名
+    }),],
   base: "./", // 在生产中服务时的基本公共路径
   publicDir: "public",  // 静态资源服务的文件夹, 默认"public"
   resolve: {
