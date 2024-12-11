@@ -35,13 +35,6 @@ export function useMusicPlayer() {
   // 用于追踪当前歌词索引
   const currentLyricIndex = ref(0)
 
-  // EQ相关的响应式变量
-  const eqSettings = ref({
-    bass: 0, // 低音
-    mid: 0, // 中音
-    treble: 0, // 高音
-  })
-
   // 在组件挂载时添加事件监听器
   onMounted(() => {
     audio.src = currentSong.value.source
@@ -113,7 +106,7 @@ export function useMusicPlayer() {
     }
   }
 
-  // 用于查找当前歌词索引并计算 translateY 值
+  // 用于查找当前歌词索引
   function findCurrentLyricIndex(newTime = 0) {
     if (lyricsData.value.lines.length === 0) return
 
@@ -234,37 +227,6 @@ export function useMusicPlayer() {
     play() // 播放歌曲
   }
 
-  // 更新EQ设置
-  const updateEQ = (band: 'bass' | 'mid' | 'treble', value: number) => {
-    eqSettings.value[band] = value
-    // 这里可以添加逻辑来应用 EQ 设置.
-    applyEQ()
-  }
-
-  // 应用EQ设置的逻辑
-  // 由于跨域问题 暂时搁浅
-  // const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  // const source = audioContext.createMediaElementSource(audio);
-  const applyEQ = () => {
-    // 这里可以结合Web Audio API来处理音频均衡器
-    // const bassFilter = audioContext.createBiquadFilter();
-    // bassFilter.type = 'lowshelf';
-    // bassFilter.frequency.value = 250; // 250Hz 以下
-    // bassFilter.gain.value = eqSettings.value.bass;
-    // const midFilter = audioContext.createBiquadFilter();
-    // midFilter.type = 'peaking';
-    // midFilter.frequency.value = 1000; // 1000Hz
-    // midFilter.gain.value = eqSettings.value.mid;
-    // const trebleFilter = audioContext.createBiquadFilter();
-    // trebleFilter.type = 'highshelf';
-    // trebleFilter.frequency.value = 6000; // 6000Hz 以上
-    // trebleFilter.gain.value = eqSettings.value.treble;
-    // // 将过滤器连接到音频链
-    // source.connect(bassFilter);
-    // bassFilter.connect(midFilter);
-    // midFilter.connect(trebleFilter);
-    // trebleFilter.connect(audioContext.destination);
-  }
   return {
     currentSong,
     isPlaying,
@@ -284,8 +246,6 @@ export function useMusicPlayer() {
     Loadlyrics,
     lyricsData,
     currentLyricIndex,
-    updateEQ,
-    eqSettings,
     scrollToCurrentLyric,
   }
 }

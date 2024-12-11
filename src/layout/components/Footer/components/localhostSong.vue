@@ -1,27 +1,34 @@
 <script setup lang="ts">
-import { MusicPlayer } from '@/hooks/interface'
-import { formatMillisecondsToTime } from '@/utils/time'
-const router = useRouter()
+  import { MusicPlayer } from '@/hooks/interface'
+  import { formatMillisecondsToTime } from '@/utils/time'
+  import Waveform from '@/layout/components/Footer/components/Waveform.vue'
 
-const audioStore = useAudioStore()
+  const router = useRouter()
 
-const { playSong } = inject('MusicPlayer') as MusicPlayer
+  const audioStore = useAudioStore()
 
-const mouseOverIndex = ref(-1) // 用于跟踪鼠标悬停的索引
+  const { playSong } = inject('MusicPlayer') as MusicPlayer
 
-const playMusic = (id: number | string) => {
-  const existingIndex = audioStore.trackList.findIndex(
-    (existingTrack) => existingTrack.id === id
-  )
-  const existingTrack = audioStore.trackList[existingIndex]
-  audioStore.setCurrentSong(existingIndex)
-  playSong(existingTrack)
-}
+  const mouseOverIndex = ref(-1) // 用于跟踪鼠标悬停的索引
+
+  const playMusic = (id: number | string) => {
+    const existingIndex = audioStore.trackList.findIndex(
+      (existingTrack) => existingTrack.id === id
+    )
+    const existingTrack = audioStore.trackList[existingIndex]
+    audioStore.setCurrentSong(existingIndex)
+    playSong(existingTrack)
+  }
 </script>
 <template>
-  <el-popover :width="450" trigger="click" placement="top-end">
+  <el-popover
+    :width="450"
+    trigger="click"
+    placement="top-end"
+    popper-class="!rounded-lg !p-0"
+  >
     <div class="py-4">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between px-4">
         <div class="flex items-center">
           <h1 class="text-xl font-bold mb-4 dark:text-white">
             最近播放
@@ -39,13 +46,13 @@ const playMusic = (id: number | string) => {
         </div>
       </div>
 
-      <el-scrollbar class="!h-[300px]">
+      <el-scrollbar class="!h-[300px] px-4">
         <ul class="space-y-1">
           <li
             v-for="(song, index) in audioStore.trackList"
             :key="index"
-            class="flex items-center px-4 py-1 hover:bg-gray-300 dark:hover:bg-[#414243] rounded-lg transition justify-between"
-            @click="playMusic(song.id)"
+            :class="`flex items-center truncate px-4 py-1 hover:bg-gray-300 ${audioStore.currentSongIndex == index ? 'bg-gray-300' : ''} dark:hover:bg-[#414243] rounded-lg transition justify-between`"
+            @dblclick="playMusic(song.id)"
             @mouseover="mouseOverIndex = index"
             @mouseleave="mouseOverIndex = -1"
           >
@@ -66,7 +73,8 @@ const playMusic = (id: number | string) => {
             </div>
 
             <!-- 默认显示时间 -->
-            <div v-show="mouseOverIndex !== index">
+            <div v-show="mouseOverIndex !== index" class="flex items-center">
+              <Waveform v-if="audioStore.currentSongIndex == index" />
               {{ formatMillisecondsToTime(song.time) }}
             </div>
             <!-- 高亮显示图标 -->
@@ -107,7 +115,7 @@ const playMusic = (id: number | string) => {
   </el-popover>
 </template>
 <style scoped>
-.el-button + .el-button {
-  margin-left: 0;
-}
+  .el-button + .el-button {
+    margin-left: 0;
+  }
 </style>

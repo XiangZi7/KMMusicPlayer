@@ -173,3 +173,11 @@ export const aniPlay = <T>(params: { id: number | string | undefined, type: stri
   return httpGet<T>(`/animation/play?${query}`);
 };
 
+// 获取轮播图
+export const banner = () => {
+  return httpGet<ResultData>(`/banner`)
+}
+// 最新专辑
+export const albumNewest = () => {
+  return httpGet<ResultData>(`/album/newest`)
+}
