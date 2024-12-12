@@ -1,1 +1,0 @@
-import{_ as e,e as r,l as s,ap as n}from"./index-BZIVKEkD.js";const t=e({__name:"index",setup(e,{expose:r}){r();const s={Waveform:n};return Object.defineProperty(s,"__isScriptSetup",{enumerable:!1,value:!0}),s}},[["render",function(e,n,t,a,i,o){return r(),s(a.Waveform)}],["__file","/home/runner/work/KMMusicPlayer/KMMusicPlayer/src/views/test/index.vue"]]);export{t as default};
