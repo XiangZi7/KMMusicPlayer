@@ -1,14 +1,10 @@
 <script setup lang="ts">
   import { topPlaylist, banner, playlistCatList, albumNewest } from '@/api'
-  import { formatMillisecondsToTime } from '@/utils/time'
-  interface Playlist {
-    id: number
-    name: string
-    description: string
-    coverImgUrl: string
-  }
-  const state = reactive({
-    Playlist: [] as Playlist[],
+  import { State, Banner, Album } from './interface'
+
+  // 定义 reactive 状态的类型
+  const state = reactive<State>({
+    Playlist: [],
     bannersList: [],
     subList: [],
     currentCat: '欧美',
@@ -19,7 +15,8 @@
     toRefs(state)
   const router = useRouter()
   // 使用hook并传入必要的参数
-  const observedElement = ref([])
+  const observedElement = ref<HTMLElement[]>([]) // 添加类型声明
+
   useIntersectionObserver(
     observedElement,
     {
@@ -37,10 +34,10 @@
   }
   onMounted(() => {
     Promise.all([
-      banner(),
+      banner<{ banners: Banner[] }>(),
       topPlaylist({ offset: 1, limit: 20 }),
       playlistCatList(),
-      albumNewest(),
+      albumNewest<{ albums: Album[] }>(),
     ])
       .then(
         ([
@@ -81,7 +78,7 @@
       </el-carousel-item>
     </el-carousel>
     <!-- 最新专辑 -->
-    <div class="mb-2">
+    <div class="mb-2" v-if="newestLsit.length > 0">
       <h1 class="text-2xl font-bold">最新专辑</h1>
       <el-scrollbar class="py-4">
         <div class="flex space-x-2">
@@ -111,7 +108,7 @@
       </el-scrollbar>
     </div>
     <!-- 歌单 -->
-    <div>
+    <div v-if="Playlist.length > 0">
       <h1 class="text-2xl font-bold mb-4">热门歌单</h1>
       <!-- 选项 -->
       <div class="pb-2">
@@ -158,12 +155,3 @@
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-  .bg-gradient {
-    background: linear-gradient(to right, #1f2937, rgba(31, 41, 55, 0.7)),
-      url('@/assets/bg2.png');
-    background-size: cover; /* 确保背景图片按比例缩放，并能完整显示 */
-    background-repeat: no-repeat; /* 禁止背景图片重复 */
-    background-position: center; /* 将背景图片放置在容器中央 */
-  }
-</style>

@@ -1,219 +1,206 @@
 <script setup lang="ts">
-import axios from "axios";
-import { ElNotification } from "element-plus";
-import hljs from "highlight.js";
-import MarkdownIt from "markdown-it";
-import "highlight.js/styles/github-dark.css"; // 可随个人喜好更换主题
+  import axios from 'axios'
+  import { ElNotification } from 'element-plus'
+  import hljs from 'highlight.js'
+  import MarkdownIt from 'markdown-it'
+  import 'highlight.js/styles/github-dark.css' // 可随个人喜好更换主题
 
-type Message = {
-  role: "system" | "user";
-  content: string;
-};
+  type Message = {
+    role: 'system' | 'user'
+    content: string
+  }
 
-const chatStore = useChatStore();
+  const chatStore = useChatStore()
 
-const {
-  conversations,
-  activeConversationId,
-  modelSelect,
-  apiBaseUrl,
-  apiToken,
-} = storeToRefs(chatStore);
-const dialogVisible = ref<boolean>(false);
-const modelList = ref<{ id: string }[]>([]);
-const newMessage = ref<string>("");
-const hoveredIndex = ref<number>(-1);
+  const {
+    conversations,
+    activeConversationId,
+    modelSelect,
+    apiBaseUrl,
+    apiToken,
+  } = storeToRefs(chatStore)
+  const dialogVisible = ref<boolean>(false)
+  const modelList = ref<{ id: string }[]>([])
+  const newMessage = ref<string>('')
+  const hoveredIndex = ref<number>(-1)
 
-// 发送消息的函数
-const sendMessage = async () => {
-  if (!newMessage.value) return; // 如果输入框为空，直接返回。
-
-  const userMessage: Message = {
-    role: "user",
-    content: newMessage.value,
-  };
-
-  // 将用户消息添加到当前会话
-  chatStore.conversations[chatStore.activeConversationId].messages.push(
-    userMessage,
-  );
-
-  const requestData = JSON.stringify({
-    model: chatStore.modelSelect,
-    messages: chatStore.conversations[chatStore.activeConversationId].messages,
-    stream: true,
-  });
-
-  try {
-    const response = await fetch(
-      `${chatStore.apiBaseUrl}/v1/chat/completions`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: chatStore.apiToken,
-          "Content-Type": "application/json",
-        },
-        body: requestData,
-      },
-    );
-
-    // 错误抛出
-    if (!response.ok) {
-      response.json().then(({ error }) => {
-        const { message, code } = error;
-        ElNotification({
-          title: "HTTP 错误！状态:",
-          message: `${code} - ${message}`,
-          type: "error",
-        });
-        throw new Error(`HTTP 错误！状态: ${code} - ${message}`);
-      });
+  // 发送消息的函数
+  const sendMessage = async () => {
+    if (!newMessage.value.trim() || !chatStore.apiToken.trim()) {
+      ElNotification({
+        title: '提示',
+        message: '请输入消息内容或填写Token',
+        type: 'warning',
+      }) // 如果输入框为空，直接返回。
+      return
+    }
+    const userMessage: Message = {
+      role: 'user',
+      content: newMessage.value,
     }
 
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder("utf-8");
+    // 将用户消息添加到当前会话
+    chatStore.conversations[chatStore.activeConversationId].messages.push(
+      userMessage
+    )
 
-    // 为助手的响应添加一个空的系统消息
-    const systemMessage: Message = { role: "system", content: "" };
-    conversations.value[activeConversationId.value].messages.push(
-      systemMessage,
-    );
+    const requestData = JSON.stringify({
+      model: chatStore.modelSelect,
+      messages:
+        chatStore.conversations[chatStore.activeConversationId].messages,
+      stream: true,
+    })
 
-    // 处理流式数据
-    await processStreamedData(
-      reader as ReadableStreamDefaultReader<Uint8Array>,
-      decoder,
-    );
-  } catch (error) {
-    console.error("发送消息时出错:", error);
-  } finally {
-    newMessage.value = ""; // 清空输入框
+    try {
+      const response = await fetch(
+        `${chatStore.apiBaseUrl}/v1/chat/completions`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: chatStore.apiToken,
+            'Content-Type': 'application/json',
+          },
+          body: requestData,
+        }
+      )
+
+      // 错误抛出
+      if (!response.ok) {
+        response.json().then(({ error }) => {
+          const { message, code } = error
+          ElNotification({
+            title: 'HTTP 错误！状态:',
+            message: `${code} - ${message}`,
+            type: 'error',
+          })
+          throw new Error(`HTTP 错误！状态: ${code} - ${message}`)
+        })
+      }
+
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder('utf-8')
+
+      // 为助手的响应添加一个空的系统消息
+      const systemMessage: Message = { role: 'system', content: '' }
+      conversations.value[activeConversationId.value].messages.push(
+        systemMessage
+      )
+
+      // 处理流式数据
+      await processStreamedData(
+        reader as ReadableStreamDefaultReader<Uint8Array>,
+        decoder
+      )
+    } catch (error) {
+      console.error('发送消息时出错:', error)
+    } finally {
+      newMessage.value = '' // 清空输入框
+    }
   }
-};
 
-const processStreamedData = async (
-  reader: ReadableStreamDefaultReader<Uint8Array>,
-  decoder: TextDecoder,
-) => {
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break; // 读取完毕时退出循环
+  const processStreamedData = async (
+    reader: ReadableStreamDefaultReader<Uint8Array>,
+    decoder: TextDecoder
+  ) => {
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break // 读取完毕时退出循环
 
-    const chunk = decoder.decode(value, { stream: true });
-    const chunks = chunk.split("\n").filter((line) => line.trim() !== "");
+      const chunk = decoder.decode(value, { stream: true })
+      const chunks = chunk.split('\n').filter((line) => line.trim() !== '')
 
-    for (const line of chunks) {
-      if (line.startsWith("data: ")) {
-        const jsonString = line.substring(6).trim(); // 去掉 'data: ' 前缀
-        if (jsonString && jsonString !== "[DONE]") {
-          try {
-            const jsonResponse = JSON.parse(jsonString);
-            const content = jsonResponse.choices[0]?.delta?.content || "";
-            const length =
-              conversations.value[activeConversationId.value].messages.length;
-            conversations.value[activeConversationId.value].messages[
-              length - 1
-            ].content += content;
-          } catch (error) {
-            console.error("解析 JSON 时出错:", error);
+      for (const line of chunks) {
+        if (line.startsWith('data: ')) {
+          const jsonString = line.substring(6).trim() // 去掉 'data: ' 前缀
+          if (jsonString && jsonString !== '[DONE]') {
+            try {
+              const jsonResponse = JSON.parse(jsonString)
+              const content = jsonResponse.choices[0]?.delta?.content || ''
+              const length =
+                conversations.value[activeConversationId.value].messages.length
+              conversations.value[activeConversationId.value].messages[
+                length - 1
+              ].content += content
+            } catch (error) {
+              console.error('解析 JSON 时出错:', error)
+            }
           }
         }
       }
     }
   }
-};
 
-const openSettingsDialog = () => {
-  dialogVisible.value = true; // 打开设置对话框
-};
+  const openSettingsDialog = () => {
+    dialogVisible.value = true // 打开设置对话框
+  }
 
-const saveSettings = () => {
-  dialogVisible.value = false; // 关闭对话框
-  // Update the store with new values
-  chatStore.setApiBaseUrl(apiBaseUrl.value);
-  chatStore.setApiToken(apiToken.value);
-};
-// 创建新的聊天会话
-const createNewChat = () => {
-  chatStore.addConversation();
-};
+  const saveSettings = () => {
+    dialogVisible.value = false // 关闭对话框
+    // Update the store with new values
+    chatStore.setApiBaseUrl(apiBaseUrl.value)
+    chatStore.setApiToken(apiToken.value)
+  }
+  // 创建新的聊天会话
+  const createNewChat = () => {
+    chatStore.addConversation()
+  }
 
-// 删除会话的函数
-const deleteChat = (index: number) => {
-  chatStore.deleteConversation(index);
-};
+  // 删除会话的函数
+  const deleteChat = (index: number) => {
+    chatStore.deleteConversation(index)
+  }
 
-// 创建具有代码高亮功能的 MarkdownIt 实例
-const md = new MarkdownIt({
-  highlight: function (str, lang) {
-    const buttonHTML = `<button class="absolute top-2 right-2 " onclick="copyToClipboard(\`${str}\`)">复制代码</button>`;
+  // 创建具有代码高亮功能的 MarkdownIt 实例
+  const md = new MarkdownIt({
+    highlight: function (str, lang) {
+      const buttonHTML = `<button class="absolute top-2 right-2">复制代码</button>`
 
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          '<pre class="hljs"><code>' +
-          buttonHTML +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
-      } catch (__) {
-        /* empty */
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return (
+            '<pre class="hljs"><code>' +
+            buttonHTML +
+            hljs.highlight(str, { language: lang, ignoreIllegals: true })
+              .value +
+            '</code></pre>'
+          )
+        } catch (__) {
+          /* empty */
+        }
       }
-    }
-    return (
-      '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + "</code></pre>"
-    );
-  },
-});
-// 定义返回 HTML 函数
-const marked = (texttomake: string) => {
-  let parsedHtml = "";
-  parsedHtml = md.render(texttomake);
-  parsedHtml = parsedHtml.replace(
-    /<a\s+([^>]*\s+)?href="([^"]*\.m3u8)"\s*([^>]*)>/g,
-    '<a $1href="#/video?videoUrl=$2&videoType=application/x-mpegURL" $3>',
-  );
-  parsedHtml = parsedHtml.replace(/<a /g, '<a target="_blank" ');
-  return parsedHtml;
-};
+      return (
+        '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
+      )
+    },
+  })
+  // 定义返回 HTML 函数
+  const marked = (texttomake: string) => {
+    let parsedHtml = ''
+    parsedHtml = md.render(texttomake)
+    parsedHtml = parsedHtml.replace(
+      /<a\s+([^>]*\s+)?href="([^"]*\.m3u8)"\s*([^>]*)>/g,
+      '<a $1href="#/video?videoUrl=$2&videoType=application/x-mpegURL" $3>'
+    )
+    parsedHtml = parsedHtml.replace(/<a /g, '<a target="_blank" ')
+    return parsedHtml
+  }
 
-// 复制到剪贴板的函数
-window.copyToClipboard = function (code: string) {
-  navigator.clipboard
-    .writeText(code)
-    .then(() => {
-      ElNotification({
-        title: "复制成功",
-        message: "代码已复制到剪贴板",
-        type: "success",
-      });
-    })
-    .catch((err) => {
-      console.error("复制失败:", err);
-      ElNotification({
-        title: "复制失败",
-        message: "无法复制代码",
-        type: "error",
-      });
-    });
-};
-
-// Fetch models on mount
-onMounted(() => {
-  if (!chatStore.apiBaseUrl || !chatStore.apiToken) return;
-  axios
-    .get(`${chatStore.apiBaseUrl}/v1/models`, {
-      headers: {
-        Authorization: chatStore.apiToken,
-      },
-    })
-    .then((res) => {
-      modelList.value = res.data.data;
-    })
-    .catch((error) => {
-      console.error("获取模型列表时出错:", error);
-    });
-});
+  // Fetch models on mount
+  onMounted(() => {
+    if (!chatStore.apiBaseUrl || !chatStore.apiToken) return
+    axios
+      .get(`${chatStore.apiBaseUrl}/v1/models`, {
+        headers: {
+          Authorization: chatStore.apiToken,
+        },
+      })
+      .then((res) => {
+        modelList.value = res.data.data
+      })
+      .catch((error) => {
+        console.error('获取模型列表时出错:', error)
+      })
+  })
 </script>
 
 <template>
@@ -247,7 +234,7 @@ onMounted(() => {
                   {{
                     item.messages.length > 0 && item.messages[0].content
                       ? item.messages[0].content
-                      : "空消息"
+                      : '空消息'
                   }}
                 </div>
                 <button

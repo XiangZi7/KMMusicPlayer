@@ -1,34 +1,35 @@
 <script setup lang="ts">
-import { Comment } from '@/api/interface'
+  import { Comment } from '@/api/interface'
 
-const drawer = defineModel()
-defineProps({
-  direction: {
-    type: String as PropType<'rtl' | 'ltr' | 'ttb' | 'btt'>,
-    default: 'rtl',
-  },
-  data: {
-    type: Array as PropType<Comment[]>,
-    default: () => [],
-  },
-})
-const Emit = defineEmits(['DIntersect'])
+  const drawer = defineModel()
+  defineProps({
+    direction: {
+      type: String as PropType<'rtl' | 'ltr' | 'ttb' | 'btt'>,
+      default: 'rtl',
+    },
+    data: {
+      type: Array as PropType<Comment[]>,
+      default: () => [],
+    },
+  })
+  const Emit = defineEmits(['DIntersect'])
 
-// 使用hook并传入必要的参数
-const observedElement = ref([])
-useIntersectionObserver(
-  observedElement,
-  {
-    initialPageNum: 2, // 初始页码
-    pageSize: 10, // 页面大小
-    threshold: 0.1, // 可选阈值参数
-  },
-  handleIntersect
-)
+  // 使用hook并传入必要的参数
+  const observedElement = ref([])
+  useIntersectionObserver(
+    observedElement,
+    {
+      initialPageNum: 2, // 初始页码
+      pageSize: 10, // 页面大小
+      threshold: 0.1, // 可选阈值参数
+    },
+    handleIntersect
+  )
 
-function handleIntersect(PageNum: number) {
-  Emit('DIntersect', PageNum)
-}
+  function handleIntersect(PageNum: number) {
+    console.log('🚀 => PageNum:', PageNum)
+    Emit('DIntersect', PageNum)
+  }
 </script>
 <template>
   <el-drawer

@@ -63,10 +63,16 @@
                 class="w-8 h-8 rounded-lg mr-4"
               />
               <div>
-                <h2 class="text-sm font-semibold dark:text-white">
+                <h2
+                  class="text-sm font-semibold dark:text-white"
+                  :title="song.title"
+                >
                   {{ song.title }}
                 </h2>
-                <p class="text-gray-600 dark:text-gray-400">
+                <p
+                  class="text-gray-600 dark:text-gray-400"
+                  :title="song.singer"
+                >
                   {{ song.singer }}
                 </p>
               </div>

@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
-import localhostSong from './components/localhostSong.vue'
-import Volume from './components/volume.vue'
-import { MusicPlayer } from '@/hooks/interface'
-import { PlayMode } from '@/enum'
-import router from '@/router'
+  import { Icon } from '@iconify/vue'
+  import localhostSong from './components/localhostSong.vue'
+  import Volume from './components/volume.vue'
+  import { MusicPlayer } from '@/hooks/interface'
+  import { PlayMode } from '@/enum'
+  import router from '@/router'
 
-const {
-  currentSong,
-  togglePlayPause,
-  isPlaying,
-  playNext,
-  playPrevious,
-  currentTime,
-  duration,
-  changeCurrentTime,
-  setPlayMode,
-} = inject('MusicPlayer') as MusicPlayer
+  const {
+    currentSong,
+    togglePlayPause,
+    isPlaying,
+    playNext,
+    playPrevious,
+    currentTime,
+    duration,
+    changeCurrentTime,
+    setPlayMode,
+  } = inject('MusicPlayer') as MusicPlayer
 
-const Emit = defineEmits(['show'])
+  const Emit = defineEmits(['show'])
 
-// 格式化时间
-function formatTime(seconds: number): string {
-  // 将秒数转换为整数分钟数和剩余秒数
-  const min = Math.floor(seconds / 60)
-  const sec = Math.floor(seconds % 60)
+  // 格式化时间
+  function formatTime(seconds: number): string {
+    // 将秒数转换为整数分钟数和剩余秒数
+    const min = Math.floor(seconds / 60)
+    const sec = Math.floor(seconds % 60)
 
-  // 返回格式化的字符串，确保分钟和秒数都至少有两位数
-  return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
-}
+    // 返回格式化的字符串，确保分钟和秒数都至少有两位数
+    return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
+  }
 </script>
 <template>
   <footer class="footer-player border-t shadow-sm dark:border-gray-600">
@@ -38,20 +38,19 @@ function formatTime(seconds: number): string {
           <el-image
             :src="currentSong.cover"
             alt="Album cover"
-            class="rounded-md w-9 h-9 cursor-pointer"
-            style="aspect-ratio: 40 / 40; object-fit: cover"
+            class="rounded-md min-w-9 h-9 cursor-pointer"
             @click="Emit('show')"
           />
-          <div>
+          <div class="truncate">
             <div
-              class="text-sm font-medium line-clamp-1 dark:text-gray-200 cursor-pointer"
+              class="text-sm font-medium dark:text-gray-200 cursor-pointer truncate"
               :title="currentSong.title"
               @click="router.push(`/search?kw=${currentSong.title}`)"
             >
               {{ currentSong.title }}
             </div>
             <div
-              class="text-xs text-gray-500 dark:text-gray-400 cursor-pointer"
+              class="text-xs text-gray-500 dark:text-gray-400 cursor-pointer truncate"
               @click="router.push(`/search?kw=${currentSong.singer}`)"
             >
               {{ currentSong.singer }}
@@ -125,7 +124,7 @@ function formatTime(seconds: number): string {
 </template>
 
 <style scoped lang="scss">
-.el-button + .el-button {
-  margin-left: 0;
-}
+  .el-button + .el-button {
+    margin-left: 0;
+  }
 </style>

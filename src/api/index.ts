@@ -174,10 +174,10 @@ export const aniPlay = <T>(params: { id: number | string | undefined, type: stri
 };
 
 // 获取轮播图
-export const banner = () => {
-  return httpGet<ResultData>(`/banner`)
+export const banner = <T>() => {
+  return httpGet<T>(`/banner`)
 }
 // 最新专辑
-export const albumNewest = () => {
-  return httpGet<ResultData>(`/album/newest`)
+export const albumNewest = <T>() => {
+  return httpGet<T>(`/album/newest`)
 }

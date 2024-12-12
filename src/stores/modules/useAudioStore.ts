@@ -50,40 +50,33 @@ export const useAudioStore = defineStore({
       this.trackList[this.currentSongIndex as number].Lyric = Lyric
     },
     addTrack(param: Track | Track[]) {
-      if (Array.isArray(param)) {
-        this.trackList = this.trackList.concat(param)
-      } else {
-        this.trackList.push(param)
-      }
+      // 收集现有歌曲的ID
+      const existingIds = new Set(this.trackList.map(track => track.id));
+      // 将参数归一化为数组
+      const tracksToAdd = Array.isArray(param) ? param : [param];
+      tracksToAdd.forEach(track => {
+        if (!existingIds.has(track.id)) { // 检查 ID 是否已存在
+          this.trackList.push(track); // 如果不存在，添加到 trackList
+        }
+      });
     },
     addTrackAndPlay(param: Track | Track[]) {
-      let addedIndex = -1 // 用于记录新添加的歌曲索引
-      let existingIndex = -1 // 用于记录已存在歌曲的索引
+      const tracksToAdd = Array.isArray(param) ? param : [param]; // 确保 param 是数组
+      let addedIndex = -1; // 用于记录新添加或更新歌曲的索引
 
-      const addTrack = (track: Track) => {
-        existingIndex = this.trackList.findIndex(
-          (existingTrack) => existingTrack.id === track.id
-        )
+      tracksToAdd.forEach(track => {
+        const existingIndex = this.trackList.findIndex(existingTrack => existingTrack.id === track.id);
 
         if (existingIndex === -1) {
-          this.trackList.push(track)
-          addedIndex = this.trackList.length - 1 // 记录新添加的歌曲索引
+          this.trackList.push(track); // 如果不存在则添加
+          addedIndex = this.trackList.length - 1; // 更新添加索引为新添加的歌曲
         } else {
-          // console.warn(`Track with ID ${track.id} already exists at index ${existingIndex}.`);
-          addedIndex = existingIndex // 更新 addedIndex 为已存在歌曲的索引
+          addedIndex = existingIndex; // 如果存在，则更新为已存在歌曲的索引
         }
-      }
-
-      if (Array.isArray(param)) {
-        param.forEach((track) => addTrack(track))
-      } else {
-        addTrack(param)
-      }
+      });
 
       // 设置当前歌曲为新添加的或已存在的歌曲
-      if (addedIndex !== -1) {
-        this.setCurrentSong(addedIndex)
-      }
+      this.setCurrentSong(addedIndex);
     },
     // 删除指定歌曲
     deleteTrack(id: number | string) {
