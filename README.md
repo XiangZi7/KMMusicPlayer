@@ -1,6 +1,6 @@
 # KMMusicPlayer
 
-![image](https://github.com/user-attachments/assets/32acc6db-4a70-49bf-a1ce-8209e8489da1)
+![image](https://github.com/user-attachments/assets/ecb841c2-62fb-4b3e-82aa-0915ace4a98c)
 
 ### 介绍 📖
 
@@ -78,27 +78,45 @@ pnpm dev
 
 ### 项目截图 📷
 
-![image](https://github.com/user-attachments/assets/32acc6db-4a70-49bf-a1ce-8209e8489da1)
+![image](https://github.com/user-attachments/assets/ecb841c2-62fb-4b3e-82aa-0915ace4a98c)
+
+![image](https://github.com/user-attachments/assets/b94d01f5-27e8-4afd-b0db-e67f2d951231)
 
 ![image](https://github.com/user-attachments/assets/7fd7d3f4-1b10-4cba-abc4-2fe8e2be679d)
 
 ![image](https://github.com/user-attachments/assets/2c71aa45-00bb-42f4-b1b3-dcff8cb52c97)
 
-![image](https://github.com/user-attachments/assets/22d01b96-6396-463e-a3fb-1c5aa42b155d)
+![image](https://github.com/user-attachments/assets/df166b44-c27f-4b91-81eb-516ba7abbdf1)
 
-![image](https://github.com/user-attachments/assets/af25b635-382b-41cc-b854-415455714840)
+![image](https://github.com/user-attachments/assets/69fe14da-7a1d-4f4b-9611-90691f0d49b7)
 
-![image](https://github.com/user-attachments/assets/fa0725ae-daa3-4da3-82a4-1b446db94c12)
+![image](https://github.com/user-attachments/assets/c76cf2e3-6e6a-4a00-8484-c07a147f45c9)
 
-![image](https://github.com/user-attachments/assets/ef6ca0e4-31f7-467d-a4da-035a32adc2e1)
+![image](https://github.com/user-attachments/assets/1d68521d-f5c0-4f0a-87a0-ffde13f266a0)
 
-![image](https://github.com/user-attachments/assets/d775e745-0304-41bc-a182-6607a3cbfd47)
+![image](https://github.com/user-attachments/assets/468e3818-2e53-42a5-8b4d-ae5ff67a80c0)
 
-![image](https://github.com/user-attachments/assets/5b79f12e-d3ae-4b09-9711-2a54b784f945)
+![image](https://github.com/user-attachments/assets/a712c6ee-e54f-4f33-8b3f-24cb154a57df)
 
-![image](https://github.com/user-attachments/assets/d9f4695f-bd3a-47a7-a36e-6c8cea336a6f)
+![image](https://github.com/user-attachments/assets/bf6fc102-308e-4a68-bb73-1b5043865c21)
 
-![image](https://github.com/user-attachments/assets/54657969-0b07-4c94-9f48-e723f94e6695)
+![image](https://github.com/user-attachments/assets/60114478-600f-429c-ba4e-fa1e445192eb)
+
+![image](https://github.com/user-attachments/assets/fc2eaccb-bfe9-4194-abb1-4d68ba9ca200)
+
+![image](https://github.com/user-attachments/assets/44a6afae-ba1f-4cde-a0de-3a7916399553)
+
+![image](https://github.com/user-attachments/assets/8adee4c0-ca4a-46e6-881a-dc82867d7bf0)
+
+![image](https://github.com/user-attachments/assets/1b06a86b-3a7b-4460-94f1-402e8e7c750d)
+
+![image](https://github.com/user-attachments/assets/82d80c29-2b76-49a9-92c4-4cdc482ee48d)
+
+![image](https://github.com/user-attachments/assets/b74b26c3-23e4-474b-b587-bc00f83f1cf1)
+
+![image](https://github.com/user-attachments/assets/793b2c0f-0d03-4380-8d36-671ea7195a0e)
+
+![image](https://github.com/user-attachments/assets/88e1575c-6470-453b-bdb7-836b58b5f7d7)
 
 ![image](https://github.com/user-attachments/assets/7bb5482f-5384-4d03-b2be-7949e0ce7f59)
 
