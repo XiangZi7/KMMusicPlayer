@@ -5,7 +5,6 @@ interface Options {
   pageSize: number
   initialPageNum: number
 }
-// eslint-disable-next-line no-unused-vars
 type Callback = (pageNum: number, pageSize: number) => void
 
 export function useIntersectionObserver(

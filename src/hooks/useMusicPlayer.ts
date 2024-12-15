@@ -62,29 +62,29 @@ export function useMusicPlayer() {
   const handleAudioError = async () => {
     if (!audio.error) return
 
-    // if (audio.error.code === audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
-    //   currentTime.value = 0
-    //   duration.value = 0
-    //   try {
-    //     // 尝试获取新的音源地址，然后重新播放
-    //     const { data } = await urlV1(currentSong.value.id)
-    //     if (!data[0].url) {
-    //       ElNotification({
-    //         title: '提示',
-    //         message: "获取新源失败。",
-    //         type: 'error',
-    //       })
-    //       pause()
-    //     }
-    //     audio.src = data[0].url
-    //     audioStore.setCurrentSongUrl(data[0].url)
-    //     audio.load()
-    //     play()
-    //   } catch (e) {
-    //     // 如果有获取新源失败的专用错误信息
-    //     // errorMessage = "获取新源失败。";
-    //   }
-    // }
+    if (audio.error.code === audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+      currentTime.value = 0
+      duration.value = 0
+      try {
+        // 尝试获取新的音源地址，然后重新播放
+        const { data } = await urlV1(currentSong.value.id)
+        if (!data[0].url) {
+          ElNotification({
+            title: '提示',
+            message: "获取新源失败。",
+            type: 'error',
+          })
+          pause()
+        }
+        audio.src = data[0].url
+        audioStore.setCurrentSongUrl(data[0].url)
+        audio.load()
+        play()
+      } catch (e) {
+        // 如果有获取新源失败的专用错误信息
+        // errorMessage = "获取新源失败。";
+      }
+    }
   }
 
   // 加载歌词

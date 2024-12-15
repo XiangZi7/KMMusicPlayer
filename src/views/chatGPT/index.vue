@@ -24,6 +24,22 @@
   const newMessage = ref<string>('')
   const hoveredIndex = ref<number>(-1)
 
+  const chatRef = ref()
+
+  // 创建用户信息
+  const createUserMessage = () => {
+    const userMessage: Message = {
+      role: 'user',
+      content: newMessage.value,
+    }
+
+    // 将用户消息添加到当前会话
+    chatStore.conversations[chatStore.activeConversationId].messages.push(
+      userMessage
+    )
+  }
+
+
   // 发送消息的函数
   const sendMessage = async () => {
     if (!newMessage.value.trim() || !chatStore.apiToken.trim()) {
@@ -34,15 +50,8 @@
       }) // 如果输入框为空，直接返回。
       return
     }
-    const userMessage: Message = {
-      role: 'user',
-      content: newMessage.value,
-    }
 
-    // 将用户消息添加到当前会话
-    chatStore.conversations[chatStore.activeConversationId].messages.push(
-      userMessage
-    )
+    createUserMessage()
 
     const requestData = JSON.stringify({
       model: chatStore.modelSelect,
@@ -121,6 +130,8 @@
               conversations.value[activeConversationId.value].messages[
                 length - 1
               ].content += content
+              // 把内容每次都打印到最底部
+              chatRef.value!.scrollTop = chatRef.value!.scrollHeight
             } catch (error) {
               console.error('解析 JSON 时出错:', error)
             }
@@ -201,6 +212,14 @@
         console.error('获取模型列表时出错:', error)
       })
   })
+
+  const changeCurrentConversation = (index: number) => {
+    chatStore.activeConversationId = index
+    // 把内容每次都打印到最底部
+    nextTick(()=>{
+      chatRef.value!.scrollTop = chatRef.value!.scrollHeight
+    })
+  }
 </script>
 
 <template>
@@ -224,7 +243,7 @@
               :class="`p-3 text-sm cursor-pointer hover:bg-gray-100 transition-colors duration-200 ${activeConversationId === index ? 'bg-purple-100 text-purple-800' : 'duration-200 text-gray-700'} flex items-center gap-2`"
               v-for="(item, index) in conversations"
               :key="item.id"
-              @click="chatStore.activeConversationId = index"
+              @click="changeCurrentConversation(index)"
               @mouseover="hoveredIndex = index"
               @mouseleave="hoveredIndex = -1"
             >
@@ -265,7 +284,7 @@
         </span>
       </header>
       <div class="relative overflow-hidden flex-1 p-4 bg-[#F9FAFB]">
-        <div class="h-full w-full rounded-[inherit] overflow-auto">
+        <div class="h-full w-full rounded-[inherit] overflow-auto" ref="chatRef">
           <div style="min-width: 100%; display: table">
             <div
               v-if="conversations[activeConversationId].messages.length === 0"
