@@ -75,7 +75,7 @@
 <template>
   <div class="container p-6 overflow-hidden h-full flex-1">
     <div class="flex gap-6 h-full">
-      <div class="flex-[20%] max-w-[20%] space-y-4 relative">
+      <div class="flex-[20%] max-w-[20%] space-y-4 relative" v-if="playlistData.playlist.coverImgUrl">
         <img
           alt="Album cover"
           class="w-full aspect-square object-cover rounded-lg shadow-xl"

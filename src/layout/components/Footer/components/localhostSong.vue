@@ -51,26 +51,26 @@
           <li
             v-for="(song, index) in audioStore.trackList"
             :key="index"
-            :class="`flex items-center truncate px-4 py-1 hover:bg-gray-300 ${audioStore.currentSongIndex == index ? 'bg-gray-300' : ''} dark:hover:bg-[#414243] rounded-lg transition justify-between`"
+            :class="`flex items-center px-4 py-1 hover:bg-gray-300 ${audioStore.currentSongIndex == index ? 'bg-gray-300' : ''} dark:hover:bg-[#414243] rounded-lg transition justify-between`"
             @dblclick="playMusic(song.id)"
             @mouseover="mouseOverIndex = index"
             @mouseleave="mouseOverIndex = -1"
           >
-            <div class="flex items-center">
+            <div class="flex items-center w-[80%]">
               <img
                 :src="song.cover + '?param=90y90'"
                 :alt="song.title"
                 class="w-8 h-8 rounded-lg mr-4"
               />
-              <div>
+              <div class="w-[70%]">
                 <h2
-                  class="text-sm font-semibold dark:text-white"
+                  class="text-sm font-semibold dark:text-white truncate"
                   :title="song.title"
                 >
                   {{ song.title }}
                 </h2>
                 <p
-                  class="text-gray-600 dark:text-gray-400"
+                  class="text-gray-600 dark:text-gray-400 truncate"
                   :title="song.singer"
                 >
                   {{ song.singer }}
