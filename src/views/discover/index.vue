@@ -3,7 +3,7 @@
   import Singer from './components/singer.vue'
   import Rankings from './components/Rankings.vue'
 
-  const activeName = ref('third')
+  const activeName = ref('first')
 </script>
 <template>
   <div class="p-6 h-full w-full">
