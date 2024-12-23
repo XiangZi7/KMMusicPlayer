@@ -1,54 +1,54 @@
 <script setup lang="ts">
-import { useSpeechSynthesis } from '@vueuse/core'
+  import { useSpeechSynthesis } from '@vueuse/core'
 
-const voice = ref<SpeechSynthesisVoice>(
-  undefined as unknown as SpeechSynthesisVoice
-)
-const text = ref('Hello, everyone! Good morning!')
-const pitch = ref(1)
-const rate = ref(1)
+  const voice = ref<SpeechSynthesisVoice>(
+    undefined as unknown as SpeechSynthesisVoice
+  )
+  const text = ref('Hello, everyone! Good morning!')
+  const pitch = ref(1)
+  const rate = ref(1)
 
-const speech = useSpeechSynthesis(text, {
-  voice,
-  pitch,
-  rate,
-})
+  const speech = useSpeechSynthesis(text, {
+    voice,
+    pitch,
+    rate,
+  })
 
-let synth: SpeechSynthesis
+  let synth: SpeechSynthesis
 
-const voices = ref<SpeechSynthesisVoice[]>([])
+  const voices = ref<SpeechSynthesisVoice[]>([])
 
-onMounted(() => {
-  if (speech.isSupported.value) {
-    // load at last
-    setTimeout(() => {
-      synth = window.speechSynthesis
-      voices.value = synth.getVoices()
-      voice.value = voices.value[0]
-    })
+  onMounted(() => {
+    if (speech.isSupported.value) {
+      // load at last
+      setTimeout(() => {
+        synth = window.speechSynthesis
+        voices.value = synth.getVoices()
+        voice.value = voices.value[0]
+      })
+    }
+  })
+
+  function play() {
+    if (speech.status.value === 'pause') {
+      console.log('resume')
+      window.speechSynthesis.resume()
+    } else {
+      speech.speak()
+    }
   }
-})
 
-function play() {
-  if (speech.status.value === 'pause') {
-    console.log('resume')
-    window.speechSynthesis.resume()
-  } else {
-    speech.speak()
+  function pause() {
+    window.speechSynthesis.pause()
   }
-}
 
-function pause() {
-  window.speechSynthesis.pause()
-}
-
-function stop() {
-  speech.stop()
-}
+  function stop() {
+    speech.stop()
+  }
 </script>
 
 <template>
-  <div class="p-2 bg-gray-50 rounded-lg shadow-lg">
+  <div class="p-2 bg-gray-50 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
     <div class="flex flex-col space-y-1.5 p-6">
       <h3
         class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight"

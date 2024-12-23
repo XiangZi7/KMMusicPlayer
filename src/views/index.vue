@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { cloudsearch } from '@/api'
-import { cloudsearchResult, PlaylistsResponse } from '@/api/interface'
+import { CloudSearchResult, PlaylistsResponse } from '@/api/interface'
 const songListRef = ref()
 const state = reactive({
-  tableData: {} as cloudsearchResult,
+  tableData: {} as CloudSearchResult,
   SongList: {} as PlaylistsResponse,
 })
 

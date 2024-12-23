@@ -1,17 +1,27 @@
 <script setup lang="ts">
   import axios from 'axios'
-  import { ElNotification } from 'element-plus'
-  import hljs from 'highlight.js'
-  import MarkdownIt from 'markdown-it'
-  import 'highlight.js/styles/github-dark.css' // 可随个人喜好更换主题
-
-  type Message = {
+  import 'highlight.js/styles/github-dark.css'
+  import { renderMarkdown } from '@/utils/markdown'
+  import { showNotification } from '@/utils/notification'
+  // 类型定义
+  interface Message {
     role: 'system' | 'user'
     content: string
   }
 
-  const chatStore = useChatStore()
+  interface ModelItem {
+    id: string
+  }
 
+  interface ApiError {
+    error: {
+      message: string
+      code: string
+    }
+  }
+
+  // Store 引用
+  const chatStore = useChatStore()
   const {
     conversations,
     activeConversationId,
@@ -19,46 +29,81 @@
     apiBaseUrl,
     apiToken,
   } = storeToRefs(chatStore)
+
+  // 响应式状态
   const dialogVisible = ref<boolean>(false)
-  const modelList = ref<{ id: string }[]>([])
+  const modelList = ref<ModelItem[]>([])
   const newMessage = ref<string>('')
   const hoveredIndex = ref<number>(-1)
+  const chatRef = ref<HTMLElement>()
 
-  const chatRef = ref()
-
-  // 创建用户信息
-  const createUserMessage = () => {
-    const userMessage: Message = {
+  /**
+   * 滚动聊天底部
+   */
+  const scrollToBottom = () => {
+    nextTick(() => {
+      if (chatRef.value) {
+        chatRef.value.scrollTop = chatRef.value.scrollHeight
+      }
+    })
+  }
+  /**
+   * 创建用户消息
+   */
+  const createUserMessage = (): void => {
+    const message: Message = {
       role: 'user',
       content: newMessage.value,
     }
-
-    // 将用户消息添加到当前会话
     chatStore.conversations[chatStore.activeConversationId].messages.push(
-      userMessage
+      message
     )
   }
 
+  /**
+   * 处理流式响应数据
+   */
+  const processStreamResponse = async (
+    reader: ReadableStreamDefaultReader<Uint8Array>,
+    decoder: TextDecoder
+  ): Promise<void> => {
+    try {
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
 
-  // 发送消息的函数
-  const sendMessage = async () => {
+        const chunk = decoder.decode(value, { stream: true })
+        const lines = chunk.split('\n').filter((line) => line.trim())
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const jsonString = line.substring(6).trim()
+            if (jsonString && jsonString !== '[DONE]') {
+              const jsonResponse = JSON.parse(jsonString)
+              const content = jsonResponse.choices[0]?.delta?.content || ''
+              const messages =
+                conversations.value[activeConversationId.value].messages
+              messages[messages.length - 1].content += content
+              scrollToBottom()
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('处理流式数据错误:', error)
+    }
+  }
+
+  /**
+   * 发送消息
+   */
+  const sendMessage = async (): Promise<void> => {
     if (!newMessage.value.trim() || !chatStore.apiToken.trim()) {
-      ElNotification({
-        title: '提示',
-        message: '请输入消息内容或填写Token',
-        type: 'warning',
-      }) // 如果输入框为空，直接返回。
+      showNotification('提示', '请输入消息内容或填写Token', 'warning')
       return
     }
 
     createUserMessage()
-
-    const requestData = JSON.stringify({
-      model: chatStore.modelSelect,
-      messages:
-        chatStore.conversations[chatStore.activeConversationId].messages,
-      stream: true,
-    })
 
     try {
       const response = await fetch(
@@ -69,168 +114,90 @@
             Authorization: chatStore.apiToken,
             'Content-Type': 'application/json',
           },
-          body: requestData,
+          body: JSON.stringify({
+            model: chatStore.modelSelect,
+            messages:
+              chatStore.conversations[chatStore.activeConversationId].messages,
+            stream: true,
+          }),
         }
       )
 
-      // 错误抛出
       if (!response.ok) {
-        response.json().then(({ error }) => {
-          const { message, code } = error
-          ElNotification({
-            title: 'HTTP 错误！状态:',
-            message: `${code} - ${message}`,
-            type: 'error',
-          })
-          throw new Error(`HTTP 错误！状态: ${code} - ${message}`)
-        })
+        const errorData = (await response.json()) as ApiError
+        throw new Error(`${errorData.error.code} - ${errorData.error.message}`)
       }
 
       const reader = response.body?.getReader()
       const decoder = new TextDecoder('utf-8')
 
-      // 为助手的响应添加一个空的系统消息
-      const systemMessage: Message = { role: 'system', content: '' }
-      conversations.value[activeConversationId.value].messages.push(
-        systemMessage
-      )
+      conversations.value[activeConversationId.value].messages.push({
+        role: 'system',
+        content: '',
+      })
 
-      // 处理流式数据
-      await processStreamedData(
+      await processStreamResponse(
         reader as ReadableStreamDefaultReader<Uint8Array>,
         decoder
       )
     } catch (error) {
-      console.error('发送消息时出错:', error)
+      showNotification(
+        '发送消息失败',
+        error instanceof Error ? error.message : '未知错误'
+      )
     } finally {
-      newMessage.value = '' // 清空输入框
+      newMessage.value = ''
     }
   }
 
-  const processStreamedData = async (
-    reader: ReadableStreamDefaultReader<Uint8Array>,
-    decoder: TextDecoder
-  ) => {
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break // 读取完毕时退出循环
-
-      const chunk = decoder.decode(value, { stream: true })
-      const chunks = chunk.split('\n').filter((line) => line.trim() !== '')
-
-      for (const line of chunks) {
-        if (line.startsWith('data: ')) {
-          const jsonString = line.substring(6).trim() // 去掉 'data: ' 前缀
-          if (jsonString && jsonString !== '[DONE]') {
-            try {
-              const jsonResponse = JSON.parse(jsonString)
-              const content = jsonResponse.choices[0]?.delta?.content || ''
-              const length =
-                conversations.value[activeConversationId.value].messages.length
-              conversations.value[activeConversationId.value].messages[
-                length - 1
-              ].content += content
-              // 把内容每次都打印到最底部
-              chatRef.value!.scrollTop = chatRef.value!.scrollHeight
-            } catch (error) {
-              console.error('解析 JSON 时出错:', error)
-            }
-          }
-        }
-      }
-    }
+  // 设置相关函数
+  const openSettingsDialog = (): void => {
+    dialogVisible.value = true
   }
 
-  const openSettingsDialog = () => {
-    dialogVisible.value = true // 打开设置对话框
-  }
-
-  const saveSettings = () => {
-    dialogVisible.value = false // 关闭对话框
-    // Update the store with new values
+  const handleSettingsSave = (): void => {
+    dialogVisible.value = false
     chatStore.setApiBaseUrl(apiBaseUrl.value)
     chatStore.setApiToken(apiToken.value)
   }
-  // 创建新的聊天会话
-  const createNewChat = () => {
+
+  // 会话管理
+  const createNewChat = (): void => {
     chatStore.addConversation()
   }
 
-  // 删除会话的函数
-  const deleteChat = (index: number) => {
+  const deleteChat = (index: number): void => {
     chatStore.deleteConversation(index)
   }
 
-  // 创建具有代码高亮功能的 MarkdownIt 实例
-  const md = new MarkdownIt({
-    highlight: function (str, lang) {
-      const buttonHTML = `<button class="absolute top-2 right-2">复制代码</button>`
-
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return (
-            '<pre class="hljs"><code>' +
-            buttonHTML +
-            hljs.highlight(str, { language: lang, ignoreIllegals: true })
-              .value +
-            '</code></pre>'
-          )
-        } catch (__) {
-          /* empty */
-        }
-      }
-      return (
-        '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
-      )
-    },
-  })
-  // 定义返回 HTML 函数
-  const marked = (texttomake: string) => {
-    let parsedHtml = ''
-    parsedHtml = md.render(texttomake)
-    parsedHtml = parsedHtml.replace(
-      /<a\s+([^>]*\s+)?href="([^"]*\.m3u8)"\s*([^>]*)>/g,
-      '<a $1href="#/video?videoUrl=$2&videoType=application/x-mpegURL" $3>'
-    )
-    parsedHtml = parsedHtml.replace(/<a /g, '<a target="_blank" ')
-    return parsedHtml
-  }
-
-  // Fetch models on mount
-  onMounted(() => {
-    if (!chatStore.apiBaseUrl || !chatStore.apiToken) return
-    axios
-      .get(`${chatStore.apiBaseUrl}/v1/models`, {
-        headers: {
-          Authorization: chatStore.apiToken,
-        },
-      })
-      .then((res) => {
-        modelList.value = res.data.data
-      })
-      .catch((error) => {
-        console.error('获取模型列表时出错:', error)
-      })
-  })
-
-  const changeCurrentConversation = (index: number) => {
+  const changeConversation = (index: number): void => {
     chatStore.activeConversationId = index
-    // 把内容每次都打印到最底部
-    nextTick(()=>{
-      chatRef.value!.scrollTop = chatRef.value!.scrollHeight
-    })
+    scrollToBottom()
   }
-</script>
 
+  // 生命周期钩子
+  onMounted(async () => {
+    if (!chatStore.apiBaseUrl || !chatStore.apiToken) return
+
+    try {
+      const { data } = await axios.get(`${chatStore.apiBaseUrl}/v1/models`, {
+        headers: { Authorization: chatStore.apiToken },
+      })
+      modelList.value = data.data
+    } catch (error) {
+      showNotification('获取模型列表失败', '请检查API配置是否正确')
+    }
+  })
+</script>
 <template>
   <div class="flex flex-1 h-full">
     <div
-      class="bg-white border-r border-gray-200 w-72 flex flex-col transition-all duration-300 ease-in-out translate-x-0 md:translate-x-0 md:static absolute z-10 h-full"
+      class="border-r border-gray-200 dark:border-gray-700 w-72 flex flex-col transition-all duration-300 ease-in-out translate-x-0 md:translate-x-0 md:static absolute z-10 h-full"
     >
-      <div class="p-4 border-b">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
         <button
           @click="createNewChat"
-          class="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 w-full justify-start bg-purple-600 hover:bg-purple-700 text-white"
+          class="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 w-full justify-start bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
         >
           <icon-material-symbols-light:add-circle-outline-rounded />
           New Chat
@@ -240,10 +207,10 @@
         <div class="h-full w-full rounded-[inherit]">
           <div style="min-width: 100%; display: table">
             <div
-              :class="`p-3 text-sm cursor-pointer hover:bg-gray-100 transition-colors duration-200 ${activeConversationId === index ? 'bg-purple-100 text-purple-800' : 'duration-200 text-gray-700'} flex items-center gap-2`"
+              :class="`p-3 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${activeConversationId === index ? 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200' : 'duration-200 text-gray-700 dark:text-gray-300'} flex items-center gap-2`"
               v-for="(item, index) in conversations"
               :key="item.id"
-              @click="changeCurrentConversation(index)"
+              @click="changeConversation(index)"
               @mouseover="hoveredIndex = index"
               @mouseleave="hoveredIndex = -1"
             >
@@ -270,9 +237,13 @@
       </div>
     </div>
     <div class="flex-1 flex flex-col">
-      <header class="bg-white border-b p-4 flex items-center justify-between">
+      <header
+        class="border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between"
+      >
         <div class="flex items-center">
-          <h1 class="text-xl font-semibold text-gray-800">General Questions</h1>
+          <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200"
+            >General Questions</h1
+          >
         </div>
         <span
           class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
@@ -283,14 +254,19 @@
           />
         </span>
       </header>
-      <div class="relative overflow-hidden flex-1 p-4 bg-[#F9FAFB]">
-        <div class="h-full w-full rounded-[inherit] overflow-auto" ref="chatRef">
+      <div class="relative overflow-hidden flex-1 p-4">
+        <div
+          class="h-full w-full rounded-[inherit] overflow-auto"
+          ref="chatRef"
+        >
           <div style="min-width: 100%; display: table">
             <div
               v-if="conversations[activeConversationId].messages.length === 0"
               class="text-center p-4"
             >
-              <p class="text-gray-500">开始聊天，输入你的问题...</p>
+              <p class="text-gray-500 dark:text-gray-400"
+                >开始聊天，输入你的问题...</p
+              >
             </div>
             <template v-else>
               <div
@@ -310,9 +286,9 @@
                   </span>
 
                   <div
-                    :class="`text-sm p-3 rounded-lg ${item.role === 'system' ? 'bg-white border border-gray-200 text-gray-800' : 'bg-purple-600 text-white'}`"
+                    :class="`text-sm p-3 rounded-lg ${item.role === 'system' ? 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200' : 'bg-purple-600 dark:bg-purple-700 text-white'}`"
                   >
-                    <p class="mb-1" v-html="marked(item.content)"></p>
+                    <p class="mb-1" v-html="renderMarkdown(item.content)"></p>
                   </div>
                   <span
                     v-if="item.role === 'user'"
@@ -329,12 +305,13 @@
           </div>
         </div>
       </div>
-      <div class="p-4 bg-white">
+      <div class="p-4 bg-white dark:bg-gray-800">
         <div class="flex items-center">
           <el-input
             size="large"
             placeholder="Type your message here..."
             v-model="newMessage"
+            class="dark:bg-gray-700 dark:text-gray-200"
           >
             <template #append>
               <el-select
@@ -354,13 +331,13 @@
           </el-input>
           <button
             @click="sendMessage"
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white"
           >
             <icon-iconoir:send-diagonal />
           </button>
           <button
             @click="openSettingsDialog"
-            class="ml-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white"
+            class="ml-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
           >
             <icon-tabler:settings />
           </button>
@@ -368,7 +345,11 @@
       </div>
     </div>
     <!-- 设置对话框 -->
-    <el-dialog title="API 设置" v-model="dialogVisible">
+    <el-dialog
+      title="API 设置"
+      v-model="dialogVisible"
+      class="dark:bg-gray-800 dark:text-gray-200"
+    >
       <el-input
         v-model="apiBaseUrl"
         class="mb-4"
@@ -386,7 +367,7 @@
       >
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="saveSettings">保存</el-button>
+        <el-button type="primary" @click="handleSettingsSave">保存</el-button>
       </template>
     </el-dialog>
   </div>

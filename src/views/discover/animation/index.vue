@@ -1,48 +1,48 @@
 <script setup lang="ts">
-import { aniSearch } from '@/api/index'
+  import { aniSearch } from '@/api/index'
 
-const router = useRouter()
-type vidioType = 'nnyy' | 'xfani'
+  const router = useRouter()
+  type vidioType = 'nnyy' | 'xfani'
 
-interface AnimeItem {
-  id: number
-  title: string
-  img: string
-}
-const kw = ref('')
-const type = ref<vidioType>('nnyy')
-const aniList = ref<AnimeItem[]>([])
+  interface AnimeItem {
+    id: number
+    title: string
+    img: string
+  }
+  const kw = ref('')
+  const type = ref<vidioType>('nnyy')
+  const aniList = ref<AnimeItem[]>([])
 
-const options = ref([
-  {
-    label: 'nnyy',
-    value: 'nnyy',
-  },
-  {
-    label: 'xfani',
-    value: 'xfani',
-  },
-])
+  const options = ref([
+    {
+      label: 'nnyy',
+      value: 'nnyy',
+    },
+    {
+      label: 'xfani',
+      value: 'xfani',
+    },
+  ])
 
-function toSearch() {
-  aniList.value = []
-  aniSearch<{ data: AnimeItem[] }>({ kw: kw.value, type: type.value }).then(
-    (res) => {
-      aniList.value = res.data
-    }
-  )
-}
+  function toSearch() {
+    aniList.value = []
+    aniSearch<{ data: AnimeItem[] }>({ kw: kw.value, type: type.value }).then(
+      (res) => {
+        aniList.value = res.data
+      }
+    )
+  }
 </script>
 <template>
-  <div class="h-full bg-gray-50 text-gray-800 p-8" data-id="1">
-    <div class="max-w-4xl mx-auto" data-id="2">
-      <header class="text-center mb-12" data-id="3">
-        <h1 class="text-3xl font-semibold mb-2" data-id="4">
-          Anime Movie Search
-        </h1>
-        <p class="text-gray-600" data-id="5">Find your favorite anime movies</p>
+  <div class="h-full text-gray-800 dark:text-gray-200 p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="text-center mb-12">
+        <h1 class="text-3xl font-semibold mb-2"> Anime Movie Search </h1>
+        <p class="text-gray-600 dark:text-gray-400"
+          >Find your favorite anime movies</p
+        >
       </header>
-      <div class="flex items-center mb-8" data-id="6">
+      <div class="flex items-center mb-8">
         <el-input
           placeholder="Search for anime movies..."
           type="text"
@@ -75,7 +75,7 @@ function toSearch() {
       </div>
       <div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-6">
         <div
-          class="overflow-hidden"
+          class="overflow-hidden dark:bg-gray-800"
           v-for="item in aniList"
           :key="item.id"
           @click="router.push(`/animation/play?id=${item.id}&type=${type}`)"
@@ -86,7 +86,7 @@ function toSearch() {
             :src="item.img"
           />
           <h3
-            class="text-lg text-center cursor-pointer font-semibold mb-2"
+            class="text-lg text-center cursor-pointer font-semibold mb-2 dark:text-gray-200"
             data-id="14"
           >
             {{ item.title }}
