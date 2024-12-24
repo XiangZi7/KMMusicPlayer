@@ -36,6 +36,7 @@
   const newMessage = ref<string>('')
   const hoveredIndex = ref<number>(-1)
   const chatRef = ref<HTMLElement>()
+  const sidebarVisible = ref<boolean>(false)
 
   /**
    * 滚动聊天底部
@@ -175,6 +176,10 @@
     scrollToBottom()
   }
 
+  const toggleSidebar = () => {
+    sidebarVisible.value = !sidebarVisible.value
+  }
+
   // 生命周期钩子
   onMounted(async () => {
     if (!chatStore.apiBaseUrl || !chatStore.apiToken) return
@@ -192,7 +197,7 @@
 <template>
   <div class="flex flex-1 h-full">
     <div
-      class="border-r border-gray-200 dark:border-gray-700 w-72 flex flex-col transition-all duration-300 ease-in-out translate-x-0 md:translate-x-0 md:static absolute z-10 h-full"
+      class="border-r border-gray-200 dark:border-gray-700 w-72 flex flex-col transition-all duration-300 ease-in-out translate-x-0 md:translate-x-0 md:static absolute z-10 h-full md:block hidden"
     >
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
         <button
@@ -240,10 +245,16 @@
       <header
         class="border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between"
       >
+        <button
+          @click="toggleSidebar"
+          class="md:hidden block text-gray-800 dark:text-gray-200"
+        >
+          <icon-tabler:menu />
+        </button>
         <div class="flex items-center">
-          <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200"
-            >General Questions</h1
-          >
+          <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{
+             conversations[activeConversationId].messages.length>0 ? conversations[activeConversationId].messages[0].content : '空消息'
+          }}</h1>
         </div>
         <span
           class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
@@ -286,7 +297,7 @@
                   </span>
 
                   <div
-                    :class="`text-sm p-3 rounded-lg ${item.role === 'system' ? 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200' : 'bg-purple-600 dark:bg-purple-700 text-white'}`"
+                    :class="`text-sm bg-gray-100 p-3 rounded-lg ${item.role === 'system' ? ' dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200' : 'bg-purple-600 dark:bg-purple-700 text-white'}`"
                   >
                     <p class="mb-1" v-html="renderMarkdown(item.content)"></p>
                   </div>
@@ -306,12 +317,12 @@
         </div>
       </div>
       <div class="p-4 bg-white dark:bg-gray-800">
-        <div class="flex items-center">
+        <div class="flex flex-col md:flex-row items-center">
           <el-input
             size="large"
             placeholder="Type your message here..."
             v-model="newMessage"
-            class="dark:bg-gray-700 dark:text-gray-200"
+            class="dark:bg-gray-700 dark:text-gray-200 flex-1 mb-2 md:mb-0"
           >
             <template #append>
               <el-select
@@ -329,18 +340,20 @@
               </el-select>
             </template>
           </el-input>
-          <button
-            @click="sendMessage"
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white"
-          >
-            <icon-iconoir:send-diagonal />
-          </button>
-          <button
-            @click="openSettingsDialog"
-            class="ml-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
-          >
-            <icon-tabler:settings />
-          </button>
+          <div class="flex space-x-2 mt-2 md:mt-0">
+            <button
+              @click="sendMessage"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white"
+            >
+              <icon-iconoir:send-diagonal />
+            </button>
+            <button
+              @click="openSettingsDialog"
+              class="ml-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
+            >
+              <icon-tabler:settings />
+            </button>
+          </div>
         </div>
       </div>
     </div>

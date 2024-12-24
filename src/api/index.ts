@@ -37,7 +37,7 @@ export const cloudsearch = ({ kw = '', offset = 0, type = 1, limit = 20 }: Searc
 };
 
 // 获取音乐连接
-export const urlV1 = (id: number | string) => httpGet<ResultData>(`song/url/v1?id=${id}&level=exhigh`);
+export const urlV1 = (id: number | string) => httpGet<{ data: { url: string }[] }>(`song/url/v1?id=${id}&level=exhigh`);
 
 // 获取歌单详情
 export const playlistDetail = (id: number | string) => httpGet<PlaylistDetailResponse>(`/playlist/detail?id=${id}`);
@@ -157,7 +157,7 @@ export const getMVRanking = (params: {
   area?: '内地' | '港台' | '欧美' | '日本' | '韩国';
   offset?: number; // 默认值为 0
 } = {}) => {
-  const { limit = 30,area = "欧美",  offset = 0 } = params; // 设置默认值
+  const { limit = 30, area = "欧美", offset = 0 } = params; // 设置默认值
   const query = createQueryString({ limit, area, offset });
   return httpGet<MVRankingResponse>(`/top/mv?${query}`);
 };

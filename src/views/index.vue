@@ -15,8 +15,8 @@ onMounted(() => {
     cloudsearch({ kw: '境界的彼方', type: 1000 }),
   ])
     .then(([result1, result2]) => {
-      state.tableData = result1.result
-      state.SongList = result2.result
+      state.tableData = result1.result as CloudSearchResult
+      state.SongList = result2.result as PlaylistsResponse
     })
     .catch((error) => {
       console.error('Error occurred:', error)

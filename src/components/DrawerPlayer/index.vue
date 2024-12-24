@@ -4,10 +4,13 @@
   import { PlayMode } from '@/enum'
   import { Comment } from '@/api/interface'
   import { commentMusic } from '@/api'
-  import { useDebounceFn } from '@vueuse/core'
+  import { formatTime, getCurrentTime } from '@/utils/time'
+  import { fetchComments, formatNumber } from '@/services/commentService'
+  import { parseLyricInfo } from '@/utils/lyricUtils'
+  import { createDebouncedFunction } from '@/utils/debounceUtils'
 
   const userStore = useUserStore()
-  const SettingStore = useSettingStore()
+  const settingStore = useSettingStore()
   const themeStore = useThemeStore()
   const { switchDark } = useTheme()
   const scrollContainer = ref()
@@ -15,12 +18,12 @@
     direction: 'ttb',
     drawer: false,
     commentListData: [] as Comment[],
-    commenDrawer: false,
-    commenTotal: 0,
+    commentDrawer: false,
+    commentTotal: 0,
     isUserScrolling: false,
   })
 
-  const { direction, drawer, commentListData, commenDrawer, commenTotal } =
+  const { direction, drawer, commentListData, commentDrawer, commentTotal } =
     toRefs(state)
 
   const {
@@ -32,7 +35,7 @@
     currentTime,
     duration,
     changeCurrentTime,
-    Loadlyrics,
+    loadLyrics,
     lyricsData,
     currentLyricIndex,
     setPlayMode,
@@ -41,113 +44,79 @@
 
   const show = () => {
     state.drawer = true
-    Loadlyrics()
+    loadLyrics()
     getCommentPlaylist()
   }
 
-  // 格式化时间
-  function formatTime(seconds: number): string {
-    // 将秒数转换为整数分钟数和剩余秒数
-    const min = Math.floor(seconds / 60)
-    const sec = Math.floor(seconds % 60)
-
-    // 返回格式化的字符串，确保分钟和秒数都至少有两位数
-    return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
-  }
-
-  function parseLyricInfo(lyricString: string) {
-    return lyricString
-      .replace(/\n/g, '<br />') // 将换行符替换为 <br />
-      .replace(/^\s*|\s*$/g, '') // 去除前后空格
-  }
-
-  // 时间
-  let LocalhostcurrentTime = ref<string>(new Date().toLocaleTimeString())
+  // 本地时间
+  let localhostCurrentTime = ref<string>(getCurrentTime())
 
   // 更新时间的函数
   function updateTime(): void {
-    LocalhostcurrentTime.value = new Date().toLocaleTimeString()
+    localhostCurrentTime.value = getCurrentTime()
   }
 
   // 打开评论抽屉并加载相应的评论数据
-  const showDrawer = () => {
-    state.commenDrawer = true // 打开评论抽屉
-    if (state.commentListData.length > 0) return // 如果已有评论数据，则不再请求
+  const showDrawer = async () => {
+    state.commentDrawer = true
+    if (state.commentListData.length > 0) return
 
-    // 请求评论数据，并更新评论列表和评论总数
-    commentMusic({ offset: 1, id: currentSong.value.id }).then((res) => {
-      state.commentListData = res.comments // 更新评论列表
-      state.commenTotal = res.total // 更新评论总数
-    })
-  }
-
-  // 格式化数字函数，将数字转换为易读的字符串（如 1.5万）
-  function formatNumber(num: number): string {
-    if (num < 10000) {
-      return num.toString() // 直接返回小于10000的数字
-    } else if (num < 100000) {
-      const formatted = (num / 10000).toFixed(1)
-      return formatted.endsWith('.0')
-        ? formatted.slice(0, -2) + '万'
-        : formatted + '万' // 处理 1.0万 和 1.5万
-    } else {
-      return (num / 10000).toFixed(0) + '万' // 对于大于或等于100000的数字，直接显示为整数的万
-    }
+    const { comments, total } = await fetchComments(currentSong.value.id)
+    state.commentListData = comments
+    state.commentTotal = total
   }
 
   // 获取评论列表的函数，默认请求第一页，如果已有评论则不再请求
   const getCommentPlaylist = (pages: number = 1) => {
-    if (state.commentListData.length > 0) return // 如果已有评论数据，则不再请求
+    if (state.commentListData.length > 0) return
 
-    // 请求评论数据，并合并到现有评论列表中
     commentMusic({ offset: pages, id: currentSong.value.id }).then((res) => {
-      state.commentListData = state.commentListData.concat(res.comments) // 更新评论列表
-      state.commenTotal = res.total // 更新评论总数
+      state.commentListData = state.commentListData.concat(res.comments)
+      state.commentTotal = res.total
     })
   }
 
   // 播放下一首歌曲的处理函数
   function handlePlayNext() {
-    state.commentListData = [] // 清空评论列表
-    state.commenTotal = 0 // 重置评论总数
-    playNext() // 播放下一首歌曲
-    getCommentPlaylist(1) // 获取新的评论列表
+    state.commentListData = []
+    state.commentTotal = 0
+    playNext()
+    getCommentPlaylist(1)
   }
 
   // 播放上一首歌曲的处理函数
   function handlePlayPrevious() {
-    state.commentListData = [] // 清空评论列表
-    state.commenTotal = 0 // 重置评论总数
-    playPrevious() // 播放上一首歌曲
-    getCommentPlaylist(1) // 获取新的评论列表
+    state.commentListData = []
+    state.commentTotal = 0
+    playPrevious()
+    getCommentPlaylist(1)
   }
 
-  // 防抖函数，用户滚动歌词时停止歌词滚动，3秒后继续
-  const debouncedFn = useDebounceFn(() => {
-    state.isUserScrolling = false // 重新设置用户滚动状态
-    scrollToCurrentLyric(scrollContainer.value) // 恢复歌词滚动
-  }, 3000) // 防抖延时：3000毫秒
+  // 防抖函数
+  const debouncedFn = createDebouncedFunction(() => {
+    state.isUserScrolling = false
+    scrollToCurrentLyric(scrollContainer.value)
+  }, 3000)
 
-  // 处理滚动事件，触发防抖函数
+  // 处理滚动事件
   function handleScroll() {
-    state.isUserScrolling = true // 标记用户正在滚动
-    debouncedFn() // 调用防抖函数
+    state.isUserScrolling = true
+    debouncedFn()
   }
 
   // 监听播放当前时间，并用于歌词滚动
   watch(
     () => currentTime.value,
     () => {
-      // 仅在 currentTime 有效且用户未滚动时滚动歌词
       if (currentTime.value && !state.isUserScrolling) {
-        scrollToCurrentLyric(scrollContainer.value) // 滚动到当前歌词
+        scrollToCurrentLyric(scrollContainer.value)
       }
     }
   )
 
   // 组件挂载时设置定时器以每秒更新时间
   onMounted(() => {
-    setInterval(updateTime, 1000) as unknown as number // 每秒更新一次本地时间
+    setInterval(updateTime, 1000) as unknown as number
   })
 
   // 允许在父组件中访问这个方法
@@ -158,7 +127,7 @@
 <template>
   <el-drawer
     :style="{
-      '--track-cover-url': `url(${SettingStore.isDrawerCover ? currentSong.cover : ''})`,
+      '--track-cover-url': `url(${settingStore.isDrawerCover ? currentSong.cover : ''})`,
     }"
     v-model="drawer"
     :direction="direction"
@@ -177,7 +146,7 @@
           <div class="flex items-center gap-1 w-[80px]">
             <icon-material-symbols:nest-clock-farsight-analog-outline />
             <span class="text-sm">
-              {{ LocalhostcurrentTime }}
+              {{ localhostCurrentTime }}
             </span>
           </div>
           <div class="flex items-center gap-1">
@@ -291,9 +260,9 @@
                   </el-button>
                   <span
                     class="text-sm dark:text-gray-300"
-                    v-if="commenTotal !== 0"
+                    v-if="commentTotal !== 0"
                   >
-                    {{ formatNumber(commenTotal) }}
+                    {{ formatNumber(commentTotal) }}
                   </span>
                 </div>
               </div>
@@ -321,13 +290,13 @@
                     `text-sm py-1 transition-all duration-300 ease-in-out ${currentLyricIndex === index ? 'activeLyric' : 'inactiveLyric'}`,
                   ]"
                 >
-                  <p v-if="item.text && SettingStore.isOriginalParsed">
+                  <p v-if="item.text && settingStore.isOriginalParsed">
                     {{ item.text }}
                   </p>
-                  <p v-if="item.translation && SettingStore.isTranslatedParsed">
+                  <p v-if="item.translation && settingStore.isTranslatedParsed">
                     {{ item.translation }}
                   </p>
-                  <p v-if="item.romaLrc && SettingStore.isRomaParsed">
+                  <p v-if="item.romaLrc && settingStore.isRomaParsed">
                     {{ item.romaLrc }}
                   </p>
                 </li>
@@ -338,14 +307,14 @@
             <div
               class="h-full flex items-center justify-center w-full text-[--el-color-primary-light-2] dark:text-gray-500 text-sm"
               v-html="parseLyricInfo(lyricsData.remark ?? '')"
-              v-if="SettingStore.isOriginalParsed"
+              v-if="settingStore.isOriginalParsed"
             ></div>
           </template>
         </div>
       </div>
     </div>
     <CommentPopup
-      v-model="commenDrawer"
+      v-model="commentDrawer"
       :data="commentListData"
       @DIntersect="getCommentPlaylist"
     />
@@ -358,14 +327,14 @@
           class="ml-2"
         />
         <el-switch
-          v-model="SettingStore.isTranslatedParsed"
-          @change="SettingStore.setTranslatedParsed"
+          v-model="settingStore.isTranslatedParsed"
+          @change="settingStore.setTranslatedParsed"
           class="ml-2"
           active-text="翻译"
         />
         <el-switch
-          v-model="SettingStore.isRomaParsed"
-          @change="SettingStore.setRomaParsed"
+          v-model="settingStore.isRomaParsed"
+          @change="settingStore.setRomaParsed"
           class="ml-2"
           active-text="罗马音"
         />

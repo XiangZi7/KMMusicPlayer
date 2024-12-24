@@ -12,7 +12,7 @@ export interface MusicPlayer {
   togglePlayPause: () => void // 切换播放/暂停状态
   playMode: Ref<PlayMode> // 当前播放模式
   setPlayMode: (mode: PlayMode) => void // 设置播放模式
-  audioElement: Ref<HTMLAudioElement> // 音频元素
+  audio: Ref<HTMLAudioElement> // 音频元素
   currentTime: Ref<number> // 当前播放时间
   duration: Ref<number> // 歌曲总时间
   changeCurrentTime: (currentTime: number) => void // 改变当前播放时间
@@ -20,12 +20,9 @@ export interface MusicPlayer {
   playSong: (param: Track) => void // 播放指定的歌曲
   volume: Ref<number> // 当前音量
   lyricsData: Ref<LyricData> // 歌词数据
-  Loadlyrics: () => Promise<void> // 加载歌词
+  loadLyrics: () => Promise<void> // 加载歌词
   scrollToCurrentLyric: (el1: HTMLElement) => void // 加载歌词
   currentLyricIndex: Ref<number> // 当前歌词索引
-  scrollStyle: Ref<{ transform: string }> // 用于滚动歌词的样式
-  eqSettings: Ref<{ bass: number; mid: number; treble: number }> // EQ 设置
-  updateEQ: (band: 'bass' | 'mid' | 'treble', value: number) => void // 更新EQ的方法
 }
 
 // 登陆状态模型
