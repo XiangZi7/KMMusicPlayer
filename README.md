@@ -124,7 +124,7 @@ pnpm dev
 
 ![image](https://github.com/user-attachments/assets/297b2355-c25d-4742-89b2-c426afb9d987)
 
-![image](https://github.com/user-attachments/assets/5302b89c-5685-4226-bca9-bb9ef8d2f617)
+![image](https://github.com/user-attachments/assets/43c2712f-ed43-4926-bd2d-20b6891b5081)
 
 ### 项目后台接口 🧩
 
