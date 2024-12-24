@@ -81,7 +81,12 @@
       />
     </div>
     <div class="p-4">
-      <h2 class="text-lg font-semibold mb-2 dark:text-white">主题颜色</h2>
+      <h2
+        class="text-lg font-semibold mb-2 dark:text-white flex items-center gap-1"
+      >
+        <icon-unjs:theme-colors />
+        主题颜色</h2
+      >
       <el-scrollbar height="400px" class="rounded-lg dark:bg-gray-800">
         <div class="grid grid-cols-auto-fill gap-4">
           <a
@@ -103,7 +108,12 @@
       </el-scrollbar>
     </div>
     <div class="p-4">
-      <h2 class="text-lg font-semibold mb-2 dark:text-white">自定义主题颜色</h2>
+      <h2
+        class="text-lg font-semibold mb-2 dark:text-white flex items-center gap-1"
+      >
+        <icon-unjs:theme-colors />
+        自定义主题颜色</h2
+      >
       <div class="flex items-center space-x-2">
         <el-color-picker
           v-model="themeStore.primary"
