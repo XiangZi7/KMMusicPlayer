@@ -1,22 +1,17 @@
 <script setup lang="ts">
-const SettingStore = useSettingStore()
+  import { useMemory, useBattery } from '@vueuse/core'
 
-import { useMemory, useBattery } from '@vueuse/core'
-const { isSupported, memory } = useMemory()
-const { charging, chargingTime, dischargingTime, level } = useBattery()
+  const SettingStore = useSettingStore()
+  const { isSupported, memory } = useMemory()
+  const { charging, chargingTime, dischargingTime, level } = useBattery()
 
-function size(v: number) {
-  const kb = v / 1024 / 1024
-  return `${kb.toFixed(2)} MB`
-}
+  function size(v: number) {
+    const kb = v / 1024 / 1024
+    return `${kb.toFixed(2)} MB`
+  }
 </script>
 <template>
-  <div class="flex min-h-screen w-full flex-col bg-muted/40">
-    <header
-      class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
-    >
-      <h1 class="text-2xl font-bold">Settings</h1>
-    </header>
+  <div class="flex w-full flex-col bg-muted/40">
     <div class="flex flex-col sm:gap-4 sm:py-4">
       <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div class="flex items-start gap-6 w-full">
