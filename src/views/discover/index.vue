@@ -9,10 +9,10 @@
   <div class="p-6 h-full w-full">
     <el-tabs v-model="activeName">
       <el-tab-pane label="推荐" name="first">
-        <Recommend v-if="activeName === 'first'"  />
+        <Recommend v-if="activeName === 'first'" />
       </el-tab-pane>
       <el-tab-pane label="排行榜" name="second">
-        <Rankings v-if="activeName === 'second'"  />
+        <Rankings v-if="activeName === 'second'" />
       </el-tab-pane>
       <el-tab-pane label="歌手" name="third">
         <Singer v-if="activeName === 'third'" />

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { MusicPlayer } from '@/hooks/interface'
-const { setVolume, volume } = inject('MusicPlayer') as MusicPlayer
+  import { MusicPlayer } from '@/hooks/interface'
+  const { setVolume, volume } = inject('MusicPlayer') as MusicPlayer
 
-const isMuted = computed(() => volume.value === 0)
+  const isMuted = computed(() => volume.value === 0)
 
-const toggleVolume = () => {
-  setVolume(isMuted.value ? 70 : 0)
-}
+  const toggleVolume = () => {
+    setVolume(isMuted.value ? 70 : 0)
+  }
 </script>
 <template>
   <div class="flex items-center">

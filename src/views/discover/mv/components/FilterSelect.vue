@@ -34,35 +34,35 @@
 </template>
 
 <script lang="ts" setup>
-// 定义 props 类型
-interface Props {
-  areas: string[]
-  types: string[]
-  orders: string[]
-}
+  // 定义 props 类型
+  interface Props {
+    areas: string[]
+    types: string[]
+    orders: string[]
+  }
 
-// 定义 events 类型
-type Emits = {
-  (
-    event: 'change',
-    selectedValues: { area: string; type: string; order: string }
-  ): void
-}
+  // 定义 events 类型
+  type Emits = {
+    (
+      event: 'change',
+      selectedValues: { area: string; type: string; order: string }
+    ): void
+  }
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+  const props = defineProps<Props>()
+  const emit = defineEmits<Emits>()
 
-// 选择的区域、类型和排序
-const selectedArea = ref(props.areas[0])
-const selectedType = ref(props.types[0])
-const selectedOrder = ref(props.orders[0])
+  // 选择的区域、类型和排序
+  const selectedArea = ref(props.areas[0])
+  const selectedType = ref(props.types[0])
+  const selectedOrder = ref(props.orders[0])
 
-// 处理选择变化
-function onChange() {
-  emit('change', {
-    area: selectedArea.value,
-    type: selectedType.value,
-    order: selectedOrder.value,
-  })
-}
+  // 处理选择变化
+  function onChange() {
+    emit('change', {
+      area: selectedArea.value,
+      type: selectedType.value,
+      order: selectedOrder.value,
+    })
+  }
 </script>

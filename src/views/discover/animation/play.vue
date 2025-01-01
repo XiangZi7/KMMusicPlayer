@@ -1,69 +1,69 @@
 <script setup lang="ts">
-import 'vue3-video-play/dist/style.css'
-import { videoPlay } from 'vue3-video-play'
-import { aniPlay } from '@/api'
+  import 'vue3-video-play/dist/style.css'
+  import { videoPlay } from 'vue3-video-play'
+  import { aniPlay } from '@/api'
 
-// 类型定义
-interface VideoPlay {
-  play_data: string
-  src_site: string
-}
-interface totalEpisodes {
-  title: string
-  slug: string
-}
-
-interface DetailedInfo {
-  title: string
-  alias?: string
-  cast?: string
-  country?: string
-  director?: string
-  genre?: string
-  rate?: string
-  synopsis?: string
-  coverImageUrl?: string
-}
-
-interface DetailList {
-  detailedInfo: DetailedInfo
-  detailInfo: { video_plays: VideoPlay[] }
-  totalEpisodes: totalEpisodes[]
-}
-
-// 状态变量
-const route = useRoute()
-const detailList = ref<DetailList | null>(null) // 初始化为 null
-const videoUrl = ref<string>('')
-
-// 获取视频数据
-const fetchVideoData = async (id: string, type: string, ep?: string) => {
-  const params = { id, type }
-  if (ep !== undefined) {
-    params.ep = ep // 如果有 ep 参数，则包含在请求中
+  // 类型定义
+  interface VideoPlay {
+    play_data: string
+    src_site: string
+  }
+  interface totalEpisodes {
+    title: string
+    slug: string
   }
 
-  const res = await aniPlay(params)
-  detailList.value = res.data
-
-  // 设置默认视频地址为第一个视频
-  if (detailList.value?.detailInfo.video_plays.length) {
-    videoUrl.value = detailList.value.detailInfo.video_plays[0].play_data
+  interface DetailedInfo {
+    title: string
+    alias?: string
+    cast?: string
+    country?: string
+    director?: string
+    genre?: string
+    rate?: string
+    synopsis?: string
+    coverImageUrl?: string
   }
-}
 
-// 组件挂载后获取数据
-onMounted(() => {
-  const { id, type } = route.query
-  if (!id) return
+  interface DetailList {
+    detailedInfo: DetailedInfo
+    detailInfo: { video_plays: VideoPlay[] }
+    totalEpisodes: totalEpisodes[]
+  }
 
-  fetchVideoData(id as string, type as string)
-})
+  // 状态变量
+  const route = useRoute()
+  const detailList = ref<DetailList | null>(null) // 初始化为 null
+  const videoUrl = ref<string>('')
 
-// 切换视频播放源
-function changeVideo(index: string) {
-  fetchVideoData(route.query.id as string, route.query.type as string, index)
-}
+  // 获取视频数据
+  const fetchVideoData = async (id: string, type: string, ep?: string) => {
+    const params = { id, type }
+    if (ep !== undefined) {
+      params.ep = ep // 如果有 ep 参数，则包含在请求中
+    }
+
+    const res = await aniPlay(params)
+    detailList.value = res.data
+
+    // 设置默认视频地址为第一个视频
+    if (detailList.value?.detailInfo.video_plays.length) {
+      videoUrl.value = detailList.value.detailInfo.video_plays[0].play_data
+    }
+  }
+
+  // 组件挂载后获取数据
+  onMounted(() => {
+    const { id, type } = route.query
+    if (!id) return
+
+    fetchVideoData(id as string, type as string)
+  })
+
+  // 切换视频播放源
+  function changeVideo(index: string) {
+    fetchVideoData(route.query.id as string, route.query.type as string, index)
+  }
 </script>
 
 <template>
@@ -157,7 +157,7 @@ function changeVideo(index: string) {
 </template>
 
 <style lang="scss" scoped>
-.el-button + .el-button {
-  margin-left: 0px;
-}
+  .el-button + .el-button {
+    margin-left: 0px;
+  }
 </style>

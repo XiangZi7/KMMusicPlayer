@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import Header from './components/Header/Header.vue'
-import Menu from './components/Menu/Menu.vue'
-import Main from './components/Main/Main.vue'
-import Footer from './components/Footer/Footer.vue'
+  import Header from './components/Header/Header.vue'
+  import Menu from './components/Menu/Menu.vue'
+  import Main from './components/Main/Main.vue'
+  import Footer from './components/Footer/Footer.vue'
 
-const PlayerDrawerRef = ref<{ show: () => void }>()
-// 共享播放器状态
-provide('MusicPlayer', useMusicPlayer())
+  const PlayerDrawerRef = ref<{ show: () => void }>()
+  // 共享播放器状态
+  provide('MusicPlayer', useMusicPlayer())
 
-const handleShow = () => {
-  if (PlayerDrawerRef.value) {
-    PlayerDrawerRef.value.show()
+  const handleShow = () => {
+    if (PlayerDrawerRef.value) {
+      PlayerDrawerRef.value.show()
+    }
   }
-}
 </script>
 <template>
   <div

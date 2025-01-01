@@ -1,16 +1,16 @@
 <script setup lang="ts">
-interface Artist {
-  name: string
-}
+  interface Artist {
+    name: string
+  }
 
-// 定义 Item 接口
-interface Item {
-  id: number
-  name: string
-  cover: string
-  artists: Artist[]
-}
-let modelValue = defineModel<Item[]>()
+  // 定义 Item 接口
+  interface Item {
+    id: number
+    name: string
+    cover: string
+    artists: Artist[]
+  }
+  let modelValue = defineModel<Item[]>()
 </script>
 <template>
   <section

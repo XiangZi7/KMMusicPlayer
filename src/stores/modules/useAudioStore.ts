@@ -51,36 +51,39 @@ export const useAudioStore = defineStore({
     },
     addTrack(param: Track | Track[]) {
       // 收集现有歌曲的ID
-      const existingIds = new Set(this.trackList.map(track => track.id));
+      const existingIds = new Set(this.trackList.map((track) => track.id))
       // 将参数归一化为数组
-      const tracksToAdd = Array.isArray(param) ? param : [param];
-      tracksToAdd.forEach(track => {
-        if (!existingIds.has(track.id)) { // 检查 ID 是否已存在
-          this.trackList.push(track); // 如果不存在，添加到 trackList
+      const tracksToAdd = Array.isArray(param) ? param : [param]
+      tracksToAdd.forEach((track) => {
+        if (!existingIds.has(track.id)) {
+          // 检查 ID 是否已存在
+          this.trackList.push(track) // 如果不存在，添加到 trackList
         }
-      });
+      })
     },
     addTrackAndPlay(param: Track | Track[]) {
-      const tracksToAdd = Array.isArray(param) ? param : [param]; // 确保 param 是数组
-      let addedIndex = -1; // 用于记录新添加或更新歌曲的索引
+      const tracksToAdd = Array.isArray(param) ? param : [param] // 确保 param 是数组
+      let addedIndex = -1 // 用于记录新添加或更新歌曲的索引
 
-      tracksToAdd.forEach(track => {
-        const existingIndex = this.trackList.findIndex(existingTrack => existingTrack.id === track.id);
+      tracksToAdd.forEach((track) => {
+        const existingIndex = this.trackList.findIndex(
+          (existingTrack) => existingTrack.id === track.id
+        )
 
         if (existingIndex === -1) {
-          this.trackList.push(track); // 如果不存在则添加
-          addedIndex = this.trackList.length - 1; // 更新添加索引为新添加的歌曲
+          this.trackList.push(track) // 如果不存在则添加
+          addedIndex = this.trackList.length - 1 // 更新添加索引为新添加的歌曲
         } else {
-          addedIndex = existingIndex; // 如果存在，则更新为已存在歌曲的索引
+          addedIndex = existingIndex // 如果存在，则更新为已存在歌曲的索引
         }
-      });
+      })
 
       // 设置当前歌曲为新添加的或已存在的歌曲
-      this.setCurrentSong(addedIndex);
+      this.setCurrentSong(addedIndex)
     },
     // 删除指定歌曲
     deleteTrack(id: number | string) {
-      this.trackList = this.trackList.filter(track => track.id !== id)
+      this.trackList = this.trackList.filter((track) => track.id !== id)
     },
     clearAllSong() {
       this.trackList = []

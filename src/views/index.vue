@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { cloudsearch } from '@/api'
-import { CloudSearchResult, PlaylistsResponse } from '@/api/interface'
-const songListRef = ref()
-const state = reactive({
-  tableData: {} as CloudSearchResult,
-  SongList: {} as PlaylistsResponse,
-})
+  import { cloudsearch } from '@/api'
+  import { CloudSearchResult, PlaylistsResponse } from '@/api/interface'
+  const songListRef = ref()
+  const state = reactive({
+    tableData: {} as CloudSearchResult,
+    SongList: {} as PlaylistsResponse,
+  })
 
-const { tableData, SongList } = toRefs(state)
+  const { tableData, SongList } = toRefs(state)
 
-onMounted(() => {
-  Promise.all([
-    cloudsearch({ kw: '境界的彼方' }),
-    cloudsearch({ kw: '境界的彼方', type: 1000 }),
-  ])
-    .then(([result1, result2]) => {
-      state.tableData = result1.result as CloudSearchResult
-      state.SongList = result2.result as PlaylistsResponse
-    })
-    .catch((error) => {
-      console.error('Error occurred:', error)
-    })
-})
+  onMounted(() => {
+    Promise.all([
+      cloudsearch({ kw: '境界的彼方' }),
+      cloudsearch({ kw: '境界的彼方', type: 1000 }),
+    ])
+      .then(([result1, result2]) => {
+        state.tableData = result1.result as CloudSearchResult
+        state.SongList = result2.result as PlaylistsResponse
+      })
+      .catch((error) => {
+        console.error('Error occurred:', error)
+      })
+  })
 
-const progress = (type: 'back' | 'forward') => {
-  const scrollLeft = songListRef.value.wrapRef.scrollLeft
-  if (type == 'back') {
-    songListRef.value.setScrollLeft(scrollLeft - 150)
-  } else {
-    songListRef.value.setScrollLeft(scrollLeft + 150)
+  const progress = (type: 'back' | 'forward') => {
+    const scrollLeft = songListRef.value.wrapRef.scrollLeft
+    if (type == 'back') {
+      songListRef.value.setScrollLeft(scrollLeft - 150)
+    } else {
+      songListRef.value.setScrollLeft(scrollLeft + 150)
+    }
   }
-}
 </script>
 <template>
   <section class="mt-8 px-6 pt-6">
@@ -120,8 +120,8 @@ const progress = (type: 'back' | 'forward') => {
 </template>
 
 <style scoped>
-.banner {
-  background-image: url('@/assets/cubes.png'),
-    linear-gradient(to right, #fd31a2, #ff3a8b, #ff4b78, #cf4af3, #e73bd7);
-}
+  .banner {
+    background-image: url('@/assets/cubes.png'),
+      linear-gradient(to right, #fd31a2, #ff3a8b, #ff4b78, #cf4af3, #e73bd7);
+  }
 </style>

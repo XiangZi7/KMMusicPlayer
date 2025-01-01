@@ -22,7 +22,6 @@ interface PlaylistCat {
   name: string
 }
 
-
 export interface State {
   Playlist: Playlist[]
   bannersList: Banner[]

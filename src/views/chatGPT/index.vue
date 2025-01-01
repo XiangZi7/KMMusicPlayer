@@ -253,7 +253,9 @@
         </button>
         <div class="flex items-center">
           <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{
-             conversations[activeConversationId].messages.length>0 ? conversations[activeConversationId].messages[0].content : '空消息'
+            conversations[activeConversationId].messages.length > 0
+              ? conversations[activeConversationId].messages[0].content
+              : '空消息'
           }}</h1>
         </div>
         <span

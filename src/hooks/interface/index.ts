@@ -12,7 +12,7 @@ export interface MusicPlayer {
   togglePlayPause: () => void // 切换播放/暂停状态
   playMode: Ref<PlayMode> // 当前播放模式
   setPlayMode: (mode: PlayMode) => void // 设置播放模式
-  audio: Ref<HTMLAudioElement> // 音频元素
+  audio: HTMLAudioElement // 音频元素
   currentTime: Ref<number> // 当前播放时间
   duration: Ref<number> // 歌曲总时间
   changeCurrentTime: (currentTime: number) => void // 改变当前播放时间

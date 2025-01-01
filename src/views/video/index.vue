@@ -1,72 +1,72 @@
 <script setup lang="ts">
-import 'vue3-video-play/dist/style.css'
-import { videoPlay } from 'vue3-video-play'
-import { mvDetail, mvUrl, commentMV, similarPlaylists } from '@/api'
-import {
-  MVDetail,
-  CommentResponse,
-  SimilarPlaylistsResponse,
-  SimilarPlaylistsPlaylist,
-} from './interface'
+  import 'vue3-video-play/dist/style.css'
+  import { videoPlay } from 'vue3-video-play'
+  import { mvDetail, mvUrl, commentMV, similarPlaylists } from '@/api'
+  import {
+    MVDetail,
+    CommentResponse,
+    SimilarPlaylistsResponse,
+    SimilarPlaylistsPlaylist,
+  } from './interface'
 
-const route = useRoute()
+  const route = useRoute()
 
-const state = reactive({
-  mvUrls: '',
-  mvDetails: {} as MVDetail,
-  mvCommentsList: {} as CommentResponse,
-  mvs: [] as SimilarPlaylistsPlaylist[],
-})
-
-const { mvUrls, mvDetails, mvCommentsList, mvs } = toRefs(state)
-
-const observedElement = ref([])
-// 使用hook并传入必要的参数
-useIntersectionObserver(
-  observedElement,
-  {
-    initialPageNum: 2, // 初始页码
-    pageSize: 10, // 页面大小
-    threshold: 0.1, // 可选阈值参数
-  },
-  handleIntersect
-)
-
-function handleIntersect(PageNum: number) {
-  commentMV<CommentResponse>({
-    offset: PageNum,
-    id: route.query.id as string,
-  }).then(({ comments }) => {
-    state.mvCommentsList.comments =
-      state.mvCommentsList.comments.concat(comments)
+  const state = reactive({
+    mvUrls: '',
+    mvDetails: {} as MVDetail,
+    mvCommentsList: {} as CommentResponse,
+    mvs: [] as SimilarPlaylistsPlaylist[],
   })
-}
 
-watch(
-  () => route.query.id,
-  (id) => {
-    if (typeof id == 'string') {
-      Promise.all([
-        mvUrl(id),
-        mvDetail(id),
-        commentMV<CommentResponse>({ id }),
-      ]).then(([result1, result2, result3]) => {
-        state.mvUrls = result1.data.url
-        state.mvDetails = result2.data
-        state.mvCommentsList = result3
-      })
-    }
-  },
-  { immediate: true }
-)
+  const { mvUrls, mvDetails, mvCommentsList, mvs } = toRefs(state)
 
-onMounted(() => {
-  similarPlaylists<SimilarPlaylistsResponse>(
-    route.query.id as unknown as number
-  ).then((res) => {
-    state.mvs = res.mvs
+  const observedElement = ref([])
+  // 使用hook并传入必要的参数
+  useIntersectionObserver(
+    observedElement,
+    {
+      initialPageNum: 2, // 初始页码
+      pageSize: 10, // 页面大小
+      threshold: 0.1, // 可选阈值参数
+    },
+    handleIntersect
+  )
+
+  function handleIntersect(PageNum: number) {
+    commentMV<CommentResponse>({
+      offset: PageNum,
+      id: route.query.id as string,
+    }).then(({ comments }) => {
+      state.mvCommentsList.comments =
+        state.mvCommentsList.comments.concat(comments)
+    })
+  }
+
+  watch(
+    () => route.query.id,
+    (id) => {
+      if (typeof id == 'string') {
+        Promise.all([
+          mvUrl(id),
+          mvDetail(id),
+          commentMV<CommentResponse>({ id }),
+        ]).then(([result1, result2, result3]) => {
+          state.mvUrls = result1.data.url
+          state.mvDetails = result2.data
+          state.mvCommentsList = result3
+        })
+      }
+    },
+    { immediate: true }
+  )
+
+  onMounted(() => {
+    similarPlaylists<SimilarPlaylistsResponse>(
+      route.query.id as unknown as number
+    ).then((res) => {
+      state.mvs = res.mvs
+    })
   })
-})
 </script>
 <template>
   <div class="w-full grid grid-rows-[auto_1fr_auto] gap-6 pb-10">

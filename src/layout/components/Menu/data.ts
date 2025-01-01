@@ -3,7 +3,6 @@ export const MenuData = [
     title: '',
     children: [
       { title: '首页', icon: 'solar:home-smile-broken', router: '/home' },
-
     ],
   },
   {

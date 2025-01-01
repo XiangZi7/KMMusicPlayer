@@ -39,4 +39,4 @@ export function findCurrentLyricIndex(
   )
   currentLyricIndex.value =
     targetIndex === -1 ? lyricsData.value.lines.length - 1 : targetIndex - 1
-} 
+}

@@ -1,69 +1,69 @@
 <script setup lang="ts">
-import { topPlaylist, banner, playlistCatList, albumNewest } from '@/api'
-import { State, Banner, Album } from './interface'
+  import { topPlaylist, banner, playlistCatList, albumNewest } from '@/api'
+  import { State, Banner, Album } from './interface'
 
-// 定义 reactive 状态的类型
-const state = reactive<State>({
-  Playlist: [],
-  bannersList: [],
-  subList: [],
-  currentCat: '欧美',
-  newestLsit: [],
-})
-
-const { Playlist, bannersList, subList, currentCat, newestLsit } =
-  toRefs(state)
-const router = useRouter()
-// 使用hook并传入必要的参数
-const observedElement = ref<HTMLElement[]>([]) // 添加类型声明
-
-useIntersectionObserver(
-  observedElement,
-  {
-    initialPageNum: 1, // 初始页码
-    pageSize: 10, // 页面大小
-    threshold: 0.1, // 可选阈值参数
-  },
-  handleIntersect
-)
-
-function handleIntersect(PageNum: number) {
-  topPlaylist({ offset: PageNum + 1 }).then(({ playlists }) => {
-    state.Playlist = state.Playlist.concat(playlists)
+  // 定义 reactive 状态的类型
+  const state = reactive<State>({
+    Playlist: [],
+    bannersList: [],
+    subList: [],
+    currentCat: '欧美',
+    newestLsit: [],
   })
-}
-onMounted(() => {
-  Promise.all([
-    banner<{ banners: Banner[] }>(),
-    topPlaylist({ offset: 1, limit: 20 }),
-    playlistCatList(),
-    albumNewest<{ albums: Album[] }>(),
-  ])
-    .then(
-      ([
-         bannerResponse,
-         playlistResponse,
-         playlistCatResponse,
-         albumResponse,
-       ]) => {
-        state.bannersList = bannerResponse.banners // 更新轮播图
-        state.Playlist = playlistResponse.playlists // 更新播放列表
-        state.subList = playlistCatResponse.sub // 更新分类列表
-        state.newestLsit = albumResponse.albums // 更新最新专辑
-      }
-    )
-    .catch((error) => {
-      console.error('Error fetching data:', error)
+
+  const { Playlist, bannersList, subList, currentCat, newestLsit } =
+    toRefs(state)
+  const router = useRouter()
+  // 使用hook并传入必要的参数
+  const observedElement = ref<HTMLElement[]>([]) // 添加类型声明
+
+  useIntersectionObserver(
+    observedElement,
+    {
+      initialPageNum: 1, // 初始页码
+      pageSize: 10, // 页面大小
+      threshold: 0.1, // 可选阈值参数
+    },
+    handleIntersect
+  )
+
+  function handleIntersect(PageNum: number) {
+    topPlaylist({ offset: PageNum + 1 }).then(({ playlists }) => {
+      state.Playlist = state.Playlist.concat(playlists)
     })
-})
-
-// 处理分类变化
-function handleCat(name: string) {
-  currentCat.value = name // 更新当前分类
-  topPlaylist({ cat: name }).then(({ playlists }) => {
-    state.Playlist = playlists // 更新播放列表
+  }
+  onMounted(() => {
+    Promise.all([
+      banner<{ banners: Banner[] }>(),
+      topPlaylist({ offset: 1, limit: 20 }),
+      playlistCatList(),
+      albumNewest<{ albums: Album[] }>(),
+    ])
+      .then(
+        ([
+          bannerResponse,
+          playlistResponse,
+          playlistCatResponse,
+          albumResponse,
+        ]) => {
+          state.bannersList = bannerResponse.banners // 更新轮播图
+          state.Playlist = playlistResponse.playlists // 更新播放列表
+          state.subList = playlistCatResponse.sub // 更新分类列表
+          state.newestLsit = albumResponse.albums // 更新最新专辑
+        }
+      )
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
   })
-}
+
+  // 处理分类变化
+  function handleCat(name: string) {
+    currentCat.value = name // 更新当前分类
+    topPlaylist({ cat: name }).then(({ playlists }) => {
+      state.Playlist = playlists // 更新播放列表
+    })
+  }
 </script>
 <template>
   <!-- 走马灯 -->

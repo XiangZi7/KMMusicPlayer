@@ -337,33 +337,33 @@ export interface TopListResponse extends Code {
 
 // MV 的详细信息
 export interface MVDetail {
-  authId: number; // 认证 ID
-  status: number; // 状态
-  id: number; // MV ID
-  title: string; // MV 标题
-  subTitle?: string; // MV 副标题，可选
+  authId: number // 认证 ID
+  status: number // 状态
+  id: number // MV ID
+  title: string // MV 标题
+  subTitle?: string // MV 副标题，可选
 }
 
 // MV 排行的单个 MV 信息结构
 export interface MVRanking {
-  artistId: number; // 艺术家 ID
-  artistName: string; // 艺术家名称
-  artists: Array<{ id: number; name: string }>; // 艺术家数组
-  briefDesc?: string | null; // 简介，可选
-  cover: string; // 封面图 URL
-  duration: number; // 时长，单位为秒
-  id: number; // MV ID
-  lastRank: number; // 上一排名
-  mark: number; // 标记
-  mv: MVDetail; // MV 的详细信息
-  name: string; // MV 名称
-  playCount: number; // 播放次数
-  score: number; // 排名得分
-  subed: boolean; // 是否订阅
+  artistId: number // 艺术家 ID
+  artistName: string // 艺术家名称
+  artists: Array<{ id: number; name: string }> // 艺术家数组
+  briefDesc?: string | null // 简介，可选
+  cover: string // 封面图 URL
+  duration: number // 时长，单位为秒
+  id: number // MV ID
+  lastRank: number // 上一排名
+  mark: number // 标记
+  mv: MVDetail // MV 的详细信息
+  name: string // MV 名称
+  playCount: number // 播放次数
+  score: number // 排名得分
+  subed: boolean // 是否订阅
 }
 // MV 排行响应类型
 export interface MVRankingResponse extends ResultData {
-  hasMore: boolean; // 是否有更多的 MV
-  updateTime: number; // 更新时间
-  data: MVRanking[]; // MV 排行列表
+  hasMore: boolean // 是否有更多的 MV
+  updateTime: number // 更新时间
+  data: MVRanking[] // MV 排行列表
 }

@@ -1,54 +1,54 @@
 <script setup lang="ts">
-import { userPlaylistRes } from '@/api/interface'
-import { MenuData } from './data'
-import { userPlaylist } from '@/api'
-import { Icon } from '@iconify/vue'
+  import { userPlaylistRes } from '@/api/interface'
+  import { MenuData } from './data'
+  import { userPlaylist } from '@/api'
+  import { Icon } from '@iconify/vue'
 
-const menuStore = useMenuStore()
-const router = useRouter()
-const userStore = useUserStore()
-const playlists = ref<userPlaylistRes[]>([])
-onMounted(() => {
-  document.addEventListener('keydown', handleKeyDown)
-})
-
-// 计算属性获取用户 ID 和登录状态
-const userId = computed(() => userStore.userInfo.userId)
-const isLoggedIn = computed(() => userStore.isLoggedIn) // 获取登录状态
-
-watch(
-  () => [userId.value, isLoggedIn.value], // 监测用户 ID 和登录状态的变化
-  async ([newUserId, loggedIn]) => {
-    if (loggedIn && newUserId !== undefined) {
-      // 只有在用户登录且用户 ID 有效时才触发
-      const { playlist } = await userPlaylist<{
-        playlist: userPlaylistRes[]
-      }>({ id: newUserId as number })
-      playlists.value = playlist
-    } else {
-      playlists.value = [] // 清空播放列表或其他处理逻辑
-    }
-  },
-  { immediate: true }
-)
-
-// 监听快捷键
-const handleKeyDown = (event: KeyboardEvent): void => {
-  MenuData.some((menuItem) => {
-    menuItem.children.some((childItem) => {
-      if (
-        childItem.shortcut &&
-        event.ctrlKey &&
-        childItem.shortcut.toLowerCase() === event.key
-      ) {
-        event.preventDefault()
-        router.push(childItem.router)
-        return true
-      }
-      return false
-    })
+  const menuStore = useMenuStore()
+  const router = useRouter()
+  const userStore = useUserStore()
+  const playlists = ref<userPlaylistRes[]>([])
+  onMounted(() => {
+    document.addEventListener('keydown', handleKeyDown)
   })
-}
+
+  // 计算属性获取用户 ID 和登录状态
+  const userId = computed(() => userStore.userInfo.userId)
+  const isLoggedIn = computed(() => userStore.isLoggedIn) // 获取登录状态
+
+  watch(
+    () => [userId.value, isLoggedIn.value], // 监测用户 ID 和登录状态的变化
+    async ([newUserId, loggedIn]) => {
+      if (loggedIn && newUserId !== undefined) {
+        // 只有在用户登录且用户 ID 有效时才触发
+        const { playlist } = await userPlaylist<{
+          playlist: userPlaylistRes[]
+        }>({ id: newUserId as number })
+        playlists.value = playlist
+      } else {
+        playlists.value = [] // 清空播放列表或其他处理逻辑
+      }
+    },
+    { immediate: true }
+  )
+
+  // 监听快捷键
+  const handleKeyDown = (event: KeyboardEvent): void => {
+    MenuData.some((menuItem) => {
+      menuItem.children.some((childItem) => {
+        if (
+          childItem.shortcut &&
+          event.ctrlKey &&
+          childItem.shortcut.toLowerCase() === event.key
+        ) {
+          event.preventDefault()
+          router.push(childItem.router)
+          return true
+        }
+        return false
+      })
+    })
+  }
 </script>
 <template>
   <aside

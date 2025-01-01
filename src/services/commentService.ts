@@ -1,7 +1,10 @@
 import { Comment } from '@/api/interface'
 import { commentMusic } from '@/api'
 
-export async function fetchComments(currentSongId: number|string, offset: number = 1): Promise<{ comments: Comment[], total: number }> {
+export async function fetchComments(
+  currentSongId: number | string,
+  offset: number = 1
+): Promise<{ comments: Comment[]; total: number }> {
   const res = await commentMusic({ offset, id: currentSongId })
   return { comments: res.comments, total: res.total }
 }

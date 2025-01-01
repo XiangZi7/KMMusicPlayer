@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import useSpeechSynthesis from './components/useSpeechSynthesis.vue'
-import useCalculator from './components/useCalculator.vue'
+  import useSpeechSynthesis from './components/useSpeechSynthesis.vue'
+  import useCalculator from './components/useCalculator.vue'
 </script>
 <template>
   <div class="container mx-auto p-4">

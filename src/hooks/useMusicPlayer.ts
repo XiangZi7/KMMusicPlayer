@@ -1,7 +1,7 @@
 // 播放模式枚丽数
 import { PlayMode } from '@/enum'
 import { Track } from '@/stores/interface'
-import { showNotification } from "@/utils/notification";
+import { showNotification } from '@/utils/notification'
 import { LyricData } from '@/utils/parseLyrics'
 import { setupAudio, handleAudioError } from './audioSetup'
 import { loadLyrics, findCurrentLyricIndex } from './lyricsHandler'
@@ -12,11 +12,12 @@ export function useMusicPlayer() {
   const defaultSong = {
     title: '未选择歌曲',
     singer: '未知歌手',
-    cover: new URL(`@/assets/default_album.jpg`, import.meta.url).href
-  };
+    cover: new URL(`@/assets/default_album.jpg`, import.meta.url).href,
+  }
   // 计算属性，用来获取当前播放的歌曲
   const currentSong = computed(
-    () => audioStore.trackList[audioStore.currentSongIndex as number] || defaultSong
+    () =>
+      audioStore.trackList[audioStore.currentSongIndex as number] || defaultSong
   )
   // 用于追踪播放状态的响应式变量
   const isPlaying = ref(false)
@@ -38,7 +39,24 @@ export function useMusicPlayer() {
 
   // 在组件挂载时添加事件监听器
   onMounted(() => {
-    setupAudio(audio, currentSong, currentTime, duration, volume, playNext, () => handleAudioError(audio, currentSong, currentTime, duration, audioStore, pause, play))
+    setupAudio(
+      audio,
+      currentSong,
+      currentTime,
+      duration,
+      volume,
+      playNext,
+      () =>
+        handleAudioError(
+          audio,
+          currentSong,
+          currentTime,
+          duration,
+          audioStore,
+          pause,
+          play
+        )
+    )
   })
 
   // 更新currentLyricIndex
@@ -90,7 +108,9 @@ export function useMusicPlayer() {
         }
         audioStore.setCurrentSong(nextIndex)
         audio.src = currentSong.value.source // 更新audio元素的资源地址
-        loadLyrics(currentSong, lyricsData, audioStore, () => findCurrentLyricIndex(lyricsData, currentLyricIndex))
+        loadLyrics(currentSong, lyricsData, audioStore, () =>
+          findCurrentLyricIndex(lyricsData, currentLyricIndex)
+        )
         play()
         break
     }
@@ -104,7 +124,9 @@ export function useMusicPlayer() {
     }
     audioStore.setCurrentSong(previousIndex)
     audio.src = currentSong.value.source // 更新audio元素的资源地址
-    loadLyrics(currentSong, lyricsData, audioStore, () => findCurrentLyricIndex(lyricsData, currentLyricIndex))
+    loadLyrics(currentSong, lyricsData, audioStore, () =>
+      findCurrentLyricIndex(lyricsData, currentLyricIndex)
+    )
     play()
   }
 
@@ -163,7 +185,10 @@ export function useMusicPlayer() {
     setVolume,
     volume,
     playSong,
-    loadLyrics: () => loadLyrics(currentSong, lyricsData, audioStore, () => findCurrentLyricIndex(lyricsData, currentLyricIndex)),
+    loadLyrics: () =>
+      loadLyrics(currentSong, lyricsData, audioStore, () =>
+        findCurrentLyricIndex(lyricsData, currentLyricIndex)
+      ),
     lyricsData,
     currentLyricIndex,
     scrollToCurrentLyric,

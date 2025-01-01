@@ -4,4 +4,3 @@ interface Window {
 }
 
 declare module 'vue3-video-play'
-

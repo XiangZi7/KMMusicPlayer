@@ -1,62 +1,62 @@
 <script setup lang="ts">
-import { topPlaylist, playlistCatList } from '@/api'
-interface Playlist {
-  id: number
-  name: string
-  description: string
-  coverImgUrl: string
-}
+  import { topPlaylist, playlistCatList } from '@/api'
+  interface Playlist {
+    id: number
+    name: string
+    description: string
+    coverImgUrl: string
+  }
 
-interface Category {
-  name: string
-  label: string
-}
-const state = reactive({
-  Playlist: [] as Playlist[],
-  CatList: [{ name: '全部', label: '全部' }] as Category[],
-  currentCat: ['全部'] as string[],
-})
+  interface Category {
+    name: string
+    label: string
+  }
+  const state = reactive({
+    Playlist: [] as Playlist[],
+    CatList: [{ name: '全部', label: '全部' }] as Category[],
+    currentCat: ['全部'] as string[],
+  })
 
-const { currentCat, CatList, Playlist } = toRefs(state)
+  const { currentCat, CatList, Playlist } = toRefs(state)
 
-const router = useRouter()
-// 使用hook并传入必要的参数
-const observedElement = ref([])
-useIntersectionObserver(
-  observedElement,
-  {
-    initialPageNum: 1, // 初始页码
-    pageSize: 10, // 页面大小
-    threshold: 0.1, // 可选阈值参数
-  },
-  handleIntersect
-)
+  const router = useRouter()
+  // 使用hook并传入必要的参数
+  const observedElement = ref([])
+  useIntersectionObserver(
+    observedElement,
+    {
+      initialPageNum: 1, // 初始页码
+      pageSize: 10, // 页面大小
+      threshold: 0.1, // 可选阈值参数
+    },
+    handleIntersect
+  )
 
-onMounted(() => {
-  topPlaylist({ offset: 1, cat: state.currentCat as [] }).then(
-    ({ playlists }) => {
+  onMounted(() => {
+    topPlaylist({ offset: 1, cat: state.currentCat as [] }).then(
+      ({ playlists }) => {
+        state.Playlist = playlists
+      }
+    )
+    playlistCatList().then(({ sub }) => {
+      state.CatList = state.CatList.concat(sub)
+    })
+  })
+
+  function handleIntersect(PageNum: number) {
+    topPlaylist({ offset: PageNum + 1, cat: state.currentCat as [] }).then(
+      ({ playlists }) => {
+        state.Playlist = state.Playlist.concat(playlists)
+      }
+    )
+  }
+
+  function catChange(e: []) {
+    state.Playlist = []
+    topPlaylist({ offset: 1, cat: e.join() }).then(({ playlists }) => {
       state.Playlist = playlists
-    }
-  )
-  playlistCatList().then(({ sub }) => {
-    state.CatList = state.CatList.concat(sub)
-  })
-})
-
-function handleIntersect(PageNum: number) {
-  topPlaylist({ offset: PageNum + 1, cat: state.currentCat as [] }).then(
-    ({ playlists }) => {
-      state.Playlist = state.Playlist.concat(playlists)
-    }
-  )
-}
-
-function catChange(e: []) {
-  state.Playlist = []
-  topPlaylist({ offset: 1, cat: e.join() }).then(({ playlists }) => {
-    state.Playlist = playlists
-  })
-}
+    })
+  }
 </script>
 <template>
   <div class="h-full w-full p-4">

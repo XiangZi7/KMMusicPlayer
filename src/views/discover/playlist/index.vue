@@ -3,9 +3,11 @@
   import { PlaylistDetailResponse } from '@/api/interface'
   import { Track } from '@/stores/interface.ts'
   import { Comment } from '@/api/interface'
+  import { MusicPlayer } from '@/hooks/interface'
 
   const route = useRoute()
   const audioStore = useAudioStore()
+  const { play, audio } = inject('MusicPlayer') as MusicPlayer
   const state = reactive({
     playlistData: {
       playlist: {
@@ -69,13 +71,20 @@
         mv: row.mv as number,
       }
     })
+    audioStore.clearAllSong()
     audioStore.addTrack(newArr as unknown as Track[])
+    audioStore.setCurrentSong(0)
+    audio.src = '' // 更新audio元素的资源地址
+    play()
   }
 </script>
 <template>
   <div class="container p-6 overflow-hidden h-full flex-1">
     <div class="flex gap-6 h-full">
-      <div class="flex-[20%] max-w-[20%] space-y-4 relative" v-if="playlistData.playlist.coverImgUrl">
+      <div
+        class="flex-[20%] max-w-[20%] space-y-4 relative"
+        v-if="playlistData.playlist.coverImgUrl"
+      >
         <img
           alt="Album cover"
           class="w-full aspect-square object-cover rounded-lg shadow-xl"

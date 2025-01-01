@@ -7,7 +7,10 @@ export const renderMarkdown = (text: string): string => {
       const copyButton = `<button class="copy-code-btn absolute top-2 right-2" onclick="copyCode(this)">复制代码</button>`
       if (lang && hljs.getLanguage(lang)) {
         try {
-          const highlighted = hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
+          const highlighted = hljs.highlight(str, {
+            language: lang,
+            ignoreIllegals: true,
+          }).value
           return `<pre class="hljs"><code>${copyButton}${highlighted}</code></pre>`
         } catch {
           return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`

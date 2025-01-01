@@ -1,6 +1,6 @@
 import { Track } from '@/stores/interface'
 import { urlV1 } from '@/api'
-import { showNotification } from "@/utils/notification";
+import { showNotification } from '@/utils/notification'
 export function setupAudio(
   audio: HTMLAudioElement,
   currentSong: Ref<Track>,
@@ -58,4 +58,4 @@ export async function handleAudioError(
       // errorMessage = "获取新源失败。";
     }
   }
-} 
+}

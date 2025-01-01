@@ -42,7 +42,7 @@ instance.interceptors.response.use(
   (error) => {
     ElNotification({
       title: `错误代码：${error.response.data.code || '网络错误'}`,
-      message: error.response.data.message || "网络太拥挤，请稍候再试！",
+      message: error.response.data.message || '网络太拥挤，请稍候再试！',
       type: 'error',
     })
     // 响应错误时也结束进度条

@@ -8,36 +8,36 @@ export const useUserStore = defineStore({
   state: (): UserState => {
     return {
       userInfo: {},
-      isLoggedIn: false  //登录状态
+      isLoggedIn: false, //登录状态
     }
   },
   actions: {
     setUserInfo(userInfo: userModel) {
       this.userInfo = userInfo
-      this.isLoggedIn = !!userInfo.userId; // 基于 userId 设置登录状态
+      this.isLoggedIn = !!userInfo.userId // 基于 userId 设置登录状态
     },
     // 检查登陆状态
     async checkLoginStatus() {
       try {
-        const { data } = await loginStatus();
+        const { data } = await loginStatus()
         if (data.profile) {
-          this.setUserInfo(data.profile);
+          this.setUserInfo(data.profile)
         } else {
-          this.setUserInfo({});
+          this.setUserInfo({})
         }
       } catch (err) {
-        console.error("Error checking login status:", err);
+        console.error('Error checking login status:', err)
       }
     },
     // 用户退出
     async userLogout() {
       try {
-        await logout();
-        this.setUserInfo({});
+        await logout()
+        this.setUserInfo({})
       } catch (err) {
-        console.error("Error logging out:", err);
+        console.error('Error logging out:', err)
       }
-    }
+    },
   },
   persist: piniaPersistConfig('UserStore'),
 })
