@@ -13,11 +13,15 @@
   "homepage": "https://github.com/XiangZi7/KMMusicPlayer",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "vite build && vite preview",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "vue": "^3.5.13",
+    "vue-i18n": "^11.0.1",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
