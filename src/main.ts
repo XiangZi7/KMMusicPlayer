@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './routers'
-import './style/index.sass'
+import './style/index.scss'
 import i18n from './i18n/i18n'; // i18n的配置文件路径，也就是 createI18n 的文件地址
 
 const app = createApp(App)

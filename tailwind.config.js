@@ -27,33 +27,13 @@ export default {
           'inactive': 'rgba(249, 250, 251, 0.55)', // button-inactive
           'inactive-light': '#3c3a3a', // light mode variant
         },
-        'hover-menu': {
-          DEFAULT: 'rgba(12, 15, 25, 0.3)', // hover-menu-bg
-          'light': 'rgba(255, 255, 255, 0.35)', // light mode variant
-        },
         'content': {
           'title': '#999ba5', // content-title-color
           'background': 'rgba(146, 151, 179, 0.13)', // content-bg
         },
-        'dropdown': {
-          'background': '#21242d', // dropdown-bg
-          'hover': 'rgb(42, 46, 60)', // dropdown-hover
-        },
-        'popup': {
-          DEFAULT: 'rgb(22, 25, 37)', // popup-bg
-          'light': 'rgb(255, 255, 255)', // light mode variant
-        },
         'search': {
           DEFAULT: '#14162b', // search-bg
           'light': 'rgba(255, 255, 255, 0.31)', // light mode variant
-        },
-        'overlay': {
-          DEFAULT: 'rgba(36, 39, 59, 0.3)', // overlay-bg
-          'light': 'rgba(255, 255, 255, 0.3)', // light mode variant
-        },
-        'scrollbar': {
-          DEFAULT: 'rgba(1, 2, 3, 0.4)', // scrollbar-bg
-          'light': 'rgba(255, 253, 253, 0.57)', // light mode variant
         },
       },
       // 字体设置
