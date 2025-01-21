@@ -1,5 +1,4 @@
 import { ref } from 'vue'
-
 export function useLocalStorage<T>(key: string, defaultValue: T) {
   // 从 localStorage 获取数据
   const storedValue = localStorage.getItem(key)
@@ -12,7 +11,7 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     value.value = newValue
     localStorage.setItem(key, JSON.stringify(newValue))
   }
-
+  
   return {
     value,
     storeValue,
