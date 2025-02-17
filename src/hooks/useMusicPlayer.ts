@@ -5,6 +5,7 @@ import { showNotification } from '@/utils/notification'
 import { LyricData } from '@/utils/parseLyrics'
 import { setupAudio, handleAudioError } from './audioSetup'
 import { loadLyrics, findCurrentLyricIndex } from './lyricsHandler'
+import { useLocalStorage } from './useLocalStorage'
 
 export function useMusicPlayer() {
   const audioStore = useAudioStore()
@@ -29,7 +30,9 @@ export function useMusicPlayer() {
   const currentTime = ref(0)
   const duration = ref(0)
   // 音量控制
-  const volume = ref(70) // 音量范围：0到100
+  // const volume = ref(70) // 音量范围：0到100
+  const {value: volume, storeValue: storeVolume } = useLocalStorage<number>('volume', 70)  // 使用 useLocalStorage 钩子管理音量 (key, defaultValue)
+  
   // 音乐歌词
   const lyricsData = ref<LyricData>({
     lines: [],
@@ -147,7 +150,8 @@ export function useMusicPlayer() {
 
   // 设置音量
   const setVolume = (newVolume: number) => {
-    volume.value = newVolume
+    // volume.value = newVolume
+    storeVolume(newVolume) //通过 localStorage 保存音量
     audio.volume = newVolume / 100 // 将音量转换为 0 到 1 的范围
   }
 
