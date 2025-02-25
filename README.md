@@ -1,6 +1,6 @@
 # KMMusicPlayer
 
-![image](https://github.com/user-attachments/assets/ecb841c2-62fb-4b3e-82aa-0915ace4a98c)
+![image](https://github.com/user-attachments/assets/a25e395e-9f55-455e-bc22-843de0698144)
 
 ### 介绍 📖
 
@@ -78,53 +78,48 @@ pnpm dev
 
 ### 项目截图 📷
 
-![image](https://github.com/user-attachments/assets/ecb841c2-62fb-4b3e-82aa-0915ace4a98c)
+![image](https://github.com/user-attachments/assets/40b285d9-5502-4c7c-822e-200e075c9cff)
 
-![image](https://github.com/user-attachments/assets/b94d01f5-27e8-4afd-b0db-e67f2d951231)
+![image](https://github.com/user-attachments/assets/eef183e3-9c32-4f75-b675-1f355515e025)
 
-![image](https://github.com/user-attachments/assets/7fd7d3f4-1b10-4cba-abc4-2fe8e2be679d)
+![image](https://github.com/user-attachments/assets/f9b0fd38-52c7-44b5-9754-e43836184d85)
 
-![image](https://github.com/user-attachments/assets/2c71aa45-00bb-42f4-b1b3-dcff8cb52c97)
+![image](https://github.com/user-attachments/assets/06ded20f-3cca-419e-9b70-305534ee7fd2)
 
-![image](https://github.com/user-attachments/assets/df166b44-c27f-4b91-81eb-516ba7abbdf1)
+![image](https://github.com/user-attachments/assets/a8b0603a-8d52-4cfd-83b7-d61526bcfe13)
 
-![image](https://github.com/user-attachments/assets/69fe14da-7a1d-4f4b-9611-90691f0d49b7)
+![image](https://github.com/user-attachments/assets/8a3f736b-b785-438c-a982-d58186c2e4e3)
 
-![image](https://github.com/user-attachments/assets/c76cf2e3-6e6a-4a00-8484-c07a147f45c9)
+![image](https://github.com/user-attachments/assets/c029af1a-307a-4900-a5f5-bbe5c52889dc)
 
-![image](https://github.com/user-attachments/assets/1d68521d-f5c0-4f0a-87a0-ffde13f266a0)
+![image](https://github.com/user-attachments/assets/db6d53e3-5079-4f8d-97ca-0669a1cff232)
 
-![image](https://github.com/user-attachments/assets/468e3818-2e53-42a5-8b4d-ae5ff67a80c0)
+![image](https://github.com/user-attachments/assets/a8dd1ef7-1f95-40e2-bc93-a27ab08c388b)
 
-![image](https://github.com/user-attachments/assets/a712c6ee-e54f-4f33-8b3f-24cb154a57df)
+![image](https://github.com/user-attachments/assets/2586cb5f-3876-427d-aa6e-24b3f694ff22)
 
-![image](https://github.com/user-attachments/assets/bf6fc102-308e-4a68-bb73-1b5043865c21)
+![image](https://github.com/user-attachments/assets/9d97aeef-5fdc-4ba6-a01a-aa8f8264931b)
 
-![image](https://github.com/user-attachments/assets/60114478-600f-429c-ba4e-fa1e445192eb)
+![image](https://github.com/user-attachments/assets/7e719067-2861-4746-9f05-a85f0c161b21)
 
-![image](https://github.com/user-attachments/assets/f6a09a7d-2956-427c-b2b0-05d3e6d04424)
+![image](https://github.com/user-attachments/assets/b34837d1-a506-4494-9f82-4ffb97593fb5)
 
-![image](https://github.com/user-attachments/assets/fc2eaccb-bfe9-4194-abb1-4d68ba9ca200)
+![image](https://github.com/user-attachments/assets/f5537cd5-3af0-4daf-80ac-8738e0140979)
 
-![image](https://github.com/user-attachments/assets/44a6afae-ba1f-4cde-a0de-3a7916399553)
+![image](https://github.com/user-attachments/assets/17495ede-cbca-401a-b95c-535062886daf)
 
-![image](https://github.com/user-attachments/assets/8adee4c0-ca4a-46e6-881a-dc82867d7bf0)
+![image](https://github.com/user-attachments/assets/f08d5102-78c4-4cc7-82d9-253e7aa12131)
 
-![image](https://github.com/user-attachments/assets/1b06a86b-3a7b-4460-94f1-402e8e7c750d)
+![image](https://github.com/user-attachments/assets/18469079-1119-4dbe-81d9-79a6c78d65f9)
 
-![image](https://github.com/user-attachments/assets/82d80c29-2b76-49a9-92c4-4cdc482ee48d)
+![image](https://github.com/user-attachments/assets/237232dd-c8c5-4e73-bf32-7bd43667ff9e)
 
-![image](https://github.com/user-attachments/assets/b74b26c3-23e4-474b-b587-bc00f83f1cf1)
+![image](https://github.com/user-attachments/assets/d7fa9540-36cd-4ae0-b3d3-5546c26da54c)
 
-![image](https://github.com/user-attachments/assets/793b2c0f-0d03-4380-8d36-671ea7195a0e)
+![image](https://github.com/user-attachments/assets/47562e55-c584-4eca-a9b2-f32fe4df0fcd)
 
-![image](https://github.com/user-attachments/assets/88e1575c-6470-453b-bdb7-836b58b5f7d7)
+![image](https://github.com/user-attachments/assets/ccdb5bd9-a9f3-48f3-9301-3bb859381505)
 
-![image](https://github.com/user-attachments/assets/7bb5482f-5384-4d03-b2be-7949e0ce7f59)
-
-![image](https://github.com/user-attachments/assets/297b2355-c25d-4742-89b2-c426afb9d987)
-
-![image](https://github.com/user-attachments/assets/43c2712f-ed43-4926-bd2d-20b6891b5081)
 
 ### 项目后台接口 🧩
 
