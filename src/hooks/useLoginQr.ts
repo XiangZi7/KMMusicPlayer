@@ -2,15 +2,16 @@ import { loginQrKey, loginQrCreate, loginQrCheck, loginStatus } from '@/api'
 import { QrCallback, ResLoginStatus } from '@/hooks/interface'
 
 export function useLoginQr(qrCallback: QrCallback) {
-  const qrKey = ref<string>('') // 存储二维码 key 的响应式数据
-  const qrImgUrl = ref<string>('') // 存储二维码图片 URL 的响应式数据
-  const qrStatus = ref<ResLoginStatus | null>(null) // 存储二维码当前状态的响应式数据
-  let intervalId: ReturnType<typeof setInterval> | null = null // 存放 setInterval 的标识符，用于清除轮询
-  const userStore = useUserStore()
+  const qrKey = ref<string>('')
+  const qrImgUrl = ref<string>('')
+  const qrStatus = ref<ResLoginStatus | null>(null)
+  let intervalId: ReturnType<typeof setInterval> | null = null
+  const userStore = UserStore()
   // 获取二维码 key 的方法
   const fetchQrKey = async () => {
     try {
       const response = await loginQrKey()
+      if (!response.data) return
       qrKey.value = response.data.unikey // 存储获取到的 key
       return response.data.unikey
     } catch (error) {
@@ -22,6 +23,7 @@ export function useLoginQr(qrCallback: QrCallback) {
   const createQrCode = async () => {
     try {
       const key = await fetchQrKey()
+      if (!key) return
       const response = await loginQrCreate(key)
       qrImgUrl.value = response.data.qrimg // 存储二维码图片 URL
     } catch (error) {
@@ -52,6 +54,7 @@ export function useLoginQr(qrCallback: QrCallback) {
             userId,
           }
           userStore.setUserInfo(userInfo)
+          userStore.setIsLoggedIn(true)
           //   通知已获取到数据
           qrCallback(true)
         })

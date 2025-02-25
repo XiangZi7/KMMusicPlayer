@@ -1,17 +1,20 @@
 import { createApp } from 'vue'
-import pinia from './stores'
 import App from './App.vue'
-import router from './router'
-import './styles/index.scss'
+import router from './routers/index'
+import Store from "@/stores";
+import i18n from "@/i18n/i18n";
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import { lazyLoad } from './directives/lazyLoad'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-
+import './style/index.scss'
 const app = createApp(App)
 
-app.use(pinia)
+// 路由
 app.use(router)
+// 状态管理
+app.use(Store)
+// 国际化
+app.use(i18n)
+// ElementPlus
 app.use(ElementPlus)
-app.directive('lazy-load', lazyLoad)
 app.mount('#app')

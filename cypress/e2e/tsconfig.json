@@ -1,8 +1,0 @@
-{
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["./**/*", "../support/**/*"],
-  "compilerOptions": {
-    "isolatedModules": false,
-    "types": ["cypress"]
-  }
-}

@@ -1,33 +1,25 @@
 <script setup lang="ts">
-  import Header from './components/Header/Header.vue'
-  import Menu from './components/Menu/Menu.vue'
-  import Main from './components/Main/Main.vue'
-  import Footer from './components/Footer/Footer.vue'
+import Header from './components/header/index.vue'
+import Aside from './components/aside/index.vue'
+import Main from './components/main/index.vue'
+import Footer from './components/footer/index.vue'
+import BG from './components/bg/index.vue'
+import { AudioPlayer } from '@/hooks/useAudioPlayer'
 
-  const PlayerDrawerRef = ref<{ show: () => void }>()
-  // 共享播放器状态
-  provide('MusicPlayer', useMusicPlayer())
-
-  const handleShow = () => {
-    if (PlayerDrawerRef.value) {
-      PlayerDrawerRef.value.show()
-    }
-  }
+provide('audioPlayer', AudioPlayer())
 </script>
 <template>
-  <div
-    class="flex flex-col bg-[#dde2eb] dark:bg-[#333333] h-full w-full items-center justify-center py-6 px-10"
-  >
+  <BG />
+  <div class="absolute w-full flex flex-col h-full p-10 z-10">
     <div
-      class="flex backdrop-blur-lg flex-col justify-center rounded-3xl shadow-xl h-full w-full overflow-hidden bg-white dark:bg-[--el-bg-color]"
+      class="w-full flex flex-col h-full rounded-2xl overflow-hidden bg-themeBgColor backdrop-blur-lg"
     >
       <Header />
-      <section class="flex flex-1 overflow-x-hidden">
-        <Menu />
+      <div class="flex flex-1 overflow-hidden">
+        <Aside />
         <Main />
-      </section>
-      <Footer @show="handleShow" />
-      <DrawerPlayer ref="PlayerDrawerRef" />
+      </div>
+      <Footer />
     </div>
   </div>
 </template>

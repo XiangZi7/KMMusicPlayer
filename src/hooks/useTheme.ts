@@ -1,53 +1,46 @@
 import { ElMessage } from 'element-plus'
-
 /**
  * @description 切换主题
  * */
 export const useTheme = () => {
-  const themeStore = useThemeStore()
-  // 切换暗黑模式
-  const switchDark = () => {
-    const body = document.documentElement
-    themeStore.isDark
-      ? body.classList.add('dark')
-      : body.classList.remove('dark')
-  }
-
-  // 修改主题颜色
-  const changePrimary = (val: string) => {
-    if (!val) {
-      val = '#409EFF'
-      ElMessage({
-        type: 'success',
-        message: `主题颜色已重置为 #409EFF`,
-      })
+    const theme = themeStore()
+    // 修改主题颜色
+    const changePrimary = (val: string) => {
+        if (!val) {
+            val = '#7E22CE'
+            ElMessage({
+                type: 'success',
+                message: `主题颜色已重置为 #7E22CE`,
+            })
+        }
+        theme.setPrimary(val)
+        // 颜色加深
+        document.documentElement.style.setProperty(
+            '--el-color-primary-dark-2',
+            `${getDarkColor(theme.primary, 0.1)}`
+        )
+        document.documentElement.style.setProperty(
+            '--el-color-primary',
+            theme.primary
+        )
+        document.documentElement.style.setProperty(
+            '--primary',
+            theme.primary
+        )
+        // 颜色变浅
+        for (let i = 1; i <= 9; i++) {
+            document.documentElement.style.setProperty(
+                `--el-color-primary-light-${i}`,
+                `${getLightColor(theme.primary, i / 10)}`
+            )
+        }
     }
-    themeStore.setPrimary(val)
-    // 颜色加深
-    document.documentElement.style.setProperty(
-      '--el-color-primary-dark-2',
-      `${getDarkColor(themeStore.primary, 0.1)}`
-    )
-    document.documentElement.style.setProperty(
-      '--el-color-primary',
-      themeStore.primary
-    )
-    // 颜色变浅
-    for (let i = 1; i <= 9; i++) {
-      document.documentElement.style.setProperty(
-        `--el-color-primary-light-${i}`,
-        `${getLightColor(themeStore.primary, i / 10)}`
-      )
+
+    onBeforeMount(() => {
+        changePrimary(theme.primary)
+    })
+
+    return {
+        changePrimary,
     }
-  }
-
-  onBeforeMount(() => {
-    switchDark()
-    changePrimary(themeStore.primary)
-  })
-
-  return {
-    switchDark,
-    changePrimary,
-  }
 }
