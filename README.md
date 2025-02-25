@@ -53,7 +53,7 @@ git clone https://github.com/XiangZi7/KM-Music-Player.git
 进入项目目录并安装所需的依赖：
 
 ```bash
-cd KM-Music-Player
+cd GlassMusicPlayer
 pnpm install
 ```
 
