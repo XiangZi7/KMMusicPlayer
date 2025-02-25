@@ -55,6 +55,7 @@ export default [
   // 忽略文件
   {
     ignores: [
+      'README.md',
       '**/dist',
       './src/main.ts',
       '.vscode',

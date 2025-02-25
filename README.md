@@ -1,11 +1,14 @@
+🎵 **提示：** KMMusicPlayer项目已迁移至新仓库 👇
+[GlassMusicPlayer/kmmusic 分支](https://github.com/XiangZi7/GlassMusicPlayer/tree/kmmusic)
+
 # Glass Music Player
 
 ![image](https://github.com/user-attachments/assets/a25e395e-9f55-455e-bc22-843de0698144)
 
 ### 介绍 📖
 
-**Glass Music Player** 是一款基于 **Vue3.5**、**Vite
-5**、**Pinia**、**Tailwindcss** 和 **Element-Plus**
+**Glass Music Player** 是一款基于
+**Vue3.5**、**Vite5**、**Pinia**、**Tailwindcss** 和 **Element-Plus**
 开发的开源 Web 音乐播放器。它采用目前最新的技术栈，提供流畅且美观的音乐播放体验。
 
 ### 系统需求 ⚙️
