@@ -17,9 +17,7 @@
 
 ### 在线预览 👀
 
-- [Netlify 预览](https://kmmusic.netlify.app)
-- [GitHub Pages](https://xiangzi7.github.io/KM-Music-Player/)
-- [Vercel 预览](https://kmmusic.vercel.app) (可能需要魔法)
+- [Netlify 预览](https://topm.netlify.app)
 
 ### 代码仓库 ⭐
 
