@@ -1,12 +1,12 @@
-# KMMusicPlayer
+# Glass Music Player
 
 ![image](https://github.com/user-attachments/assets/a25e395e-9f55-455e-bc22-843de0698144)
 
 ### 介绍 📖
 
-**KMMusicPlayer** (**Kuriyama Mirai Music Player**) 是一款基于 **Vue
-3.5**、**Vite 5**、**Pinia**、**Tailwindcss** 和 **Element-Plus** 开发的开源 Web 音乐播放器。它采
-用目前最新的技术栈，提供流畅且美观的音乐播放体验。
+**Glass Music Player** 是一款基于 **Vue3.5**、**Vite
+5**、**Pinia**、**Tailwindcss** 和 **Element-Plus**
+开发的开源 Web 音乐播放器。它采用目前最新的技术栈，提供流畅且美观的音乐播放体验。
 
 ### 系统需求 ⚙️
 
@@ -26,14 +26,12 @@
 
 - 支持上、下、循环、顺序、随机、单曲播放
 - 支持 MV 显示
-- 正常动漫播放
 - 歌词滚动显示
 - 网易云二维码登录
-- 动态切换主题
+- 动态切换主题颜色
 - 暗黑模式
 - ChatGPT
 - 影视、动漫播放
-- 数据大屏
 
 ### 安装使用步骤 📔
 
@@ -73,8 +71,8 @@ pnpm dev
 
 文档说明
 
-你可以查阅 [网易云音乐 API 文档](https://neteasecloudmusicapi.vercel.app/#/) 以
-获取更多信息和接口使用说明（可能需要魔法上网）。
+你可以查阅 [网易云音乐 API 文档](https://neteasecloudmusicapi.vercel.app/#/)
+以获取更多信息和接口使用说明（可能需要魔法上网）。
 
 ### 项目截图 📷
 
@@ -120,16 +118,15 @@ pnpm dev
 
 ![image](https://github.com/user-attachments/assets/ccdb5bd9-a9f3-48f3-9301-3bb859381505)
 
-
 ### 项目后台接口 🧩
 
 - [https://neteasecloudmusicapi.vercel.app/#/](https://neteasecloudmusicapi.vercel.app/#/)
   （可能需魔法上网）
 
-### 免责声明  ⚠️
-KMMusicPlayer（Kuriyama Mirai Music Player）项目仅用于学习和研究目的。使用该项目的用户需自行承担相关风险。
-本项目所使用的相关API和数据源均为第三方提供，使用时请遵循相关法律法规及第三方的使用条款。本项目不得用于任何商业目的，
-我们不对任何由于使用本项目而引起的直接或间接的损失或法律责任负责。
+### 免责声明 ⚠️
+
+KMMusicPlayer（Kuriyama Mirai Music
+Player）项目仅用于学习和研究目的。使用该项目的用户需自行承担相关风险。本项目所使用的相关API和数据源均为第三方提供，使用时请遵循相关法律法规及第三方的使用条款。本项目不得用于任何商业目的，我们不对任何由于使用本项目而引起的直接或间接的损失或法律责任负责。
 
 请在使用之前仔细阅读该免责声明，并确保遵守以上条款。谢谢您的理解与支持。
 
@@ -139,12 +136,15 @@ KMMusicPlayer（Kuriyama Mirai Music Player）项目仅用于学习和研究目�
 
 ### 捐赠 （❤
 
-如果觉得该项目能对你有帮助或喜欢可投食
-|                                        微信                                        |                                       支付宝                                       |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="https://github.com/user-attachments/assets/46d07565-72b9-4d48-bea2-4a7242e5ada0" alt="Alipay QRcode" width=170> | <img src="https://github.com/user-attachments/assets/7c3e1e96-cfc3-460d-b534-8a1da636cc09" alt="Wechat QRcode" width=170> |
-
-
+如果觉得该项目能对你有帮助或喜欢可投食 | 微信 | 支付宝 | |
+:--------------------------------------------------------------------------------:
+|
+:--------------------------------------------------------------------------------:
+| |
+<img src="https://github.com/user-attachments/assets/46d07565-72b9-4d48-bea2-4a7242e5ada0" alt="Alipay QRcode" width=170>
+|
+<img src="https://github.com/user-attachments/assets/7c3e1e96-cfc3-460d-b534-8a1da636cc09" alt="Wechat QRcode" width=170>
+|
 
 ### GitHub Star 趋势
 
@@ -159,4 +159,3 @@ KMMusicPlayer（Kuriyama Mirai Music Player）项目仅用于学习和研究目�
 - 播放器如何更改主题？
 
 在侧边菜单栏中选择“主题”选项，然后你可以选择不同的主题风格。
-
