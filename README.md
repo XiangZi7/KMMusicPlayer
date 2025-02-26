@@ -43,7 +43,7 @@
 使用 Git 克隆项目到本地：
 
 ```bash
-git clone https://github.com/XiangZi7/KM-Music-Player.git
+git clone https://github.com/XiangZi7/GlassMusicPlayer.git
 ```
 
 安装依赖
